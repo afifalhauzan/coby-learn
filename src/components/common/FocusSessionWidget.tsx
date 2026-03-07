@@ -1,0 +1,423 @@
+import React, { useState, useEffect, useRef } from 'react';
+import {
+  Box,
+  Typography,
+  Button,
+  Paper,
+  IconButton,
+  Stack,
+  LinearProgress,
+  TextField,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Slider,
+  InputAdornment,
+  Chip,
+} from '@mui/material';
+
+// Icons
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import PauseIcon from '@mui/icons-material/Pause';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import SkipNextIcon from '@mui/icons-material/SkipNext';
+import VolumeUpIcon from '@mui/icons-material/VolumeUp';
+import SettingsIcon from '@mui/icons-material/Settings';
+import MusicNoteIcon from '@mui/icons-material/MusicNote';
+import SearchIcon from '@mui/icons-material/Search';
+import TimerIcon from '@mui/icons-material/Timer';
+import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+
+import YouTube from 'react-youtube';
+
+const RADIO_STATIONS = [
+  { id: "jfKfPfyJRdk", name: "Lofi Girl Radio", desc: "Beats to relax/study to" },
+  { id: "4xDzrJKXOOY", name: "Synthwave Radio", desc: "Beats to chill/game to" },
+  { id: "DXHf0XJtqJw", name: "Quiet Rain", desc: "Nature sounds for focus" },
+  { id: "lTRiuFIWV54", name: "Classical Piano", desc: "Mozart for studying" },
+  { id: "5qap5aO4i9A", name: "Lofi Hip Hop", desc: "Chill beats mix" },
+  { id: "DWcJFNfaw9c", name: "Ambient Space", desc: "Deep focus atmosphere" },
+];
+
+const ALARM_SOUND_URL = "https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3";
+const PRESET_DURATIONS = [5, 10, 25, 30, 45, 60]; 
+
+function FocusSessionWidget(): React.JSX.Element {
+  
+  // States Dialog
+  const [openSettings, setOpenSettings] = useState(false);
+  const [openMusicSearch, setOpenMusicSearch] = useState(false);
+  const [openTimeUpDialog, setOpenTimeUpDialog] = useState(false);
+
+  // Timer States
+  const [focusDuration, setFocusDuration] = useState(25);
+  const [timeLeft, setTimeLeft] = useState(25 * 60); 
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
+  
+  // Audio Ref
+  const alarmAudio = useRef(new Audio(ALARM_SOUND_URL));
+
+  // --- LOGIKA SETTINGS ---
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    let val = parseInt(event.target.value, 10);
+    if (isNaN(val)) val = 0;
+    if (val > 180) val = 180; 
+    setFocusDuration(val);
+  };
+
+  const handleSliderChange = (_: Event, newValue: number | number[]) => {
+    setFocusDuration(newValue as number);
+  };
+
+  const applySettings = () => {
+    if (!isTimerRunning) {
+      setTimeLeft(focusDuration * 60);
+    }
+    setOpenSettings(false);
+  };
+
+  useEffect(() => {
+  let interval: ReturnType<typeof setInterval>;
+
+    if (isTimerRunning && timeLeft > 0) {
+      interval = setInterval(() => {
+        setTimeLeft((prev) => prev - 1);
+      }, 1000);
+    } 
+    else if (timeLeft === 0 && isTimerRunning) {
+      setIsTimerRunning(false);
+      triggerAlarm();
+    }
+    return () => clearInterval(interval);
+  }, [isTimerRunning, timeLeft]);
+
+  // --- LOGIKA ALARM ---
+  const triggerAlarm = () => {
+    alarmAudio.current.loop = true;
+    alarmAudio.current.play().catch(e => console.error("Audio play failed:", e));
+    setOpenTimeUpDialog(true);
+    if (Notification.permission === "granted") {
+      new Notification("⏰ Time's Up!", { body: "Focus session completed. Take a break!" });
+    }
+  };
+
+  const stopAlarmAndReset = () => {
+    alarmAudio.current.pause();
+    alarmAudio.current.currentTime = 0;
+    setOpenTimeUpDialog(false);
+    setTimeLeft(focusDuration * 60);
+  };
+
+  useEffect(() => {
+    if (Notification.permission !== "granted") Notification.requestPermission();
+  }, []);
+
+  const formatTime = (seconds: number) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  };
+
+  const handleResetTimer = () => {
+    setIsTimerRunning(false);
+    setTimeLeft(focusDuration * 60);
+  };
+
+  // --- LOGIKA MUSIC PLAYER ---
+  const [currentStationIndex, setCurrentStationIndex] = useState(0);
+  const [currentVideoId, setCurrentVideoId] = useState(RADIO_STATIONS[0].id);
+  const [currentInfo, setCurrentInfo] = useState({ name: RADIO_STATIONS[0].name, desc: RADIO_STATIONS[0].desc });
+  
+  const [inputVideoUrl, setInputVideoUrl] = useState('');
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [player, setPlayer] = useState<any>(null);
+
+  const onPlayerReady = (event: any) => setPlayer(event.target);
+
+  const toggleMusic = () => {
+    if (!player) return;
+    isPlaying ? player.pauseVideo() : player.playVideo();
+    setIsPlaying(!isPlaying);
+  };
+
+  const toggleTimer = () => {
+    if (!isTimerRunning) {
+      if (player && !isPlaying) {
+        player.playVideo();
+        setIsPlaying(true);
+      }
+    }
+    setIsTimerRunning(!isTimerRunning);
+  };
+
+  const handleSkip = () => {
+    const nextIndex = (currentStationIndex + 1) % RADIO_STATIONS.length;
+    const nextStation = RADIO_STATIONS[nextIndex];
+    setCurrentStationIndex(nextIndex);
+    setCurrentVideoId(nextStation.id);
+    setCurrentInfo({ name: nextStation.name, desc: nextStation.desc });
+    setIsPlaying(true);
+  };
+
+  const handleChangeMusic = () => {
+    let videoId = inputVideoUrl;
+    try {
+      const urlObj = new URL(inputVideoUrl);
+      if (urlObj.hostname.includes('youtube.com')) videoId = urlObj.searchParams.get('v') || videoId;
+      else if (urlObj.hostname.includes('youtu.be')) videoId = urlObj.pathname.slice(1) || videoId;
+    } catch (e) {}
+
+    if (videoId) {
+      setCurrentVideoId(videoId);
+      setCurrentInfo({ name: "Custom Video", desc: "Youtube Selection" });
+      setIsPlaying(true);
+      setOpenMusicSearch(false);
+      setInputVideoUrl('');
+    }
+  };
+
+  return (
+    <Paper
+      elevation={0}
+      sx={{
+        p: 3, 
+        borderRadius: '24px', 
+        bgcolor: '#1E293B', // Background sama dengan card lain
+        border: '1px solid #334155',
+        display: 'flex', 
+        flexDirection: 'column', // Force column layout untuk sidebar
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        gap: 3,
+        position: 'relative', 
+        overflow: 'hidden',
+        width: '100%'
+      }}
+    >
+      <Box sx={{ display: 'none' }}>
+        <YouTube key={currentVideoId} videoId={currentVideoId} opts={{ height: '0', width: '0', playerVars: { autoplay: isPlaying ? 1 : 0, controls: 0 } }} onReady={onPlayerReady} />
+      </Box>
+
+      {/* === TIMER SECTION === */}
+      <Box sx={{ width: '100%', textAlign: 'center' }}>
+        
+        {/* Header Widget */}
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1, mb: 1 }}>
+          <Typography variant="subtitle2" fontWeight="bold" sx={{ color: '#F97316', textTransform: 'uppercase', letterSpacing: 1 }}>
+            Focus Timer
+          </Typography>
+          {isTimerRunning && (
+            <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: '#EF4444', animation: 'pulse 1.5s infinite' }} />
+          )}
+          <IconButton size="small" onClick={() => setOpenSettings(true)} sx={{ color: '#64748B', p: 0.5 }}>
+            <SettingsIcon fontSize="small" />
+          </IconButton>
+        </Box>
+
+        {/* Big Timer */}
+        <Typography variant="h1" fontWeight="800" sx={{ color: 'white', letterSpacing: 2, fontSize: '3.5rem', lineHeight: 1 }}>
+          {formatTime(timeLeft)}
+        </Typography>
+
+        {/* Controls */}
+        <Stack direction="row" spacing={1} sx={{ mt: 3, justifyContent: 'center' }}>
+          <Button 
+            variant="contained" 
+            fullWidth
+            onClick={toggleTimer} 
+            startIcon={isTimerRunning ? <PauseIcon /> : <PlayArrowIcon />} 
+            sx={{ 
+              bgcolor: '#F97316', color: 'white', fontWeight: 'bold', 
+              borderRadius: '12px', py: 1, textTransform: 'none', 
+              boxShadow: '0 4px 14px 0 rgba(249, 115, 22, 0.39)',
+              '&:hover': { bgcolor: '#ea580c' } 
+            }}
+          >
+            {isTimerRunning ? 'Pause' : 'Start Focus'}
+          </Button>
+          
+          <IconButton 
+            onClick={handleResetTimer} 
+            sx={{ 
+              color: '#94A3B8', 
+              border: '1px solid #334155', 
+              borderRadius: '12px',
+              width: 42,
+              height: 42,
+              '&:hover': { bgcolor: '#334155', color: 'white' }
+            }}
+          >
+            <RefreshIcon fontSize="small" />
+          </IconButton>
+        </Stack>
+      </Box>
+
+      {/* === MUSIC PLAYER SECTION (COMPACT CARD) === */}
+      <Box 
+        sx={{ 
+          width: '100%', 
+          bgcolor: '#0F172A', // Darker background untuk membedakan area
+          p: 2, 
+          borderRadius: '16px', 
+          border: '1px solid #334155' 
+        }}
+      >
+        <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center', mb: 2 }}>
+          {/* Album Art / Icon */}
+          <Box sx={{ 
+            width: 48, height: 48, borderRadius: '10px', 
+            bgcolor: '#1E293B', display: 'flex', alignItems: 'center', 
+            justifyContent: 'center', overflow: 'hidden', flexShrink: 0 
+          }}>
+             {isPlaying ? 
+               <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExazF5ZHR0aDhmaDhmaDhmaDhmaDhmaDhmaDhmaDhmaDhmaC9lcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/XMaB779YcmP9m/giphy.gif" alt="playing" style={{ width: '100%', opacity: 0.8 }} /> 
+               : <VolumeUpIcon sx={{ color: '#64748B', fontSize: 20 }} />
+             }
+          </Box>
+          
+          {/* Info Text */}
+          <Box sx={{ flexGrow: 1, minWidth: 0 }}>
+            <Typography variant="body2" fontWeight="bold" sx={{ color: 'white', lineHeight: 1.2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+              {currentInfo.name}
+            </Typography>
+            <Typography variant="caption" sx={{ color: '#64748B', display: 'block', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+              {currentInfo.desc}
+            </Typography>
+          </Box>
+        </Box>
+
+        {/* Music Controls */}
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+           <IconButton 
+             onClick={toggleMusic} 
+             size="small"
+             sx={{ 
+               color: 'white', bgcolor: '#334155', 
+               '&:hover': { bgcolor: '#475569' }, 
+               width: 32, height: 32 
+             }}
+           >
+             {isPlaying ? <PauseIcon fontSize="small" /> : <PlayArrowIcon fontSize="small" />}
+           </IconButton>
+
+           <LinearProgress 
+             variant="determinate" 
+             value={isPlaying ? 100 : 0} 
+             sx={{ 
+               flexGrow: 1, height: 4, borderRadius: 2, 
+               bgcolor: '#1E293B', 
+               '& .MuiLinearProgress-bar': { bgcolor: '#10B981' } 
+             }} 
+           />
+           
+           <IconButton onClick={handleSkip} size="small" sx={{ color: '#94A3B8', '&:hover': { color: 'white' } }}>
+             <SkipNextIcon fontSize="small" />
+           </IconButton>
+        </Box>
+
+        {/* Search Toggle */}
+        <Button 
+          fullWidth
+          size="small"
+          onClick={() => setOpenMusicSearch(true)}
+          startIcon={<MusicNoteIcon fontSize="small" />}
+          sx={{ mt: 1.5, fontSize: '0.7rem', color: '#F97316', textTransform: 'none', py: 0.5, '&:hover': { color: '#64748B', bgcolor: 'transparent' } }}
+        >
+          Change Station
+        </Button>
+      </Box>
+
+      {/* === 1. MODAL WAKTU HABIS (ALARM) === */}
+      <Dialog 
+        open={openTimeUpDialog} 
+        onClose={() => {}} 
+        maxWidth="xs" 
+        fullWidth
+        PaperProps={{
+          sx: { 
+            borderRadius: '24px', 
+            bgcolor: '#1E293B', 
+            color: 'white',
+            textAlign: 'center',
+            p: 2,
+            border: '1px solid #F97316',
+            boxShadow: '0 0 50px rgba(249, 115, 22, 0.3)' 
+          }
+        }}
+      >
+        <DialogContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
+          <Box sx={{ animation: 'shake 0.5s infinite' }}>
+            <AccessAlarmIcon sx={{ fontSize: 80, color: '#F97316' }} />
+          </Box>
+          <Typography variant="h4" fontWeight="bold">Time's Up!</Typography>
+          <Typography variant="body1" sx={{ color: '#CBD5E1' }}>
+            Great job focusing! Take a short break now.
+          </Typography>
+        </DialogContent>
+        <DialogActions sx={{ justifyContent: 'center', pb: 3 }}>
+          <Button 
+            variant="contained" 
+            size="large" 
+            onClick={stopAlarmAndReset}
+            startIcon={<CheckCircleIcon />}
+            sx={{ 
+              bgcolor: '#F97316', color: 'white', fontWeight: 'bold', 
+              borderRadius: 50, px: 4,
+              '&:hover': { bgcolor: '#ea580c' } 
+            }}
+          >
+            Stop Alarm
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* === 2. MODAL SETTINGS === */}
+      <Dialog open={openSettings} onClose={() => setOpenSettings(false)} maxWidth="xs" fullWidth PaperProps={{ sx: { borderRadius: '24px', bgcolor: '#1E293B', color: 'white', border: '1px solid #334155' } }}>
+        <DialogTitle sx={{ textAlign: 'center', pt: 3, pb: 1 }}>
+          <Typography variant="h6" fontWeight="bold" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
+            <TimerIcon sx={{ color: '#F97316' }} /> Set Duration
+          </Typography>
+        </DialogTitle>
+        <DialogContent sx={{ textAlign: 'center', pb: 4 }}>
+          <Box sx={{ my: 4, position: 'relative', display: 'inline-block' }}>
+            <TextField variant="standard" type="number" value={focusDuration} onChange={handleInputChange} inputProps={{ min: 1, max: 180, style: { textAlign: 'center', fontSize: '3.5rem', fontWeight: '800', color: 'white', padding: 0 } }} sx={{ width: '120px', '& .MuiInput-underline:before': { borderBottom: 'none' }, '& .MuiInput-underline:after': { borderBottom: 'none' }, '& .MuiInput-underline:hover:not(.Mui-disabled):before': { borderBottom: 'none' } }} />
+            <Typography variant="subtitle1" sx={{ color: '#94A3B8', position: 'absolute', bottom: 10, right: -40, fontWeight: 'bold' }}>min</Typography>
+          </Box>
+          <Box sx={{ px: 2, mb: 4 }}>
+            <Slider value={typeof focusDuration === 'number' ? focusDuration : 0} onChange={handleSliderChange} min={5} max={120} step={1} sx={{ color: '#F97316', height: 6, '& .MuiSlider-thumb': { width: 20, height: 20, bgcolor: 'white', border: '4px solid #F97316' }, '& .MuiSlider-rail': { bgcolor: '#334155', opacity: 1 } }} />
+          </Box>
+          <Typography variant="caption" sx={{ color: '#64748B', mb: 1.5, display: 'block', textTransform: 'uppercase', letterSpacing: 1, fontWeight: 'bold' }}>Quick Presets</Typography>
+          <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1, flexWrap: 'wrap' }}>
+            {PRESET_DURATIONS.map((preset) => (
+              <Chip key={preset} label={`${preset}m`} onClick={() => setFocusDuration(preset)} sx={{ bgcolor: focusDuration === preset ? '#F97316' : '#334155', color: focusDuration === preset ? 'white' : '#94A3B8', fontWeight: 'bold', border: 'none', '&:hover': { bgcolor: focusDuration === preset ? '#ea580c' : '#475569' } }} />
+            ))}
+          </Box>
+        </DialogContent>
+        <DialogActions sx={{ justifyContent: 'center', pb: 3, px: 3 }}>
+          <Button onClick={applySettings} fullWidth variant="contained" size="large" sx={{ bgcolor: '#F97316', color: 'white', fontWeight: 'bold', borderRadius: '10px', px: 4, py: 1, textTransform: 'none', '&:hover': { bgcolor: '#ea580c' } }}>Start Focus</Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* === 3. MODAL MUSIC SEARCH === */}
+      <Dialog open={openMusicSearch} onClose={() => setOpenMusicSearch(false)} maxWidth="sm" fullWidth PaperProps={{ sx: { borderRadius: '16px' } }}>
+        <DialogTitle fontWeight="bold">Change Background Music</DialogTitle>
+        <DialogContent>
+          <TextField autoFocus margin="dense" label="YouTube URL / ID" placeholder="e.g. jfKfPfyJRdk" fullWidth variant="outlined" value={inputVideoUrl} onChange={(e) => setInputVideoUrl(e.target.value)} InputProps={{ startAdornment: <InputAdornment position="start"><SearchIcon /></InputAdornment> }} />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenMusicSearch(false)}>Cancel</Button>
+          <Button onClick={handleChangeMusic} variant="contained" sx={{color:'white'}}>Play</Button>
+        </DialogActions>
+      </Dialog>
+
+      <style>{`
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); } 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
+        @keyframes shake { 0% { transform: rotate(0deg); } 25% { transform: rotate(-10deg); } 50% { transform: rotate(10deg); } 75% { transform: rotate(-10deg); } 100% { transform: rotate(0deg); } }
+      `}</style>
+    </Paper>
+  );
+}
+
+export default FocusSessionWidget;
