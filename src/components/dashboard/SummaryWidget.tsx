@@ -26,23 +26,23 @@ function SummaryWidget(): React.JSX.Element {
         p: 3,
         borderRadius: 3,
         boxShadow: '0 4px 18px rgba(0,0,0,0.25)',
-        bgcolor: '#1E293B',
+        bgcolor: 'background.paper',
       }}
     >
       <Typography
         variant="h6"
-        sx={{ mb: 1, fontWeight: 600, color: '#F8FAFC' }}
+        sx={{ mb: 1, fontWeight: 600, color: 'text.primary' }}
       >
         Daily Quiz
       </Typography>
 
       {isDone ? (
         <Box sx={{ textAlign: 'center', py: 2 }}>
-          <CheckCircleOutlineIcon sx={{ fontSize: 48, color: '#22C55E', mb: 1 }} />
-          <Typography variant="body1" fontWeight="bold" sx={{ color: '#22C55E' }}>
+          <CheckCircleOutlineIcon sx={{ fontSize: 48, color: 'success.main', mb: 1 }} />
+          <Typography variant="body1" fontWeight="bold" sx={{ color: 'success.main' }}>
             All Done for Today!
           </Typography>
-          <Typography variant="body2" sx={{ color: '#94A3B8', mt: 1 }}>
+          <Typography variant="body2" sx={{ color: 'text.secondary', mt: 1 }}>
             You've kept your streak alive. Come back tomorrow for a new challenge.
           </Typography>
         </Box>
@@ -50,7 +50,7 @@ function SummaryWidget(): React.JSX.Element {
         <>
           <Typography
             variant="body2"
-            sx={{ color: '#94A3B8', mb: 3, lineHeight: 1.5 }}
+            sx={{ color: 'text.secondary', mb: 3, lineHeight: 1.5 }}
           >
             Test your knowledge and keep your streak going! Don't break the chain.
           </Typography>
@@ -65,10 +65,10 @@ function SummaryWidget(): React.JSX.Element {
               py: 1.2,
               borderRadius: 2,
               fontSize: '0.95rem',
-              backgroundColor: '#F97316',
+              backgroundColor: 'primary.main',
               color: 'white',
               '&:hover': {
-                backgroundColor: '#ea5e05',
+                backgroundColor: 'primary.dark',
               },
             }}
           >
