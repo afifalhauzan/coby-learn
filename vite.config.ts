@@ -29,10 +29,11 @@ export default defineConfig({
   ],
   server: {
     proxy: {
-      '/api': {
-        target: 'https://distinguished-dusty-mohamadarif346-d2688a41.koyeb.app', 
-        changeOrigin: true, 
-        secure: false, 
+      // Matches the relative path in your axios config
+      '/api/v1': {
+        target: 'https://distinguished-dusty-mohamadarif346-d2688a41.koyeb.app',
+        changeOrigin: true,
+        secure: false,
       }
     }
   }

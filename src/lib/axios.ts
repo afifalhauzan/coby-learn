@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://distinguished-dusty-mohamadarif346-d2688a41.koyeb.app/api/v1';
+// export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://distinguished-dusty-mohamadarif346-d2688a41.koyeb.app/api/v1';
+
+export const API_BASE_URL = '/api/v1';
 
 console.log('API Base URL:', API_BASE_URL);
 
