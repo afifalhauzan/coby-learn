@@ -259,7 +259,7 @@ function Navbar(): React.JSX.Element {
                       primary={item.text}
                       primaryTypographyProps={{
                         fontWeight: active ? 700 : 500,
-                        color: active ? 'secondary.main' : 'text.secondary',
+                        color: active ? 'primary.main' : 'text.primary',
                       }}
                     />
                   </ListItemButton>
