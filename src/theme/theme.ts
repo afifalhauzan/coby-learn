@@ -16,6 +16,11 @@ export const theme = createTheme({
       paper: '#FFFFFF',    // Pure white for paper surfaces
     },
 
+    grey: {
+      300: '#C1C1C1', // Light grey for borders and dividers
+      500: '#9E9E9E', // Medium grey for disabled elements
+    },
+
     text: {
       primary: '#1E293B',   // Deep Slate for accessibility
       secondary: '#64748B', // Slate 500 for secondary text

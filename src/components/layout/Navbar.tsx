@@ -18,8 +18,19 @@ import {
   useTheme,
   Menu,
   MenuItem,
+  BottomNavigation,
+  BottomNavigationAction,
+  Paper,
 } from '@mui/material';
-import { Menu as MenuIcon, Logout, Person3Outlined } from '@mui/icons-material';
+import { 
+  Menu as MenuIcon, 
+  Logout, 
+  Person3Outlined, 
+  Home, 
+  MenuBook, 
+  Assignment, 
+  TrendingUp 
+} from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import logo from '../../assets/logo.png';
@@ -28,10 +39,10 @@ import { getDailyQuizStatus } from '../../services/apiLibraryService';
 
 // Daftar menu agar mudah diedit di satu tempat
 const MENU_ITEMS = [
-  { text: 'Dashboard', path: '/dashboard' },
-  { text: 'My Library', path: '/library' },
-  { text: 'My Tasks', path: '/tasks' },
-  { text: 'Progress', path: '/progress' },
+  { text: 'Dashboard', path: '/dashboard', icon: Home },
+  { text: 'My Library', path: '/library', icon: MenuBook },
+  { text: 'My Tasks', path: '/tasks', icon: Assignment },
+  { text: 'Progress', path: '/progress', icon: TrendingUp },
 ];
 
 function Navbar(): React.JSX.Element {
@@ -200,79 +211,83 @@ function Navbar(): React.JSX.Element {
                 </MenuItem>
               </Menu>
 
-              {/* Mobile Menu Toggle */}
-              {isMobile && (
-                <IconButton onClick={toggleDrawer(true)} edge="end" sx={{ ml: 0.5 }}>
-                  <MenuIcon sx={{ color: 'text.primary', fontSize: 28 }} />
-                </IconButton>
-              )}
             </Box>
 
           </Toolbar>
         </Container>
       </AppBar>
 
-      {/* MOBILE DRAWER */}
-      <Drawer
-        anchor="right"
-        open={open}
-        onClose={toggleDrawer(false)}
-        PaperProps={{
-          sx: {
-            backgroundColor: 'background.paper',
-            color: 'text.primary',
-            width: 280,
-            borderLeft: '1px solid',
-            borderColor: 'divider'
-          },
-        }}
-      >
-        <Box sx={{ p: 3, display: 'flex', flexDirection: 'column', height: '100%' }}>
-
-          {/* Drawer Header */}
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 4 }}>
-            <img src={logo} alt="logo" style={{ width: '40px' }} />
-            <Typography variant="h6" fontWeight="bold">Menu</Typography>
-          </Box>
-
-          {/* Menu List */}
-          <List sx={{ flexGrow: 1 }}>
+      {/* MOBILE BOTTOM NAVIGATION */}
+      {isMobile && (
+        <Paper 
+          sx={{ 
+            position: 'fixed', 
+            bottom: 0, 
+            left: 0, 
+            right: 0, 
+            zIndex: 1000,
+            borderTop: '1px solid',
+            borderColor: 'divider',
+          }} 
+          elevation={3}
+        >
+          <BottomNavigation
+            value={location.pathname}
+            onChange={(event, newValue) => {
+              navigate(newValue);
+            }}
+            showLabels
+            sx={{
+              backgroundColor: 'background.paper',
+              '& .MuiBottomNavigationAction-root': {
+                minWidth: 'auto',
+                maxWidth: 'none',
+                flex: 1,
+                padding: '4px 10px',
+                position: 'relative',
+                '&.Mui-selected': {
+                  color: 'primary.main',
+                  '&::before': {
+                    content: '""',
+                    position: 'absolute',
+                    top: 0,
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    width: '50px',
+                    height: '3px',
+                    backgroundColor: 'primary.main',
+                    borderRadius: '0 0 2px 2px',
+                    boxShadow: '0 2px 4px rgba(74, 144, 226, 0.3)',
+                  },
+                },
+                '&:not(.Mui-selected)': {
+                  color: 'grey.300',
+                },
+              },
+              '& .MuiBottomNavigationAction-label': {
+                fontSize: '0.75rem',
+                fontWeight: 300,
+                '&.Mui-selected': {
+                  fontSize: '0.75rem',
+                  fontWeight: 500,
+                },
+              },
+            }}
+          >
             {MENU_ITEMS.map((item) => {
-              const active = isActive(item.path);
+              const IconComponent = item.icon;
               return (
-                <ListItem key={item.text} disablePadding sx={{ mb: 1 }}>
-                  <ListItemButton
-                    onClick={() => {
-                      navigate(item.path);
-                      setOpen(false);
-                    }}
-                    sx={{
-                      borderRadius: 2,
-                      backgroundColor: active ? 'action.selected' : 'transparent',
-                      '&:hover': { backgroundColor: 'action.hover' }
-                    }}
-                  >
-                    <ListItemText
-                      primary={item.text}
-                      primaryTypographyProps={{
-                        fontWeight: active ? 700 : 500,
-                        color: active ? 'primary.main' : 'text.primary',
-                      }}
-                    />
-                  </ListItemButton>
-                </ListItem>
+                <BottomNavigationAction
+                  key={item.path}
+                  label={item.text}
+                  value={item.path}
+                  icon={<IconComponent />}
+                />
               );
             })}
-          </List>
-
-          {/* Drawer Footer (Optional: Logout) */}
-          <Box sx={{ mt: 'auto', pt: 2, borderTop: '1px solid', borderColor: 'divider' }}>
-            <Button fullWidth variant="outlined" color="error" size="small">
-              Log Out
-            </Button>
-          </Box>
-        </Box>
-      </Drawer>
+          </BottomNavigation>
+        </Paper>
+      )}
     </>
   );
 }
