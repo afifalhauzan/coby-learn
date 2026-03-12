@@ -17,7 +17,7 @@ function Header({ username }: HeaderProps): React.JSX.Element {
         sx={{
           color: 'text.primary',
           mb: 0.5,
-          fontWeight: 500,
+          fontWeight: 600,
           // Responsive font size mapping
           fontSize: {
             xs: '1.5rem', // h4-ish

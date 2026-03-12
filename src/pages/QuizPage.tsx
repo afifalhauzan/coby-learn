@@ -155,7 +155,7 @@ function QuizPage(): React.JSX.Element {
         </Button>
       )}
 
-      <Paper sx={{ p: { xs: 2, md: 4 }, borderRadius: '16px', border: '1px solid', borderColor: 'divider' }}>
+      <Paper sx={{ p: { xs: 2, md: 4 }, border: '1px solid', borderColor: 'divider' }}>
 
         {/* TAMPILAN SAAT LOADING SUBMIT */}
         {submitMutation.isPending ? (
@@ -235,7 +235,7 @@ function QuizPage(): React.JSX.Element {
                 variant="contained"
                 onClick={isReviewMode ? handleReviewNext : handleNextQuestion}
                 disabled={!isReviewMode && !selectedKey}
-                sx={{ textTransform: 'none', bgcolor: '#F97316', color: 'white', px: 4, py: 1, fontWeight: 'bold', '&:hover': { bgcolor: '#ea580c' } }}
+                sx={{ textTransform: 'none', bgcolor: 'primary.main', color: 'white', px: 4, py: 1, fontWeight: 'bold', '&:hover': { bgcolor: 'primary.dark' } }}
               >
                 {currentQuestionIndex < totalQuestions - 1 ? 'Next Question' : (isReviewMode ? 'Finish Review' : 'Submit Quiz')}
               </Button>
@@ -292,7 +292,7 @@ function QuizPage(): React.JSX.Element {
                   setShowResults(false);
                   setCurrentQuestionIndex(0);
                 }}
-                sx={{ textTransform: 'none', bgcolor: '#F97316', color: 'white', px: 4, '&:hover': { bgcolor: '#ea580c' } }}
+                sx={{ textTransform: 'none', bgcolor: 'primary.main', color: 'white', px: 4, '&:hover': { bgcolor: 'primary.dark' } }}
               >
                 Review Answers
               </Button>

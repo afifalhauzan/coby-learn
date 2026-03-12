@@ -407,7 +407,7 @@ function MaterialDetailPage(): React.JSX.Element {
                   </Paper>
                 ))
               ) : (
-                <Paper sx={{ p: 4, textAlign: 'center', bgcolor: 'background.paper', borderRadius: '16px', border: '1px dashed', borderColor: 'divider' }}>
+                <Paper sx={{ p: 4, textAlign: 'center', bgcolor: 'background.paper', border: '1px dashed', borderColor: 'divider' }}>
                   <Typography color="text.secondary">Belum ada riwayat kuis.</Typography>
                 </Paper>
               )}

@@ -30,9 +30,9 @@ function GenerateQuizDialog({ open, onClose, onSubmit, isLoading }: GenerateQuiz
   };
 
   return (
-    <Dialog open={open} onClose={onClose} fullWidth maxWidth="xs" PaperProps={{ sx: { borderRadius: 3 } }}>
+    <Dialog open={open} onClose={onClose} fullWidth maxWidth="xs">
       <DialogTitle sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-        <AutoAwesomeIcon sx={{ color: '#F97316' }} />
+        <AutoAwesomeIcon sx={{ color: 'primary.main' }} />
         <Typography variant="h6" fontWeight="bold">Generate AI Quiz</Typography>
       </DialogTitle>
       
@@ -64,7 +64,7 @@ function GenerateQuizDialog({ open, onClose, onSubmit, isLoading }: GenerateQuiz
           sx={{ 
             bgcolor: '#F97316', 
             color: 'white',
-            '&:hover': { bgcolor: '#ea580c' }
+            '&:hover': { bgcolor: 'primary.dark' }
           }}
         >
           {isLoading ? 'Generating...' : 'Start Generation'}

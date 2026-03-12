@@ -66,7 +66,6 @@ function FolderDialog({ open, onClose, onSave, initialData }: FolderDialogProps)
       onClose={onClose}
       maxWidth="xs"
       fullWidth
-      PaperProps={{ sx: { borderRadius: '16px' } }}
     >
       <DialogTitle sx={{ m: 0, p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Typography variant="h6" component="div" fontWeight="bold">

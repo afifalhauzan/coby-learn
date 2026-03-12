@@ -241,7 +241,7 @@ function CalendarView({ tasks, onAddTask, onEditTask }: CalendarViewProps): Reac
 
       {/* AREA 1: KALENDER (KIRI / ATAS) */}
       <Box sx={{ minWidth: 0 }}>
-        <Paper elevation={0} sx={{ p: { xs: 1.5, md: 3 }, borderRadius: 4, border: '1px solid', borderColor: 'divider' }}>
+        <Paper elevation={0} sx={{ p: { xs: 1.5, md: 3 }, border: '1px solid', borderColor: 'divider' }}>
           {renderHeader()}
           {renderDays()}
           {renderCells()}
@@ -253,7 +253,7 @@ function CalendarView({ tasks, onAddTask, onEditTask }: CalendarViewProps): Reac
         <Paper
           elevation={0}
           sx={{
-            p: { xs: 2, md: 3 }, borderRadius: 4, border: '1px solid', borderColor: 'divider',
+            p: { xs: 2, md: 3 }, border: '1px solid', borderColor: 'divider',
             height: '100%',
             minHeight: { xs: 'auto', md: 500 },
             display: 'flex', flexDirection: 'column'
@@ -278,7 +278,7 @@ function CalendarView({ tasks, onAddTask, onEditTask }: CalendarViewProps): Reac
                   onClick={() => onEditTask(task)}
                   elevation={0}
                   sx={{
-                    p: 2, borderRadius: 3, bgcolor: 'background.default', border: '1px solid', borderColor: 'divider',
+                    p: 2, bgcolor: 'background.default', border: '1px solid', borderColor: 'divider',
                     cursor: 'pointer', transition: '0.2s',
                     '&:hover': { transform: 'translateY(-2px)', borderColor: 'primary.main', boxShadow: 2 }
                   }}
@@ -294,8 +294,8 @@ function CalendarView({ tasks, onAddTask, onEditTask }: CalendarViewProps): Reac
               ))
             )}
           </Box>
-          <Button variant="contained" fullWidth startIcon={<Add />} onClick={onAddTask} sx={{ mt: 3, borderRadius: 3, textTransform: 'none', py: 1.5, fontWeight: 'bold', color: 'white', bgcolor: '#F97316', boxShadow: 'none' }}>
-            Add New Task
+          <Button variant="contained" fullWidth startIcon={<Add />} onClick={onAddTask} sx={{ mt: 3, borderRadius: 3, textTransform: 'none', py: 1.5 }}>
+            Add New Task for {format(selectedDate, 'MMM d')}
           </Button>
         </Paper>
       </Box>

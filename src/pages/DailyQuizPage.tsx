@@ -196,7 +196,7 @@ function DailyQuizPage(): React.JSX.Element {
       <Container maxWidth="sm" sx={{ textAlign: 'center', mt: 8 }}>
         {(isCompleted) && <Confetti width={window.innerWidth} height={window.innerHeight} recycle={false} numberOfPieces={300} />}
 
-        <Paper sx={{ p: 6, borderRadius: 4, textAlign: 'center' }}>
+        <Paper sx={{ p: 6, textAlign: 'center' }}>
           <LocalFireDepartmentIcon sx={{ fontSize: 80, color: '#F97316', mb: 2 }} />
           <Typography variant="h4" fontWeight="bold" gutterBottom>
             Streak Saved!
@@ -424,7 +424,7 @@ function DailyQuizPage(): React.JSX.Element {
         Quit
       </Button>
 
-      <Paper sx={{ p: { xs: 2, md: 6 }, borderRadius: 2, boxShadow: 4 }}>
+      <Paper sx={{ p: { xs: 2, md: 6 }, boxShadow: 4 }}>
         {/* Progress */}
         <Box sx={{ mb: 4 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
@@ -459,8 +459,8 @@ function DailyQuizPage(): React.JSX.Element {
                 size="large"
                 onClick={handleNext}
                 sx={{
-                  bgcolor: '#F97316', color: 'white', px: 4, borderRadius: '12px', fontWeight: 'bold',
-                  '&:hover': { bgcolor: '#ea580c' }
+                  bgcolor: 'primary.secondary', color: 'white', px: 4, borderRadius: '12px', fontWeight: 'bold',
+                  '&:hover': { bgcolor: 'primary.main' }
                 }}
               >
                 {currentIdx === totalQ - 1 ? (claimMutation.isPending ? 'Claiming...' : 'Finish & Claim') : 'Next Question'}

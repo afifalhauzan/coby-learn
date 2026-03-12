@@ -41,7 +41,6 @@ const DeleteConfirmDialog: React.FC<DeleteConfirmDialogProps> = ({
       onClose={onClose}
       PaperProps={{
         sx: {
-          borderRadius: 4,
           padding: 2,
           minWidth: 320,
           maxWidth: 400,

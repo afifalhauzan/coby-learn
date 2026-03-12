@@ -299,7 +299,7 @@ function FileUploadDialog({ open, onClose, onSubmit, isLoading }: FileUploadDial
                     <Typography variant="caption" color="text.secondary">Supported formats: .pdf (Max 10MB)</Typography>
                   </Box>
                 ) : (
-                  <Paper variant="outlined" sx={{ p: 2, borderRadius: 3, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <Paper variant="outlined" sx={{ p: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                       <Box sx={{ p: 1, borderRadius: 2, bgcolor: 'error.lighter', color: 'error.main' }}>
                         <CloudUploadOutlinedIcon />

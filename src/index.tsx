@@ -6,6 +6,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { theme } from './theme/theme';
 import App from './App';
 
+
 const container = document.getElementById('root');
 
 if (container) {

@@ -154,7 +154,10 @@ function TasksPage(): React.JSX.Element {
 
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3, flexWrap: 'wrap', gap: 2 }}>
         <Box>
-          <Typography variant="h4" gutterBottom fontWeight="bold">My Tasks</Typography>
+          <Typography variant="h4" gutterBottom>My Tasks</Typography>
+          <Typography variant="subtitle1" color="text.secondary" sx={{ mb: 4 }}>
+            Organize your study materials neatly and efficiently.
+          </Typography>
           <Tabs
             value={viewMode}
             onChange={(_, val) => setViewMode(val)}
@@ -172,7 +175,7 @@ function TasksPage(): React.JSX.Element {
           variant="contained"
           color="primary"
           startIcon={<AddIcon />}
-          sx={{ textTransform: 'none', color: 'white', height: 40, borderRadius: 2, px: 3 }}
+          sx={{ textTransform: 'none', color: 'white', height: 40, px: 3 }}
           onClick={handleOpenCreate}
         >
           Add Task
@@ -214,7 +217,7 @@ function TasksPage(): React.JSX.Element {
             ) : isError ? (
               <Alert severity="error">Error loading tasks</Alert>
             ) : showEmptyState ? (
-              <Paper sx={{ p: 6, textAlign: 'center', border: '2px dashed', borderColor: 'divider', bgcolor: 'transparent', borderRadius: 4 }}>
+              <Paper sx={{ p: 6, textAlign: 'center', border: '2px dashed', borderColor: 'divider', bgcolor: 'transparent' }}>
                 <Typography color="text.secondary">No tasks available.</Typography>
 
               </Paper>

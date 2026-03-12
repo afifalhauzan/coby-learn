@@ -12,7 +12,7 @@ function FocusSessionWidget(): React.JSX.Element {
 
   if (isLoading) {
     return (
-      <Paper sx={{ p: 2, borderRadius: 2, height: '100%', bgcolor: 'background.paper' }}>
+      <Paper sx={{ p: 2, height: '100%', bgcolor: 'background.paper' }}>
         <Skeleton width="70%" height={24} sx={{ mb: 1 }} />
         <Skeleton width="50%" height={20} sx={{ mb: 2 }} />
         <Box sx={{ display: 'flex', gap: 1 }}>

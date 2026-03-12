@@ -34,7 +34,7 @@ function LibraryPage(): React.JSX.Element {
   const [openDialog, setOpenDialog] = useState(false);
   const [openFileDialog, setOpenFileDialog] = useState(false);
   const [editingFolder, setEditingFolder] = useState<Folder | null>(null);
-  
+
   // State for Delete Dialog
   const [deleteFolderId, setDeleteFolderId] = useState<number | null>(null);
 
@@ -128,7 +128,7 @@ function LibraryPage(): React.JSX.Element {
   return (
     <Box sx={{ width: '100%' }}>
       {/* Page Header */}
-      <Typography variant="h4" fontWeight="bold" gutterBottom>
+      <Typography variant="h4" gutterBottom>
         My Library
       </Typography>
 
@@ -147,7 +147,6 @@ function LibraryPage(): React.JSX.Element {
           }}
           sx={{
             textTransform: 'none',
-            borderRadius: '10px',
             px: 3,
             py: 1.2,
             fontWeight: 600,
@@ -165,7 +164,7 @@ function LibraryPage(): React.JSX.Element {
         sx={{
           display: 'grid',
           // Responsive Grid: 1 column on mobile, adaptive columns on desktop
-          gridTemplateColumns: { xs: '1fr', sm: 'repeat(auto-fill, minmax(280px, 1fr))' }, 
+          gridTemplateColumns: { xs: '1fr', sm: 'repeat(auto-fill, minmax(280px, 1fr))' },
           gap: 2.5,
         }}
       >
@@ -175,7 +174,6 @@ function LibraryPage(): React.JSX.Element {
             sx={{
               gridColumn: '1 / -1', // Span full width
               p: 8,
-              borderRadius: 4,
               border: '2px dashed',
               borderColor: 'divider',
               textAlign: 'center',
@@ -197,11 +195,10 @@ function LibraryPage(): React.JSX.Element {
               elevation={0}
               onClick={() => navigate(`/library/${folder.id}`)}
               sx={{
-                p: 2.5,
+                p: 3,
                 display: 'flex',
                 alignItems: 'center',
                 gap: 2,
-                borderRadius: 4,
                 border: '1px solid',
                 borderColor: 'divider',
                 transition: 'all 0.2s ease-in-out',
@@ -209,25 +206,28 @@ function LibraryPage(): React.JSX.Element {
                 bgcolor: 'background.paper',
                 position: 'relative',
                 overflow: 'hidden',
+                boxShadow: 'shadows[1]',
                 '&:hover': {
-                  transform: 'translateY(-4px)',
+                  transform: 'translateY(-3px)',
                   boxShadow: '0 12px 24px rgba(0,0,0,0.06)',
                   borderColor: 'primary.main',
-                  '& .folder-actions': { opacity: 1 } // Show actions on hover
+                  '& .folder-actions': { opacity: 0.6 } // Show actions on hover
                 },
               }}
             >
-              {/* Icon */}
-              <Box 
-                sx={{ 
-                  width: 56, 
-                  height: 56, 
-                  borderRadius: 3, 
-                  bgcolor: `${folder.iconColor}15`, // Transparan version of color
-                  display: 'flex', 
-                  alignItems: 'center', 
+              <Box
+                sx={{
+                  width: 50,
+                  height: 50,
+                  minWidth: 50, // Prevents shrinking below this
+                  minHeight: 50,
+                  flexShrink: 0, // CRITICAL: Tells Flexbox "Do not squeeze me"
+                  borderRadius: 3,
+                  bgcolor: `${folder.iconColor}15`,
+                  display: 'flex',
+                  alignItems: 'center',
                   justifyContent: 'center',
-                  color: folder.iconColor 
+                  color: folder.iconColor
                 }}
               >
                 <FolderOutlinedIcon sx={{ fontSize: 32 }} />
@@ -236,13 +236,11 @@ function LibraryPage(): React.JSX.Element {
               {/* Text Info */}
               <Box sx={{ flexGrow: 1, minWidth: 0 }}>
                 <Typography
-                  variant="h6"
-                  fontWeight="bold"
+                  variant="h5"
                   sx={{
                     whiteSpace: 'nowrap',
                     overflow: 'hidden',
                     textOverflow: 'ellipsis',
-                    fontSize: '1rem',
                     mb: 0.5
                   }}
                 >
@@ -253,10 +251,10 @@ function LibraryPage(): React.JSX.Element {
                   variant="caption"
                   color="text.secondary"
                   fontWeight="500"
-                  sx={{ 
-                    bgcolor: 'action.hover', 
-                    px: 1, py: 0.5, 
-                    borderRadius: 1 
+                  sx={{
+                    bgcolor: 'action.hover',
+                    px: 1, py: 0.5,
+                    borderRadius: 1
                   }}
                 >
                   {folder.material_count} items
@@ -264,11 +262,11 @@ function LibraryPage(): React.JSX.Element {
               </Box>
 
               {/* Action Buttons (Edit/Delete) */}
-              <Box 
+              <Box
                 className="folder-actions"
-                sx={{ 
-                  display: 'flex', 
-                  flexDirection: 'column', 
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
                   opacity: { xs: 1, md: 0 }, // Always visible on mobile, hover on desktop
                   transition: '0.2s'
                 }}
@@ -301,14 +299,14 @@ function LibraryPage(): React.JSX.Element {
         )}
       </Box>
 
-      
+
       <FolderDialog
         open={openDialog}
         onClose={handleCloseDialog}
         onSave={handleSaveDialog}
         initialData={editingFolder}
       />
-      
+
       <FileUploadDialog
         open={openFileDialog}
         onClose={() => setOpenFileDialog(false)}
@@ -318,7 +316,7 @@ function LibraryPage(): React.JSX.Element {
         }}
       />
 
-      <DeleteConfirmDialog 
+      <DeleteConfirmDialog
         open={!!deleteFolderId}
         onClose={() => setDeleteFolderId(null)}
         onConfirm={handleConfirmDelete}

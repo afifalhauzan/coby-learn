@@ -12,7 +12,7 @@ import {
   Alert,
   Chip
 } from '@mui/material';
-import { Add } from '@mui/icons-material';
+import { Add, Task as TaskICon } from '@mui/icons-material';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 // Import Service & Types
@@ -123,7 +123,7 @@ function TasksWidget(): React.JSX.Element {
           <Skeleton variant="text" width={120} height={32} />
           <Skeleton variant="rounded" width={80} height={32} />
         </Box>
-        <Paper sx={{ p: 3, height: 'calc(100% - 60px)', bgcolor: 'background.paper', borderRadius: 4 }}>
+        <Paper sx={{ p: 3, height: 'calc(100% - 60px)', bgcolor: 'background.paper' }}>
           <Skeleton variant="rounded" height={50} sx={{ mb: 1 }} />
           <Skeleton variant="rounded" height={50} sx={{ mb: 1 }} />
           <Skeleton variant="rounded" height={50} />
@@ -140,7 +140,7 @@ function TasksWidget(): React.JSX.Element {
             Today's Tasks
           </Typography>
         </Box>
-        <Paper sx={{ p: 3, height: 'calc(100% - 60px)', borderRadius: 4 }}>
+        <Paper sx={{ p: 3, height: 'calc(100% - 60px)' }}>
           <Alert severity="error">Gagal memuat tugas hari ini.</Alert>
         </Paper>
       </Box>
@@ -172,8 +172,24 @@ function TasksWidget(): React.JSX.Element {
       <Paper sx={{ p: 3, elevation: 1, bgcolor: 'background.paper', height: 'calc(100% - 60px)' }}>
         {/* List Tasks */}
         {isEmpty ? (
-          <Box sx={{ textAlign: 'center', py: 4, color: 'text.secondary' }}>
-            <Typography variant="body2">No tasks for today.</Typography>
+          <Box sx={{ textAlign: 'center', py: 4, color: 'text.secondary', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <Box
+              sx={{
+                width: 64,
+                height: 64,
+                borderRadius: '50%',
+                bgcolor: 'grey.100',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                mb: 2
+              }}
+            >
+              <TaskICon sx={{ fontSize: 32, color: 'action.disabled' }} />
+            </Box>
+            <Typography variant="body1" sx={{ color: 'text.primary' }}>
+              No tasks for today.
+            </Typography>
             <Typography variant="caption">Enjoy your free time!</Typography>
           </Box>
         ) : (

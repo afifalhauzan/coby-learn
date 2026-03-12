@@ -68,7 +68,7 @@ function ProjectPage(): React.JSX.Element {
       <Box sx={{ display: 'grid', gridTemplateColumns: { xs: '1fr', lg: '7fr 5fr' }, gap: 3 }}>
 
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-          <Paper sx={{ p: 3, borderRadius: '12px', border: '1px solid', borderColor: 'divider' }}>
+          <Paper sx={{ p: 3, border: '1px solid', borderColor: 'divider' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
               <Typography variant="h6" fontWeight="bold">AI Summary</Typography>
               <IconButton size="small" title="Copy summary">
@@ -82,7 +82,7 @@ function ProjectPage(): React.JSX.Element {
         </Box>
 
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-          <Paper sx={{ p: 3, borderRadius: '12px', border: '1px solid', borderColor: 'divider' }}>
+          <Paper sx={{ p: 3, border: '1px solid', borderColor: 'divider' }}>
             <Typography variant="h6" fontWeight="bold" sx={{ mb: 2 }}>Test Your Knowledge</Typography>
 
             <FormControl fullWidth sx={{ mb: 2 }}>
@@ -112,7 +112,7 @@ function ProjectPage(): React.JSX.Element {
             </Button>
           </Paper>
 
-          <Paper sx={{ p: 3, borderRadius: '12px', border: '1px solid', borderColor: 'divider', display: 'flex', flexDirection: 'column' }}>
+          <Paper sx={{ p: 3, border: '1px solid', borderColor: 'divider', display: 'flex', flexDirection: 'column' }}>
             <Typography variant="h6" fontWeight="bold" sx={{ mb: 2 }}>My Notes</Typography>
             <TextField
               multiline

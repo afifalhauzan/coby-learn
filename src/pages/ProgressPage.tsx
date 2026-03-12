@@ -70,7 +70,7 @@ function ProgressPage(): React.JSX.Element {
     <Box>
       {/* Header */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3, flexWrap: 'wrap', gap: 2 }}>
-        <Typography variant="h4" fontWeight="bold">
+        <Typography variant="h4">
           My Progress
         </Typography>
 
@@ -130,7 +130,7 @@ function ProgressPage(): React.JSX.Element {
             </Box>
           </Paper>
 
-          <Paper sx={{ p: 3, borderRadius: '16px', border: '1px solid', borderColor: 'divider' }} elevation={0}>
+          <Paper sx={{ p: 3, border: '1px solid', borderColor: 'divider' }} elevation={0}>
             <StudyHeatmap />
           </Paper>
         </Box>

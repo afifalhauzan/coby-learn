@@ -106,11 +106,13 @@ export const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: ({ theme }) => ({
-          borderRadius: 8,
+          borderRadius: 6,
           paddingTop: 10,
           paddingBottom: 10,
+          boxShadow: 'shadows[1]', 
           // This spreads all caption properties (fontSize, fontWeight, etc.)
           ...theme.typography.caption,
+          letterSpacing: '0.04em', // 3% spacing for that distinct feel
           textTransform: 'none', // Buttons are uppercase by default in MUI
         }),
         contained: {
@@ -164,7 +166,7 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           '& .MuiOutlinedInput-root': {
-            borderRadius: 12,
+            borderRadius: 16,
             backgroundColor: '#FFFFFF',
             '& fieldset': {
               borderColor: 'rgba(26, 50, 79, 0.12)',

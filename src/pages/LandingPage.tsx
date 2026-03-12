@@ -168,7 +168,7 @@ function LandingPage(): React.JSX.Element {
                           px: 3,
                           textTransform: 'none',
                           fontWeight: 'bold',
-                          '&:hover': { bgcolor: '#EA580C' }
+                          '&:hover': { bgcolor: 'primary.dark' }
                         }}
                       >
                         Sign Up Free
@@ -295,7 +295,7 @@ function LandingPage(): React.JSX.Element {
                 fontWeight: 'bold',
                 color: 'white',
                 boxShadow: 6,
-                '&:hover': { bgcolor: '#EA580C', transform: 'translateY(-2px)', transition: '0.2s' }
+                '&:hover': { bgcolor: 'primary.dark', transform: 'translateY(-2px)', transition: '0.2s' }
               }}
             >
               Start for Free

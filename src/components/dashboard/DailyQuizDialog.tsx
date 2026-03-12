@@ -224,7 +224,7 @@ function DailyQuizDialog({ open, onClose }: DailyQuizDialogProps): React.JSX.Ele
                 fullWidth
                 variant="contained"
                 onClick={handleNext}
-                sx={{ bgcolor: '#F97316', color: 'white', '&:hover': { bgcolor: '#ea580c' } }}
+                sx={{ bgcolor: '#F97316', color: 'white', '&:hover': { bgcolor: 'primary.blue' } }}
               >
                 {currentIdx === totalQ - 1 ? (claimMutation.isPending ? 'Claiming...' : 'Finish & Claim') : 'Next Question'}
               </Button>
@@ -241,7 +241,7 @@ function DailyQuizDialog({ open, onClose }: DailyQuizDialogProps): React.JSX.Ele
       onClose={onClose}
       fullWidth
       maxWidth="xs"
-      PaperProps={{ sx: { borderRadius: 2, p: 1 } }}
+      PaperProps={{ sx: { p: 1 } }}
     >
       {/* Tombol Close di pojok */}
       <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>

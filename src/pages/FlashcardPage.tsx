@@ -165,7 +165,7 @@ function FlashcardPage(): React.JSX.Element {
         <IconButton 
           onClick={handleNext} 
           disabled={currentIndex === totalCards - 1}
-          sx={{ bgcolor: '#F97316', color: 'white', p: 2, '&:hover': { bgcolor: '#ea580c' } }}
+          sx={{ bgcolor: 'primary.main', color: 'white', p: 2, '&:hover': { bgcolor: 'primary.dark' } }}
         >
           <ArrowForwardIcon />
         </IconButton>

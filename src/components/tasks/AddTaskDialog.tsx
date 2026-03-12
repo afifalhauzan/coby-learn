@@ -85,7 +85,7 @@ function AddTaskDialog({ open, onClose, initialData, onSubmit }: AddTaskDialogPr
   };
 
   return (
-    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm" PaperProps={{ sx: { borderRadius: '16px' } }}>
+    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
       <DialogTitle sx={{ fontWeight: 'bold' }}>
         {initialData ? 'Edit Task' : 'Add New Task'}
       </DialogTitle>
@@ -119,11 +119,10 @@ function AddTaskDialog({ open, onClose, initialData, onSubmit }: AddTaskDialogPr
             InputLabelProps={{ shrink: true }}
             sx={{
               '& input::-webkit-calendar-picker-indicator': {
-                filter: 'invert(1)', 
                 cursor: 'pointer'
               },
               '& input': {
-                color: 'white',
+                color: 'text.primary',
               }
             }}
           />
@@ -137,11 +136,10 @@ function AddTaskDialog({ open, onClose, initialData, onSubmit }: AddTaskDialogPr
             required
             sx={{
               '& input::-webkit-calendar-picker-indicator': {
-                filter: 'invert(1)', 
                 cursor: 'pointer'
               },
               '& input': {
-                color: 'white',
+                color: 'text.primary',
               }
             }}
           />

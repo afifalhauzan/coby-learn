@@ -343,7 +343,6 @@ function FocusSessionWidget(): React.JSX.Element {
         fullWidth
         PaperProps={{
           sx: { 
-            borderRadius: 2, // 2 * 8px = 16px 
             bgcolor: 'background.paper', 
             color: 'text.primary',
             textAlign: 'center',
@@ -381,7 +380,7 @@ function FocusSessionWidget(): React.JSX.Element {
       </Dialog>
 
       {/* === 2. MODAL SETTINGS === */}
-      <Dialog open={openSettings} onClose={() => setOpenSettings(false)} maxWidth="xs" fullWidth PaperProps={{ sx: { borderRadius: 2, bgcolor: 'background.paper', color: 'text.primary', border: '1px solid', borderColor: 'divider' } }}>
+      <Dialog open={openSettings} onClose={() => setOpenSettings(false)} maxWidth="xs" fullWidth PaperProps={{ sx: { bgcolor: 'background.paper', color: 'text.primary', border: '1px solid', borderColor: 'divider' } }}>
         <DialogTitle sx={{ textAlign: 'center', pt: 3, pb: 1 }}>
           <Typography variant="h6" fontWeight="bold" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
             <TimerIcon sx={{ color: 'secondary.main' }} /> Set Duration
@@ -408,7 +407,7 @@ function FocusSessionWidget(): React.JSX.Element {
       </Dialog>
 
       {/* === 3. MODAL MUSIC SEARCH === */}
-      <Dialog open={openMusicSearch} onClose={() => setOpenMusicSearch(false)} maxWidth="sm" fullWidth PaperProps={{ sx: { borderRadius: '16px' } }}>
+      <Dialog open={openMusicSearch} onClose={() => setOpenMusicSearch(false)} maxWidth="sm" fullWidth>
         <DialogTitle fontWeight="bold">Change Background Music</DialogTitle>
         <DialogContent>
           <TextField autoFocus margin="dense" label="YouTube URL / ID" placeholder="e.g. jfKfPfyJRdk" fullWidth variant="outlined" value={inputVideoUrl} onChange={(e) => setInputVideoUrl(e.target.value)} InputProps={{ startAdornment: <InputAdornment position="start"><SearchIcon /></InputAdornment> }} />

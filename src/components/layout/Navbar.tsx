@@ -121,37 +121,42 @@ function Navbar(): React.JSX.Element {
             {!isMobile && (
               <Stack direction="row" spacing={1}>
                 {MENU_ITEMS.map((item) => (
-                  <Button
-                    key={item.text}
-                    onClick={() => navigate(item.path)}
-                    sx={{
-                      fontWeight: isActive(item.path) ? 700 : 500,
-                      textTransform: 'none',
-                      fontSize: '0.95rem',
-                      color: isActive(item.path) ? 'primary.main' : 'text.disabled',
-                      position: 'relative',
-                      px: 2,
-                      '&:hover': {
-                        color: 'secondary.main',
-                        bgcolor: 'action.hover'
-                      },
-                      // Garis bawah kecil untuk menu aktif
-                      '&::after': isActive(item.path) ? {
-                        content: '""',
-                        position: 'absolute',
-                        bottom: 6,
-                        left: '50%',
-                        transform: 'translateX(-50%)',
-                        width: '55px',
-                        height: '2px',
-                        bgcolor: 'primary.main',
-                        borderRadius: '2px'
-                      } : {}
-                    }}
-                  >
-                    {item.text}
-                  </Button>
-                ))}
+  <Button
+    key={item.text}
+    onClick={() => navigate(item.path)}
+    sx={{
+      // 1. Give every button the exact same fixed width
+      width: 100, 
+      fontWeight: isActive(item.path) ? 700 : 500,
+      textTransform: 'none',
+      fontSize: '0.95rem',
+      color: isActive(item.path) ? 'primary.main' : 'text.disabled',
+      position: 'relative',
+      px: 0, // Reset padding since width is fixed
+      '&:hover': {
+        color: 'secondary.main',
+        bgcolor: 'transparent' // Often looks cleaner on navbars
+      },
+      '&::after': {
+        content: '""',
+        position: 'absolute',
+        bottom: 6,
+        left: '50%',
+        transform: 'translateX(-50%)',
+        width: '40px', // Fixed width for indicator
+        height: '2px',
+        bgcolor: 'primary.main',
+        borderRadius: '2px',
+        // 2. Control visibility with opacity instead of conditional rendering
+        // This prevents the "jump" when the element is added/removed
+        opacity: isActive(item.path) ? 1 : 0,
+        transition: 'opacity 0.2s ease'
+      }
+    }}
+  >
+    {item.text}
+  </Button>
+))}
               </Stack>
             )}
 

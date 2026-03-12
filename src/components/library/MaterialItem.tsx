@@ -156,7 +156,7 @@ function MaterialItem({ material }: MaterialItemProps): React.JSX.Element {
           open={Boolean(anchorEl)}
           onClose={(e: any) => handleMenuClose(e)}
           onClick={(e) => e.stopPropagation()} 
-          PaperProps={{ sx: { borderRadius: 2, minWidth: 150 } }}
+          PaperProps={{ sx: { minWidth: 150 } }}
         >
           <MenuItem onClick={handleRenameClick}>Rename</MenuItem>
           <MenuItem onClick={handleDeleteClick} sx={{ color: 'error.main' }}>Delete</MenuItem>
