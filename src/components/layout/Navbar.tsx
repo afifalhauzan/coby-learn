@@ -243,7 +243,7 @@ function Navbar(): React.JSX.Element {
                 minWidth: 'auto',
                 maxWidth: 'none',
                 flex: 1,
-                padding: '4px 10px',
+                padding: '12px 16px',
                 position: 'relative',
                 '&.Mui-selected': {
                   color: 'primary.main',

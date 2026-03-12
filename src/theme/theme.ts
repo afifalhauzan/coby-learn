@@ -92,7 +92,7 @@ export const theme = createTheme({
           borderRadius: 16, // Consistent with global shape
           backgroundColor: '#FFFFFF',
           boxShadow: '0px 4px 6px rgba(26, 50, 79, 0.08), 0px 2px 4px rgba(26, 50, 79, 0.06)', // Foundation Blue-tinted shadow
-          padding: 8,
+          padding: 10,
           border: '1px solid rgba(26, 50, 79, 0.06)', // Light border with Foundation Blue tint
         },
       },
