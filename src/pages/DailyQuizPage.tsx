@@ -197,7 +197,7 @@ function DailyQuizPage(): React.JSX.Element {
         {(isCompleted) && <Confetti width={window.innerWidth} height={window.innerHeight} recycle={false} numberOfPieces={300} />}
 
         <Paper sx={{ p: 6, textAlign: 'center' }}>
-          <LocalFireDepartmentIcon sx={{ fontSize: 80, color: '#F97316', mb: 2 }} />
+          <LocalFireDepartmentIcon sx={{ fontSize: 80, color: 'primary.main', mb: 2 }} />
           <Typography variant="h4" fontWeight="bold" gutterBottom>
             Streak Saved!
           </Typography>
@@ -431,7 +431,7 @@ function DailyQuizPage(): React.JSX.Element {
             <Typography variant="caption" fontWeight="bold" color="primary">QUESTION {currentIdx + 1} OF {totalQ}</Typography>
             <Typography variant="caption" color="text.secondary">Daily Challenge</Typography>
           </Box>
-          <LinearProgress variant="determinate" value={progress} sx={{ height: 8, borderRadius: 4, bgcolor: 'action.hover', '& .MuiLinearProgress-bar': { bgcolor: '#F97316' } }} />
+          <LinearProgress variant="determinate" value={progress} sx={{ height: 8, borderRadius: 4, bgcolor: 'action.hover', '& .MuiLinearProgress-bar': { bgcolor: 'primary.main' } }} />
         </Box>
 
         {/* Soal */}

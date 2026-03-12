@@ -169,7 +169,7 @@ function DailyQuizDialog({ open, onClose }: DailyQuizDialogProps): React.JSX.Ele
       <Box sx={{ textAlign: 'center', py: 4 }}>
         {isCompleted && <Confetti width={400} height={400} recycle={false} numberOfPieces={200} />}
 
-        <LocalFireDepartmentIcon sx={{ fontSize: 80, color: '#F97316', mb: 2 }} />
+        <LocalFireDepartmentIcon sx={{ fontSize: 80, color: 'primary.main', mb: 2 }} />
         <Typography variant="h4" fontWeight="bold" gutterBottom>
           Streak Saved!
         </Typography>
@@ -224,7 +224,7 @@ function DailyQuizDialog({ open, onClose }: DailyQuizDialogProps): React.JSX.Ele
                 fullWidth
                 variant="contained"
                 onClick={handleNext}
-                sx={{ bgcolor: '#F97316', color: 'white', '&:hover': { bgcolor: 'primary.blue' } }}
+                sx={{ bgcolor: 'primary.main', color: 'white', '&:hover': { bgcolor: 'primary.blue' } }}
               >
                 {currentIdx === totalQ - 1 ? (claimMutation.isPending ? 'Claiming...' : 'Finish & Claim') : 'Next Question'}
               </Button>

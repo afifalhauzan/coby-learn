@@ -160,7 +160,7 @@ function QuizPage(): React.JSX.Element {
         {/* TAMPILAN SAAT LOADING SUBMIT */}
         {submitMutation.isPending ? (
           <Box sx={{ textAlign: 'center', py: 8 }}>
-            <CircularProgress sx={{ color: '#F97316', mb: 2 }} />
+            <CircularProgress sx={{ color: 'primary.main', mb: 2 }} />
             <Typography variant="h6">Submitting your answers...</Typography>
             <Typography variant="body2" color="text.secondary">Please wait while we calculate your score.</Typography>
           </Box>
@@ -172,7 +172,7 @@ function QuizPage(): React.JSX.Element {
                 {isReviewMode ? 'Reviewing Question' : 'Question'} {currentQuestionIndex + 1} of {totalQuestions}
               </Typography>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                <LocalFireDepartmentIcon sx={{ fontSize: 18, color: '#F97316' }} />
+                <LocalFireDepartmentIcon sx={{ fontSize: 18, color: 'primary.main' }} />
                 <Typography variant="body2" color="text.secondary">Streak Mode</Typography>
               </Box>
             </Box>
@@ -180,7 +180,7 @@ function QuizPage(): React.JSX.Element {
             <LinearProgress
               variant="determinate"
               value={((currentQuestionIndex + 1) / totalQuestions) * 100}
-              sx={{ height: 8, borderRadius: 4, mb: 4, bgcolor: 'action.hover', '& .MuiLinearProgress-bar': { bgcolor: '#F97316' } }}
+              sx={{ height: 8, borderRadius: 4, mb: 4, bgcolor: 'action.hover', '& .MuiLinearProgress-bar': { bgcolor: 'primary.main' } }}
             />
 
             <Typography variant="h6" fontWeight="bold" sx={{ mb: 3, lineHeight: 1.6 }}>
@@ -245,7 +245,7 @@ function QuizPage(): React.JSX.Element {
           // === TAMPILAN HASIL (DATA DARI BACKEND) ===
           <Box sx={{ textAlign: 'center', py: 4 }}>
             <Box sx={{ width: 80, height: 80, borderRadius: '50%', bgcolor: 'rgba(249, 115, 22, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', mx: 'auto', mb: 3 }}>
-              <LocalFireDepartmentIcon sx={{ fontSize: 48, color: '#F97316' }} />
+              <LocalFireDepartmentIcon sx={{ fontSize: 48, color: 'primary.main' }} />
             </Box>
 
             <Typography variant="h4" fontWeight="bold" sx={{ mb: 1 }}>

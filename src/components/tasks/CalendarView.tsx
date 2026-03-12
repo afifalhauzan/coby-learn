@@ -151,7 +151,7 @@ function CalendarView({ tasks, onAddTask, onEditTask }: CalendarViewProps): Reac
               p: { xs: 0.5, sm: 1 }, // Padding lebih kecil di HP
               cursor: 'pointer',
               bgcolor: isSelected
-                ? (theme.palette.mode === 'dark' ? 'rgba(249, 115, 22, 0.08)' : '#FFF7ED')
+                ? (theme.palette.mode === 'dark' ? 'rgba(249, 115, 22, 0.08)' : '#E5F4F9')
                 : 'transparent',
               transition: '0.2s',
               '&:hover': { bgcolor: 'action.hover' },
@@ -168,7 +168,7 @@ function CalendarView({ tasks, onAddTask, onEditTask }: CalendarViewProps): Reac
                   fontSize: { xs: '0.75rem', sm: '0.875rem' },
                   display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%',
                   fontWeight: isTodayDate ? 'bold' : 'normal',
-                  bgcolor: isTodayDate ? '#F97316' : 'transparent',
+                  bgcolor: isTodayDate ? 'primary.main' : 'transparent',
                   color: isTodayDate ? 'white' : (!isCurrentMonth ? 'text.disabled' : 'text.primary'),
                 }}
               >
@@ -199,7 +199,7 @@ function CalendarView({ tasks, onAddTask, onEditTask }: CalendarViewProps): Reac
               {isMobile && dayTasks.length > 0 && (
                 <Box sx={{ display: 'flex', justifyContent: 'center', gap: 0.5 }}>
                   {dayTasks.slice(0, 3).map((_, idx) => (
-                    <Box key={idx} sx={{ width: 4, height: 4, borderRadius: '50%', bgcolor: '#F97316' }} />
+                    <Box key={idx} sx={{ width: 4, height: 4, borderRadius: '50%', bgcolor: 'primary.main' }} />
                   ))}
                 </Box>
               )}

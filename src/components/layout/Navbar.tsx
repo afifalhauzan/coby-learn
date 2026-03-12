@@ -17,13 +17,13 @@ import {
   BottomNavigationAction,
   Paper,
 } from '@mui/material';
-import { 
-  Logout, 
-  Person3Outlined, 
-  Home, 
-  MenuBook, 
-  Assignment, 
-  TrendingUp 
+import {
+  Logout,
+  Person3Outlined,
+  Home,
+  MenuBook,
+  Assignment,
+  TrendingUp
 } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
@@ -78,13 +78,14 @@ function Navbar(): React.JSX.Element {
           borderBottom: '1px solid',
           borderColor: 'divider',
           color: 'text.primary',
+          px: 0, // Remove horizontal padding to let Container handle it
           py: { xs: 0.5, md: 1 },
           borderRadius: 0,
           top: 0,
           zIndex: 1100,
         }}
       >
-        <Container maxWidth="xl">
+        <Container maxWidth="2xl">
           <Toolbar disableGutters sx={{ height: { xs: 30, md: 30 }, justifyContent: 'space-between' }}>
 
             {/* LEFT GROUP: LOGO */}
@@ -121,42 +122,42 @@ function Navbar(): React.JSX.Element {
             {!isMobile && (
               <Stack direction="row" spacing={1}>
                 {MENU_ITEMS.map((item) => (
-  <Button
-    key={item.text}
-    onClick={() => navigate(item.path)}
-    sx={{
-      // 1. Give every button the exact same fixed width
-      width: 100, 
-      fontWeight: isActive(item.path) ? 700 : 500,
-      textTransform: 'none',
-      fontSize: '0.95rem',
-      color: isActive(item.path) ? 'primary.main' : 'text.disabled',
-      position: 'relative',
-      px: 0, // Reset padding since width is fixed
-      '&:hover': {
-        color: 'secondary.main',
-        bgcolor: 'transparent' // Often looks cleaner on navbars
-      },
-      '&::after': {
-        content: '""',
-        position: 'absolute',
-        bottom: 6,
-        left: '50%',
-        transform: 'translateX(-50%)',
-        width: '40px', // Fixed width for indicator
-        height: '2px',
-        bgcolor: 'primary.main',
-        borderRadius: '2px',
-        // 2. Control visibility with opacity instead of conditional rendering
-        // This prevents the "jump" when the element is added/removed
-        opacity: isActive(item.path) ? 1 : 0,
-        transition: 'opacity 0.2s ease'
-      }
-    }}
-  >
-    {item.text}
-  </Button>
-))}
+                  <Button
+                    key={item.text}
+                    onClick={() => navigate(item.path)}
+                    sx={{
+                      // 1. Give every button the exact same fixed width
+                      width: 100,
+                      fontWeight: isActive(item.path) ? 700 : 500,
+                      textTransform: 'none',
+                      fontSize: '0.95rem',
+                      color: isActive(item.path) ? 'primary.main' : 'text.disabled',
+                      position: 'relative',
+                      px: 0, // Reset padding since width is fixed
+                      '&:hover': {
+                        color: 'secondary.main',
+                        bgcolor: 'transparent' // Often looks cleaner on navbars
+                      },
+                      '&::after': {
+                        content: '""',
+                        position: 'absolute',
+                        bottom: 6,
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        width: '40px', // Fixed width for indicator
+                        height: '2px',
+                        bgcolor: 'primary.main',
+                        borderRadius: '2px',
+                        // 2. Control visibility with opacity instead of conditional rendering
+                        // This prevents the "jump" when the element is added/removed
+                        opacity: isActive(item.path) ? 1 : 0,
+                        transition: 'opacity 0.2s ease'
+                      }
+                    }}
+                  >
+                    {item.text}
+                  </Button>
+                ))}
               </Stack>
             )}
 
@@ -217,16 +218,16 @@ function Navbar(): React.JSX.Element {
 
       {/* MOBILE BOTTOM NAVIGATION */}
       {isMobile && (
-        <Paper 
-          sx={{ 
-            position: 'fixed', 
-            bottom: 0, 
-            left: 0, 
-            right: 0, 
+        <Paper
+          sx={{
+            position: 'fixed',
+            bottom: 0,
+            left: 0,
+            right: 0,
             zIndex: 1000,
             borderTop: '1px solid',
             borderColor: 'divider',
-          }} 
+          }}
           elevation={3}
         >
           <BottomNavigation

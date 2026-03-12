@@ -18,7 +18,6 @@ function StatCard({ title, value, IconComponent, iconBgColor, iconColor }: StatC
         display: 'flex',
         alignItems: 'center',
         gap: 2,
-        borderRadius: '12px',
         bgcolor: 'background.paper',
         border: '1px solid',
         borderColor: 'divider',
@@ -40,7 +39,7 @@ function StatCard({ title, value, IconComponent, iconBgColor, iconColor }: StatC
         <Typography variant="body2" color="text.secondary">
           {title}
         </Typography>
-        <Typography variant="h5" fontWeight="bold">
+        <Typography variant="h5">
           {value}
         </Typography>
       </Box>

@@ -62,7 +62,7 @@ function ProgressPage(): React.JSX.Element {
 
   const isStreakDone = streakData?.is_done ?? false;
 
-  const streakColor = isStreakDone ? '#F97316' : '#8996aaff';
+  const streakColor = isStreakDone ? theme.palette.primary.main : '#8996aaff';
   const streakBgColor = isStreakDone ? '#FFF4E5' : '#F8FAFC';
   const streakTextColor = isStreakDone ? '#9A3412' : '#8996aaff';
 
@@ -106,25 +106,24 @@ function ProgressPage(): React.JSX.Element {
               justifyContent: 'space-between',
               alignItems: 'center',
               borderRadius: '16px',
-              bgcolor: streakBgColor,
               border: '1px solid',
               borderColor: 'divider',
               transition: 'background-color 0.3s'
             }}
           >
             <Box>
-              <Typography variant="h6" fontWeight="bold" sx={{ color: streakTextColor }}>
+              <Typography variant="h6">
                 Current Streak!
               </Typography>
-              <Typography variant="body2" sx={{ color: isStreakDone ? '#9A3412' : 'text.secondary', opacity: 0.8 }}>
+              <Typography variant="body2" sx={{ color: isStreakDone ? 'text.primary' : 'text.secondary', opacity: 0.8 }}>
                 {isStreakDone ? 'Keep the flame alive.' : 'Complete daily quiz to ignite!'}
               </Typography>
             </Box>
 
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <LocalFireDepartmentIcon sx={{ fontSize: 40, color: streakColor, transition: 'color 0.3s' }} />
+              <LocalFireDepartmentIcon sx={{ fontSize: 40, color: '#FFA726', transition: 'color 0.3s' }} />
 
-              <Typography variant="h3" fontWeight="bold" sx={{ color: streakColor, transition: 'color 0.3s' }}>
+              <Typography variant="h3" fontWeight="bold" sx={{ color: '#FFA726', transition: 'color 0.3s' }}>
                 {adjustedStreak}
               </Typography>
             </Box>
@@ -136,7 +135,7 @@ function ProgressPage(): React.JSX.Element {
         </Box>
 
         <Box>
-          <Typography variant="h6" fontWeight="bold" sx={{ mb: 2 }}>
+          <Typography variant="h6" fontWeight="500" sx={{ mb: 2 }}>
             Key Stats ({filter})
           </Typography>
 

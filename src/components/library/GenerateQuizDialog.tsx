@@ -62,7 +62,7 @@ function GenerateQuizDialog({ open, onClose, onSubmit, isLoading }: GenerateQuiz
           variant="contained" 
           disabled={isLoading}
           sx={{ 
-            bgcolor: '#F97316', 
+            bgcolor: 'primary.main', 
             color: 'white',
             '&:hover': { bgcolor: 'primary.dark' }
           }}

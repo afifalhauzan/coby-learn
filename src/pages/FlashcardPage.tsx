@@ -69,7 +69,7 @@ function FlashcardPage(): React.JSX.Element {
       <LinearProgress 
         variant="determinate" 
         value={((currentIndex + 1) / totalCards) * 100} 
-        sx={{ mb: 6, borderRadius: 2, height: 6, bgcolor: 'action.hover', '& .MuiLinearProgress-bar': { bgcolor: '#F97316' } }}
+        sx={{ mb: 6, borderRadius: 2, height: 6, bgcolor: 'action.hover', '& .MuiLinearProgress-bar': { bgcolor: 'primary.main' } }}
       />
 
       {/* FLIP CARD CONTAINER */}
@@ -137,7 +137,7 @@ function FlashcardPage(): React.JSX.Element {
               color: '#1E293B'
             }}
           >
-            <Typography variant="overline" sx={{ color: '#F97316', mb: 2, fontWeight: 'bold' }}>ANSWER</Typography>
+            <Typography variant="overline" sx={{ color: 'primary.main', mb: 2, fontWeight: 'bold' }}>ANSWER</Typography>
             <Typography variant="h5" fontWeight="medium">
               {currentCard.back}
             </Typography>

@@ -89,12 +89,12 @@ const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 const getColorForLevel = (level: number) => {
   switch (level) {
-    case 0: return '#FFE7D2';
-    case 1: return '#FFB97F';
-    case 2: return '#F97316';
-    case 3: return '#B84E0F';
-    case 4: return '#5A2404';
-    default: return '#5A2404';
+    case 0: return '#E5F4F9';
+    case 1: return '#AFD3E9';
+    case 2: return '#86B4DA';
+    case 3: return '#609ED0';
+    case 4: return '#3B6C9E';
+    default: return '#164C81';
   }
 };
 
@@ -122,7 +122,9 @@ function StudyHeatmap(): React.JSX.Element {
     <Box>
       {/* Header Heatmap */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-        <Typography variant="h6" fontWeight="bold">Study Heatmap</Typography>
+        <Typography variant="h6" sx={{ fontWeight: '600' }}>
+          Study Heatmap
+        </Typography>
       </Box>
 
       {/* Month Navigation */}

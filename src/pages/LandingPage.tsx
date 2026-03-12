@@ -45,7 +45,7 @@ const COLORS = {
   bgCard: '#FFFFFF',     // Card background
   primary: '#3B82F6',    // Blue 500
   primaryGlow: 'rgba(59, 130, 246, 0.3)',
-  accent: '#F97316',     // Orange 500 (secondary in theme)
+  accent: 'primary.main',     // Orange 500 (secondary in theme)
   accentGlow: 'rgba(249, 115, 22, 0.3)',
   textMain: '#1E293B',   // Dark text for light mode
   textMuted: '#64748B',  // Muted text
