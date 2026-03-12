@@ -9,7 +9,7 @@ function MainLayout(): React.JSX.Element {
       sx={{
         minHeight: '100vh',
         bgcolor: 'background.default',
-        p: { xs: 1, sm: 2, md: 3 },
+        p: { xs: 0, sm: 0, md: 0 },
       }}
     >
       {/* <Container

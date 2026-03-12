@@ -68,8 +68,8 @@ function Navbar(): React.JSX.Element {
   return (
     <>
       <AppBar
-        position="sticky" // Ganti ke sticky agar navbar tetap terlihat saat scroll
-        elevation={0}
+        position="sticky" // Sticky to the top, stays visible when scrolling
+        elevation={1} // Use shadow elevation 1 from Material Design theme
         sx={{
           backgroundColor: 'rgba(255, 255, 255, 0.9)',
           backdropFilter: 'blur(12px)',
@@ -81,11 +81,11 @@ function Navbar(): React.JSX.Element {
         }}
       >
         <Container maxWidth="xl">
-          <Toolbar disableGutters sx={{ height: { xs: 64, md: 72 }, justifyContent: 'space-between' }}>
+          <Toolbar disableGutters sx={{ height: { xs: 48, md: 56 }, justifyContent: 'space-between' }}>
 
             {/* LEFT GROUP: LOGO */}
             <Box
-              sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: 1.5 }}
+              sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: 1 }}
               onClick={() => navigate('/dashboard')}
             >
               {/* Logo Image Responsive */}
@@ -93,7 +93,7 @@ function Navbar(): React.JSX.Element {
                 src={logo}
                 alt="Logo"
                 style={{
-                  width: isMobile ? '50px' : '90px', // Kecil di HP, Besar di PC
+                  width: isMobile ? '35px' : '60px', // Kecil di HP, Besar di PC
                   transition: '0.3s'
                 }}
               />
@@ -124,7 +124,7 @@ function Navbar(): React.JSX.Element {
                       fontWeight: isActive(item.path) ? 700 : 500,
                       textTransform: 'none',
                       fontSize: '0.95rem',
-                      color: isActive(item.path) ? 'secondary.main' : 'text.secondary',
+                      color: isActive(item.path) ? 'primary.main' : 'text.disabled',
                       position: 'relative',
                       px: 2,
                       '&:hover': {
@@ -138,9 +138,9 @@ function Navbar(): React.JSX.Element {
                         bottom: 6,
                         left: '50%',
                         transform: 'translateX(-50%)',
-                        width: '20px',
+                        width: '55px',
                         height: '2px',
-                        bgcolor: 'secondary.main',
+                        bgcolor: 'primary.main',
                         borderRadius: '2px'
                       } : {}
                     }}
@@ -154,8 +154,6 @@ function Navbar(): React.JSX.Element {
             {/* RIGHT GROUP: ACTIONS */}
             <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 1, md: 2 } }}>
 
-
-
               {/* Avatar with Menu */}
               <IconButton sx={{ p: 0 }} onClick={(e) => setAnchorEl(e.currentTarget)}>
                 <Avatar
@@ -164,7 +162,6 @@ function Navbar(): React.JSX.Element {
                     width: { xs: 32, md: 40 }, // Responsive size
                     height: { xs: 32, md: 40 },
                     border: '2px solid',
-                    borderColor: 'warning.main',
                     boxShadow: 2,
                     bgcolor: 'primary.main',
                     fontSize: '1rem',

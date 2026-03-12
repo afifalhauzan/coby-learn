@@ -19,6 +19,7 @@ export const theme = createTheme({
     text: {
       primary: '#1E293B',   // Deep Slate for accessibility
       secondary: '#64748B', // Slate 500 for secondary text
+      disabled: '#9E9E9E',  // Gray #000000/38 for disabled text
     },
 
     // Enhanced palette for better semantic colors
@@ -86,7 +87,7 @@ export const theme = createTheme({
           borderRadius: 16, // Consistent with global shape
           backgroundColor: '#FFFFFF',
           boxShadow: '0px 4px 6px rgba(26, 50, 79, 0.08), 0px 2px 4px rgba(26, 50, 79, 0.06)', // Foundation Blue-tinted shadow
-          padding: 24,
+          padding: 8,
           border: '1px solid rgba(26, 50, 79, 0.06)', // Light border with Foundation Blue tint
         },
       },
