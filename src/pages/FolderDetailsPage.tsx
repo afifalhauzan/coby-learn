@@ -114,7 +114,7 @@ function FolderDetailsPage(): React.JSX.Element {
                 />
               )}
 
-              <Typography variant="h4" fontWeight="bold" sx={{ fontSize: { xs: '1.5rem', md: '2.125rem' } }}>
+              <Typography variant="h4" sx={{ fontSize: { xs: '1.5rem', md: '2.125rem' } }}>
                 {isLoading ? <Skeleton width={300} /> : packageData?.title}
               </Typography>
             </Box>

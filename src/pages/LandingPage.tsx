@@ -37,7 +37,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import StarIcon from '@mui/icons-material/Star';
 
 // Assets
-import logo from '../assets/logo.png';
+import logo from '../assets/logo_1.svg';
 
 // --- THEME CONSTANTS (Light Mode Compatible) ---
 const COLORS = {

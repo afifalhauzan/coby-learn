@@ -27,7 +27,7 @@ import {
 } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import logo from '../../assets/logo.png';
+import logo from '../../assets/logo_1.svg';
 import { logoutUser } from '../../services/apiAuthService';
 import { getDailyQuizStatus } from '../../services/apiLibraryService';
 
@@ -90,7 +90,7 @@ function Navbar(): React.JSX.Element {
 
             {/* LEFT GROUP: LOGO */}
             <Box
-              sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: 1 }}
+              sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer', gap: 2 }}
               onClick={() => navigate('/dashboard')}
             >
               {/* Logo Image Responsive */}
@@ -98,7 +98,7 @@ function Navbar(): React.JSX.Element {
                 src={logo}
                 alt="Logo"
                 style={{
-                  width: isMobile ? '35px' : '60px', // Kecil di HP, Besar di PC
+                  width: isMobile ? '35px' : '50px', // Kecil di HP, Besar di PC
                   transition: '0.3s'
                 }}
               />
@@ -109,7 +109,7 @@ function Navbar(): React.JSX.Element {
                 noWrap
                 sx={{
                   fontWeight: 700,
-                  color: 'text.primary',
+                  color: 'primary.main',
                   fontSize: { xs: '1rem', md: '1.25rem' },
                   display: { xs: 'none', sm: 'block' } // Hidden on Extra Small screens
                 }}
@@ -120,7 +120,7 @@ function Navbar(): React.JSX.Element {
 
             {/* CENTER GROUP: DESKTOP MENU */}
             {!isMobile && (
-              <Stack direction="row" spacing={1}>
+              <Stack direction="row" spacing={1} sx={{ mr: 10 }}> {/* Margin kanan untuk memberi ruang ke avatar */}
                 {MENU_ITEMS.map((item) => (
                   <Button
                     key={item.text}
@@ -193,8 +193,9 @@ function Navbar(): React.JSX.Element {
                     bgcolor: 'background.paper',
                     color: 'text.primary',
                     border: '1px solid',
-                    borderColor: 'divider',
-                    minWidth: 150
+                    borderColor: 'divider'  ,
+                    minWidth: 50,
+                    p: 1,
                   }
                 }}
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
