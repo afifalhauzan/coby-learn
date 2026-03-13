@@ -182,8 +182,6 @@ function FocusSessionWidget(): React.JSX.Element {
     <Paper
       elevation={0}
       sx={{
-        p: 2, // 2 * 8px = 16px 
-        borderRadius: '24px', 
         bgcolor: 'background.paper',
         border: '1px solid',
         borderColor: 'divider',
@@ -382,19 +380,19 @@ function FocusSessionWidget(): React.JSX.Element {
       {/* === 2. MODAL SETTINGS === */}
       <Dialog open={openSettings} onClose={() => setOpenSettings(false)} maxWidth="xs" fullWidth PaperProps={{ sx: { bgcolor: 'background.paper', color: 'text.primary', border: '1px solid', borderColor: 'divider' } }}>
         <DialogTitle sx={{ textAlign: 'center', pt: 3, pb: 1 }}>
-          <Typography variant="h6" fontWeight="bold" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
+          <Typography variant="h5" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
             <TimerIcon sx={{ color: 'secondary.main' }} /> Set Duration
           </Typography>
         </DialogTitle>
         <DialogContent sx={{ textAlign: 'center', pb: 4 }}>
           <Box sx={{ my: 4, position: 'relative', display: 'inline-block' }}>
-            <TextField variant="standard" type="number" value={focusDuration} onChange={handleInputChange} inputProps={{ min: 1, max: 180, style: { textAlign: 'center', fontSize: '3.5rem', fontWeight: '800', color: 'white', padding: 0 } }} sx={{ width: '120px', '& .MuiInput-underline:before': { borderBottom: 'none' }, '& .MuiInput-underline:after': { borderBottom: 'none' }, '& .MuiInput-underline:hover:not(.Mui-disabled):before': { borderBottom: 'none' } }} />
+            <TextField variant="standard" type="number" value={focusDuration} onChange={handleInputChange} inputProps={{ min: 1, max: 180, style: { textAlign: 'center', fontSize: '3.5rem', fontWeight: '600', padding: 0 } }} sx={{ width: '120px', '& .MuiInput-underline:before': { borderBottom: 'none' }, '& .MuiInput-underline:after': { borderBottom: 'none' }, '& .MuiInput-underline:hover:not(.Mui-disabled):before': { borderBottom: 'none' } }} />
             <Typography variant="subtitle1" sx={{ color: 'text.secondary', position: 'absolute', bottom: 10, right: -40, fontWeight: 'bold' }}>min</Typography>
           </Box>
           <Box sx={{ px: 2, mb: 4 }}>
             <Slider value={typeof focusDuration === 'number' ? focusDuration : 0} onChange={handleSliderChange} min={5} max={120} step={1} sx={{ color: 'secondary.main', height: 6, '& .MuiSlider-thumb': { width: 20, height: 20, bgcolor: 'background.paper', border: '4px solid', borderColor: 'secondary.main' }, '& .MuiSlider-rail': { bgcolor: 'divider', opacity: 1 } }} />
           </Box>
-          <Typography variant="caption" sx={{ color: 'text.secondary', mb: 1.5, display: 'block', textTransform: 'uppercase', letterSpacing: 1, fontWeight: 'bold' }}>Quick Presets</Typography>
+          <Typography variant="caption" sx={{ color: 'text.primary', mb: 1.5, display: 'block', textTransform: 'uppercase', letterSpacing: 1, fontWeight: 'bold' }}>Quick Presets</Typography>
           <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1, flexWrap: 'wrap' }}>
             {PRESET_DURATIONS.map((preset) => (
               <Chip key={preset} label={`${preset}m`} onClick={() => setFocusDuration(preset)} sx={{ bgcolor: focusDuration === preset ? 'secondary.main' : 'action.selected', color: focusDuration === preset ? 'white' : 'text.secondary', fontWeight: 'bold', border: 'none', '&:hover': { bgcolor: focusDuration === preset ? 'secondary.dark' : 'action.hover' } }} />

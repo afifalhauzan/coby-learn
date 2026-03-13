@@ -5,6 +5,8 @@ import { useQuery } from '@tanstack/react-query';
 import { getDailyQuizStatus } from '../../services/apiLibraryService';
 
 function FocusSessionWidget(): React.JSX.Element {
+  const [weekOffset, setWeekOffset] = React.useState(0);
+
   const { data: status, isLoading } = useQuery({
     queryKey: ['dailyQuizStatus'],
     queryFn: getDailyQuizStatus,
@@ -25,15 +27,18 @@ function FocusSessionWidget(): React.JSX.Element {
   }
 
   const streakCount = status?.streak || 0;
-  
-  // Generate the current week days
+
+  // Generate weekdays for the selected week (Monday-Friday)
   const today = new Date();
-  const currentDay = today.getDay(); // 0 = Sunday, 6 = Saturday
-  const startOfWeek = new Date(today);
-  startOfWeek.setDate(today.getDate() - currentDay); // Go back to Sunday
+  const selectedDate = new Date(today);
+  selectedDate.setDate(today.getDate() + weekOffset * 7);
+
+  const currentDay = selectedDate.getDay(); // 0 = Sunday, 6 = Saturday
+  const startOfWeek = new Date(selectedDate);
+  startOfWeek.setDate(selectedDate.getDate() - currentDay); // Go back to Sunday
 
   const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
-  const weekDates = [];
+  const weekDates: Date[] = [];
   
   // Generate week dates starting from Monday (skip Sunday)
   for (let i = 1; i <= 5; i++) {
@@ -42,7 +47,21 @@ function FocusSessionWidget(): React.JSX.Element {
     weekDates.push(date);
   }
 
-  const todayDate = today.getDate();
+  const isSameDate = (dateA: Date, dateB: Date): boolean => {
+    return (
+      dateA.getDate() === dateB.getDate() &&
+      dateA.getMonth() === dateB.getMonth() &&
+      dateA.getFullYear() === dateB.getFullYear()
+    );
+  };
+
+  const handlePrevWeek = () => {
+    setWeekOffset((prev) => prev - 1);
+  };
+
+  const handleNextWeek = () => {
+    setWeekOffset((prev) => prev + 1);
+  };
 
   return (
     <Paper
@@ -88,6 +107,8 @@ function FocusSessionWidget(): React.JSX.Element {
         <Box sx={{ display: 'flex', gap: 0.5 }}>
           <IconButton 
             size="small" 
+            onClick={handlePrevWeek}
+            aria-label="Previous week"
             sx={{ 
               width: 32, 
               height: 32,
@@ -99,6 +120,8 @@ function FocusSessionWidget(): React.JSX.Element {
           </IconButton>
           <IconButton 
             size="small" 
+            onClick={handleNextWeek}
+            aria-label="Next week"
             sx={{ 
               width: 32, 
               height: 32,
@@ -148,7 +171,7 @@ function FocusSessionWidget(): React.JSX.Element {
         >
           {weekDates.map((date, index) => {
             const dateNum = date.getDate();
-            const isToday = dateNum === todayDate;
+            const isToday = isSameDate(date, today);
             
             return (
               <Box

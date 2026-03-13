@@ -285,7 +285,7 @@ function MaterialDetailPage(): React.JSX.Element {
 
   return (
     <Box sx={{ bgcolor: 'background.default', minHeight: '100vh', color: 'text.primary', pb: 10 }}>
-      <Box sx={{ maxWidth: 1600, mx: 'auto', px: { xs: 2, md: 4 }, pt: 4 }}>
+      <Box sx={{ px: { xs: 0, md: 1 } }}>
 
         <Box sx={{ mb: 4 }}>
           <Button
@@ -297,7 +297,7 @@ function MaterialDetailPage(): React.JSX.Element {
           </Button>
 
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-            <Typography variant="h3" fontWeight="bold" sx={{ color: 'white', fontSize: { xs: '1.8rem', md: '2.5rem' } }}>
+            <Typography variant="h4" sx={{ color: 'text.primary', fontSize: { xs: '1.8rem', md: '2.5rem' } }}>
               {material.title}
             </Typography>
 
@@ -332,9 +332,17 @@ function MaterialDetailPage(): React.JSX.Element {
             <Paper
               elevation={0}
               sx={{
-                p: 4, borderRadius: 2, // 2 * 8px = 16px
-                bgcolor: 'background.paper', border: '1px solid', borderColor: 'divider',
-                minHeight: 500, mb: 4
+                p: { xs: 2, md: 4 }, // Standardizing padding: less on mobile
+                borderRadius: 2,
+                bgcolor: 'background.paper',
+                border: '1px solid',
+                borderColor: 'divider',
+                minHeight: 500,
+                mb: 4,
+                // --- RESPONSIVE SCROLL LOGIC ---
+                maxHeight: { xs: 700, md: 'none' },
+                overflowY: { xs: 'auto', md: 'visible' },
+                // -------------------------------
               }}
             >
               <Typography variant="h6" fontWeight="bold" sx={{ mb: 3, color: 'text.primary' }}>

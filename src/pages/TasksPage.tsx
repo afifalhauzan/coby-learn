@@ -195,7 +195,7 @@ function TasksPage(): React.JSX.Element {
               <Box sx={{ flexGrow: 1 }} />
               <FormControl size="small" sx={{ minWidth: 140 }}>
                 <InputLabel>Filter Date</InputLabel>
-                <Select value={dateFilterType} label="Filter Date" onChange={(e) => setDateFilterType(e.target.value as any)}>
+                <Select value={dateFilterType} label="Filter Date" onChange={(e) => setDateFilterType(e.target.value as any)} sx={{ px: 1 }}>
                   <MenuItem value="all">All Dates</MenuItem>
                   <MenuItem value="today">Today</MenuItem>
                   <MenuItem value="tomorrow">Tomorrow</MenuItem>
@@ -203,7 +203,7 @@ function TasksPage(): React.JSX.Element {
               </FormControl>
               <FormControl size="small" sx={{ minWidth: 140 }}>
                 <InputLabel>Filter Priority</InputLabel>
-                <Select value={priorityFilter} label="Filter Priority" onChange={(e) => setPriorityFilter(e.target.value as any)}>
+                <Select value={priorityFilter} label="Filter Priority" onChange={(e) => setPriorityFilter(e.target.value as any)} sx={{ px: 1 }}>
                   <MenuItem value="all">All Priorities</MenuItem>
                   <MenuItem value="low">Low</MenuItem>
                   <MenuItem value="medium">Medium</MenuItem>

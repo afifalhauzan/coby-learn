@@ -85,7 +85,7 @@ function Navbar(): React.JSX.Element {
           zIndex: 1100,
         }}
       >
-        <Container maxWidth="2xl">
+        <Container maxWidth={false}>
           <Toolbar disableGutters sx={{ height: { xs: 30, md: 30 }, justifyContent: 'space-between' }}>
 
             {/* LEFT GROUP: LOGO */}

@@ -62,10 +62,6 @@ function ProgressPage(): React.JSX.Element {
 
   const isStreakDone = streakData?.is_done ?? false;
 
-  const streakColor = isStreakDone ? theme.palette.primary.main : '#8996aaff';
-  const streakBgColor = isStreakDone ? '#FFF4E5' : '#F8FAFC';
-  const streakTextColor = isStreakDone ? '#9A3412' : '#8996aaff';
-
   return (
     <Box>
       {/* Header */}

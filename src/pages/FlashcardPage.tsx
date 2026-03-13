@@ -111,11 +111,11 @@ function FlashcardPage(): React.JSX.Element {
               border: '1px solid #334155'
             }}
           >
-            <Typography variant="overline" sx={{ color: '#94A3B8', mb: 2 }}>QUESTION</Typography>
+            <Typography variant="h5" sx={{ color: '#94A3B8', mb: 2 }}>QUESTION</Typography>
             <Typography variant="h4" fontWeight="bold" sx={{ color: 'white' }}>
               {currentCard.front}
             </Typography>
-            <Typography variant="caption" sx={{ mt: 4, color: '#64748B' }}>Tap to flip</Typography>
+            <Typography variant="h6" sx={{ mt: 4, color: '#64748B' }}>Tap to flip</Typography>
           </Paper>
 
           {/* BACK SIDE */}
@@ -133,11 +133,10 @@ function FlashcardPage(): React.JSX.Element {
               flexDirection: 'column',
               p: 4,
               borderRadius: 2, // 2 * 8px = 16px
-              bgcolor: '#FFF7ED', // Light Orange Background
               color: '#1E293B'
             }}
           >
-            <Typography variant="overline" sx={{ color: 'primary.main', mb: 2, fontWeight: 'bold' }}>ANSWER</Typography>
+            <Typography variant="h5" sx={{ color: 'text.secondary', mb: 2, fontWeight: 'bold' }}>ANSWER</Typography>
             <Typography variant="h5" fontWeight="medium">
               {currentCard.back}
             </Typography>

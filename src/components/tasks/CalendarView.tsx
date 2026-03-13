@@ -6,6 +6,8 @@ import {
   IconButton,
   Button,
   Chip,
+  Fade,
+  Grow,
   useTheme,
   Stack,
   Divider,
@@ -43,6 +45,17 @@ interface CalendarViewProps {
 
 function CalendarView({ tasks, onAddTask, onEditTask }: CalendarViewProps): React.JSX.Element {
   const theme = useTheme();
+  const dayCellTransition = theme.transitions.create('background-color', {
+    duration: theme.transitions.duration.shorter,
+    easing: theme.transitions.easing.easeInOut,
+  });
+  const taskCardTransition = theme.transitions.create(
+    ['transform', 'border-color', 'box-shadow', 'background-color'],
+    {
+      duration: theme.transitions.duration.shorter,
+      easing: theme.transitions.easing.easeInOut,
+    }
+  );
 
   // Breakpoints untuk responsiveness
   const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // HP
@@ -153,7 +166,7 @@ function CalendarView({ tasks, onAddTask, onEditTask }: CalendarViewProps): Reac
               bgcolor: isSelected
                 ? (theme.palette.mode === 'dark' ? 'rgba(249, 115, 22, 0.08)' : '#E5F4F9')
                 : 'transparent',
-              transition: '0.2s',
+              transition: dayCellTransition,
               '&:hover': { bgcolor: 'action.hover' },
               display: 'flex', flexDirection: 'column', gap: 0.5,
               position: 'relative'
@@ -244,7 +257,9 @@ function CalendarView({ tasks, onAddTask, onEditTask }: CalendarViewProps): Reac
         <Paper elevation={0} sx={{ p: { xs: 1.5, md: 3 }, border: '1px solid', borderColor: 'divider' }}>
           {renderHeader()}
           {renderDays()}
-          {renderCells()}
+          <Fade in key={format(currentMonth, 'yyyy-MM')} timeout={theme.transitions.duration.shorter}>
+            <Box>{renderCells()}</Box>
+          </Fade>
         </Paper>
       </Box>
 
@@ -265,32 +280,37 @@ function CalendarView({ tasks, onAddTask, onEditTask }: CalendarViewProps): Reac
           </Box>
           <Divider sx={{ mb: 3 }} />
 
-          <Box sx={{ flexGrow: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 2, pr: 1, maxHeight: { xs: '400px', lg: 'none' } }}>
+          <Box sx={{ flexGrow: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 2, pr: 1, pt: 1, maxHeight: { xs: '400px', lg: 'none' } }}>
             {selectedDayTasks.length === 0 ? (
               <Box sx={{ textAlign: 'center', py: 6, opacity: 0.6 }}>
                 <EventNote sx={{ fontSize: 48, color: 'text.disabled', mb: 1 }} />
                 <Typography variant="body2" color="text.secondary">No tasks scheduled.</Typography>
               </Box>
             ) : (
-              selectedDayTasks.map((task) => (
-                <Paper
+              selectedDayTasks.map((task, index) => (
+                <Grow
                   key={task.id}
-                  onClick={() => onEditTask(task)}
-                  elevation={0}
-                  sx={{
-                    p: 2, bgcolor: 'background.default', border: '1px solid', borderColor: 'divider',
-                    cursor: 'pointer', transition: '0.2s',
-                    '&:hover': { transform: 'translateY(-2px)', borderColor: 'primary.main', boxShadow: 2 }
-                  }}
+                  in
+                  timeout={theme.transitions.duration.shorter + index * 40}
                 >
-                  <Typography variant="subtitle2" fontWeight="bold" sx={{ textDecoration: task.completed ? 'line-through' : 'none', color: task.completed ? 'text.secondary' : 'text.primary', mb: 1 }}>
-                    {task.label}
-                  </Typography>
-                  <Stack direction="row" spacing={1} alignItems="center">
-                    <Chip label={task.priority} size="small" sx={{ height: 20, fontSize: '0.65rem', bgcolor: getStatusColor(task.completed, task.priority) + '22', color: getStatusColor(task.completed, task.priority), fontWeight: 'bold' }} />
-                    <Typography variant="caption" color="text.secondary">{task.completed ? 'Done' : format(parseISO(task.dueDate), 'HH:mm')}</Typography>
-                  </Stack>
-                </Paper>
+                  <Paper
+                    onClick={() => onEditTask(task)}
+                    elevation={0}
+                    sx={{
+                      p: 2, bgcolor: 'background.default', border: '1px solid', borderColor: 'divider',
+                      cursor: 'pointer', transition: taskCardTransition,
+                      '&:hover': { transform: 'translateY(-2px)', borderColor: 'primary.main', boxShadow: 2 }
+                    }}
+                  >
+                    <Typography variant="subtitle2" fontWeight="bold" sx={{ textDecoration: task.completed ? 'line-through' : 'none', color: task.completed ? 'text.secondary' : 'text.primary', mb: 1 }}>
+                      {task.label}
+                    </Typography>
+                    <Stack direction="row" spacing={1} alignItems="center">
+                      <Chip label={task.priority} size="small" sx={{ height: 20, fontSize: '0.65rem', bgcolor: getStatusColor(task.completed, task.priority) + '22', color: getStatusColor(task.completed, task.priority), fontWeight: 'bold' }} />
+                      <Typography variant="caption" color="text.secondary">{task.completed ? 'Done' : format(parseISO(task.dueDate), 'HH:mm')}</Typography>
+                    </Stack>
+                  </Paper>
+                </Grow>
               ))
             )}
           </Box>
