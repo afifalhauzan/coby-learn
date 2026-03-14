@@ -240,7 +240,7 @@ function RegisterPage(): React.JSX.Element {
       >
         <Stack spacing={3} alignItems="center">
           <Box sx={{ textAlign: 'center' }}>
-            <Typography variant="h4" fontWeight="600" sx={{ color: 'text.primary' }}>
+            <Typography variant="h4" fontWeight="600" sx={{ color: 'text.primary', mb: 1 }}>
               Create Account
             </Typography>
             <Typography variant="body2" color="text.secondary">

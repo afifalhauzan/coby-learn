@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Button, Container, Grid, Paper, Stack, Typography } from '@mui/material';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import SchoolIcon from '@mui/icons-material/School';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
 import heroImage from '../../assets/hero_image.png';
 import { COLORS } from './landingPage.constants';
 import { useTheme, useMediaQuery } from '@mui/material';
@@ -12,6 +12,8 @@ interface HeroProps {
     onPrimaryClick: () => void;
     onSecondaryClick: () => void;
 }
+
+const HERO_WORDS = ['Smarter,', 'Better,'];
 
 function StatCard({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }): React.JSX.Element {
     return (
@@ -47,6 +49,15 @@ function Hero({ isLoggedIn, onPrimaryClick, onSecondaryClick }: HeroProps): Reac
     const { scrollY } = useScroll();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+    const [wordIndex, setWordIndex] = useState(0);
+
+    useEffect(() => {
+        const timer = window.setInterval(() => {
+            setWordIndex((prev) => (prev + 1) % HERO_WORDS.length);
+        }, 5500);
+
+        return () => window.clearInterval(timer);
+    }, []);
 
     // Adjust range based on device
     // On mobile, we reduce the travel distance (e.g., 40px instead of 150px)
@@ -84,7 +95,40 @@ function Hero({ isLoggedIn, onPrimaryClick, onSecondaryClick }: HeroProps): Reac
                                 color: '#1A2B5E',
                             }}
                         >
-                            Learn Smarter,
+                            Learn{' '}
+                            <Box
+                                component="span"
+                                sx={{
+                                    position: 'relative',
+                                    display: 'inline-flex',
+                                    width: { xs: '190px', md: '260px' },
+                                    height: '1.13em',
+                                    overflow: 'hidden',
+                                    verticalAlign: 'bottom',
+                                }}
+                            >
+                                <AnimatePresence mode="wait">
+                                    <motion.span
+                                        key={HERO_WORDS[wordIndex]}
+                                        initial={{ opacity: 0, y: 18 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -18 }}
+                                        transition={{ duration: 0.35, ease: 'easeOut' }}
+                                        style={{
+                                            position: 'absolute',
+                                            left: 0,
+                                            top: 0,
+                                            display: 'inline-block',
+                                            color: 'primary.main',
+                                            font: 'inherit',
+                                            lineHeight: 'inherit',
+                                        }}
+                                    >
+                                        {HERO_WORDS[wordIndex]}
+                                    </motion.span>
+                                </AnimatePresence>
+                            </Box>
+                            
                         </Typography>
                         <Typography
                             variant="h2"
@@ -166,18 +210,34 @@ function Hero({ isLoggedIn, onPrimaryClick, onSecondaryClick }: HeroProps): Reac
                                 display: 'inline-block'   // Shrink-wrap to content
                             }}
                         >
-                            <Box
-                                component="img"
-                                src={heroImage}
-                                alt="Student learning with AI"
-                                sx={{
-                                    width: '100%',
-                                    display: 'block',       // Remove image bottom gap
-                                    height: 'auto',
-                                    borderRadius: '24px',
-                                    objectFit: 'cover',
+                            <motion.div
+                                animate={{
+                                    boxShadow: [
+                                        '0 0 0px rgba(37, 99, 235, 0)',   // Start: No glow
+                                        '0 0 40px rgba(37, 99, 235, 0.5)', // Middle: Full glow
+                                    ],
                                 }}
-                            />
+                                transition={{
+                                    duration: 2,
+                                    repeat: Infinity,
+                                    repeatType: "mirror", // This is the secret to "smooth infinite in and out"
+                                    ease: "easeInOut",    // Prevents the mechanical/blocked linear speed
+                                }}
+                                style={{ borderRadius: 24, overflow: 'visible' }} // Ensure overflow is visible!
+                            >
+                                <Box
+                                    component="img"
+                                    src={heroImage}
+                                    alt="Student learning with AI"
+                                    sx={{
+                                        width: '100%',
+                                        display: 'block',       // Remove image bottom gap
+                                        height: 'auto',
+                                        borderRadius: '24px',
+                                        objectFit: 'cover',
+                                    }}
+                                />
+                            </motion.div>
 
                             {/* Top-left stat card - Now anchored exactly to image top-left */}
                             <Box sx={{ position: 'absolute', top: { xs: 20, md: 40 }, left: { xs: -10, md: -24 } }}>
