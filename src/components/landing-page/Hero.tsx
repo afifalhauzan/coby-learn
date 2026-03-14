@@ -5,6 +5,7 @@ import SchoolIcon from '@mui/icons-material/School';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import heroImage from '../../assets/hero_image.png';
 import { COLORS } from './landingPage.constants';
+import { useTheme, useMediaQuery } from '@mui/material';
 
 interface HeroProps {
     isLoggedIn: boolean;
@@ -44,8 +45,22 @@ function StatCard({ icon, label, value }: { icon: React.ReactNode; label: string
 
 function Hero({ isLoggedIn, onPrimaryClick, onSecondaryClick }: HeroProps): React.JSX.Element {
     const { scrollY } = useScroll();
-    const topCardParallaxY = useTransform(scrollY, [0, 600], [0, 88]);
-    const bottomCardParallaxY = useTransform(scrollY, [0, 600], [0, 88]);
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+    // Adjust range based on device
+    // On mobile, we reduce the travel distance (e.g., 40px instead of 150px)
+    const topCardParallaxY = useTransform(
+        scrollY,
+        [0, 700],
+        [0, isMobile ? 30 : 150]
+    );
+
+    const bottomCardParallaxY = useTransform(
+        scrollY,
+        [0, 700],
+        [0, isMobile ? 25 : 95]
+    );
 
     return (
         <Box
@@ -87,7 +102,7 @@ function Hero({ isLoggedIn, onPrimaryClick, onSecondaryClick }: HeroProps): Reac
                             variant="body1"
                             sx={{ color: '#4A5568', maxWidth: 480, mb: 4, lineHeight: 1.75, fontSize: '1rem' }}
                         >
-                            Upload your study materials and let AI instantly transform them into summaries, quizzes, and flashcards. Turn hours of reading into minutes of mastering.
+                            Upload your study materials and let AI instantly transform them into summaries, quizzes, and flashcards. <br /> Turn hours of reading into minutes of mastering.
                         </Typography>
 
                         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
@@ -185,7 +200,7 @@ function Hero({ isLoggedIn, onPrimaryClick, onSecondaryClick }: HeroProps): Reac
                                 <motion.div style={{ y: bottomCardParallaxY }}>
                                     <motion.div
                                         animate={{ y: [0, 10, 0] }}
-                                        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.25 }}
+                                        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
                                     >
                                         <StatCard
                                             icon={<SchoolIcon />}

@@ -92,31 +92,27 @@ function LandingNavbar({
               </Typography>
             </Box>
 
-            {!isMobile && (
-              <Stack direction="row" spacing={4} alignItems="center">
-                {LANDING_NAV_ITEMS.map((item) => (
-                  <Button
-                    key={item.id}
-                    onClick={() => handleSectionClick(item.id)}
-                    sx={{
-                      color: COLORS.textMuted,
-                      '&:hover': {
-                        color: COLORS.textMuted,
-                        opacity: 0.8,
-                      },
-                      textTransform: 'none',
-                      fontSize: '1rem',
-                    }}
-                  >
-                    {item.label}
-                  </Button>
-                ))}
-              </Stack>
-            )}
-
-            <Stack direction="row" spacing={2} alignItems="center">
+            <Stack direction="row" spacing={1} alignItems="center">
               {!isMobile && (
                 <>
+                  {LANDING_NAV_ITEMS.map((item) => (
+                    <Button
+                      key={item.id}
+                      onClick={() => handleSectionClick(item.id)}
+                      sx={{
+                        color: COLORS.textMuted,
+                        '&:hover': {
+                          color: COLORS.textMuted,
+                          opacity: 0.8,
+                        },
+                        textTransform: 'none',
+                        fontSize: '14px',
+                      }}
+                    >
+                      {item.label}
+                    </Button>
+                  ))}
+
                   {isLoggedIn ? (
                     <Button
                       variant="contained"
@@ -143,6 +139,7 @@ function LandingNavbar({
                           color: 'primary.blue',
                           borderColor: 'primary.blue',
                           textTransform: 'none',
+                          fontWeight: 'bold',
                           borderRadius: '8px',
                           '&:hover': {
                             borderColor: 'primary.blue',
@@ -159,6 +156,7 @@ function LandingNavbar({
                           bgcolor: COLORS.primary,
                           color: 'white',
                           borderRadius: '8px',
+                          fontWeight: 'bold',
                           px: 3,
                           textTransform: 'none',
                           boxShadow: 'none',
