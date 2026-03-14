@@ -43,14 +43,6 @@ function Navbar(): React.JSX.Element {
   const theme = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
-  const logoTransition = theme.transitions.create('transform', {
-    duration: theme.transitions.duration.shorter,
-    easing: theme.transitions.easing.easeInOut,
-  });
-  const navIndicatorTransition = theme.transitions.create('opacity', {
-    duration: theme.transitions.duration.shorter,
-    easing: theme.transitions.easing.easeInOut,
-  });
 
   // Breakpoints: MD (Tablet/PC Kecil) ke bawah dianggap Mobile
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
@@ -107,7 +99,7 @@ function Navbar(): React.JSX.Element {
                 alt="Logo"
                 style={{
                   width: isMobile ? '35px' : '50px', // Kecil di HP, Besar di PC
-                  transition: logoTransition
+                  transition: '0.3s'
                 }}
               />
 
@@ -159,7 +151,7 @@ function Navbar(): React.JSX.Element {
                         // 2. Control visibility with opacity instead of conditional rendering
                         // This prevents the "jump" when the element is added/removed
                         opacity: isActive(item.path) ? 1 : 0,
-                        transition: navIndicatorTransition
+                        transition: 'opacity 0.2s ease'
                       }
                     }}
                   >

@@ -6,6 +6,7 @@ import {
   Button,
   Paper,
   IconButton,
+  Fab,
   Stack,
   Skeleton,
   Alert,
@@ -13,10 +14,12 @@ import {
   TextField,
   Avatar,
   Chip,
+  Dialog,
 } from '@mui/material';
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
+import CloseIcon from '@mui/icons-material/Close';
 import SendIcon from '@mui/icons-material/Send';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import StyleIcon from '@mui/icons-material/Style';
@@ -37,12 +40,27 @@ import { getChatHistory, sendChatMessage, type ChatMessage } from '../services/a
 
 import GenerateQuizDialog from '../components/library/GenerateQuizDialog';
 import FocusSessionWidget from '../components/common/FocusSessionWidget';
+import { useUiStore } from '../stores/useUiStore';
+
+const CHAT_SUGGESTIONS = [
+  'Summarize this material in simple points',
+  'Give me 5 likely quiz questions from this material',
+  'Explain the hardest concept in this material',
+];
 
 interface ChatWidgetProps {
   materialId: number;
+  withTopMargin?: boolean;
+  initialPrompt?: string;
+  onPromptConsumed?: () => void;
 }
 
-const ChatWidget = ({ materialId }: ChatWidgetProps) => {
+const ChatWidget = ({
+  materialId,
+  withTopMargin = true,
+  initialPrompt,
+  onPromptConsumed,
+}: ChatWidgetProps) => {
   const [chatInput, setChatInput] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>([]);
 
@@ -98,11 +116,32 @@ const ChatWidget = ({ materialId }: ChatWidgetProps) => {
     chatMutation.mutate(userText);
   };
 
+  useEffect(() => {
+    if (!initialPrompt || chatMutation.isPending) return;
+
+    const trimmedPrompt = initialPrompt.trim();
+    if (!trimmedPrompt) {
+      onPromptConsumed?.();
+      return;
+    }
+
+    const tempUserMessage: ChatMessage = {
+      id: Date.now(),
+      role: 'user',
+      message: trimmedPrompt,
+      created_at: new Date().toISOString(),
+    };
+
+    setMessages((prev) => [...prev, tempUserMessage]);
+    setChatInput('');
+    chatMutation.mutate(trimmedPrompt);
+    onPromptConsumed?.();
+  }, [initialPrompt, chatMutation, materialId, onPromptConsumed]);
+
   return (
     <Paper
       elevation={0}
       sx={{
-        borderRadius: 2, // 2 * 8px = 16px
         bgcolor: 'background.paper',
         border: '1px solid',
         borderColor: 'divider',
@@ -110,7 +149,7 @@ const ChatWidget = ({ materialId }: ChatWidgetProps) => {
         display: 'flex',
         flexDirection: 'column',
         height: '500px',
-        mt: 4
+        mt: withTopMargin ? 4 : 0
       }}
     >
       {/* Chat Header */}
@@ -219,8 +258,12 @@ function MaterialDetailPage(): React.JSX.Element {
   const { materialId } = useParams<{ materialId: string }>();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const hasSeenChatSuggestions = useUiStore((state) => state.hasSeenChatSuggestions);
+  const markChatSuggestionsSeen = useUiStore((state) => state.markChatSuggestionsSeen);
 
   const [openQuizDialog, setOpenQuizDialog] = useState(false);
+  const [openChatDialog, setOpenChatDialog] = useState(false);
+  const [selectedSuggestion, setSelectedSuggestion] = useState<string | null>(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -272,6 +315,23 @@ function MaterialDetailPage(): React.JSX.Element {
   const handleCreateFlashcard = () => {
     if (!materialId) return;
     flashcardMutation.mutate({ material_id: Number(materialId) });
+  };
+
+  const handleOpenChat = () => {
+    setOpenChatDialog(true);
+    if (!hasSeenChatSuggestions) {
+      markChatSuggestionsSeen();
+    }
+  };
+
+  const handleCloseChatSuggestions = () => {
+    markChatSuggestionsSeen();
+  };
+
+  const handleSuggestionClick = (suggestion: string) => {
+    setSelectedSuggestion(suggestion);
+    setOpenChatDialog(true);
+    markChatSuggestionsSeen();
   };
 
   const formatDate = (dateString: string) => {
@@ -423,26 +483,42 @@ function MaterialDetailPage(): React.JSX.Element {
           </Box>
 
           {/* === KOLOM KANAN (SIDEBAR STICKY) === */}
-          <Box component="aside">
-            <Box sx={{ position: 'sticky', top: 24 }}>
+          <Box component="aside"
+            sx={{
+              // Ensure the aside takes up the full height of the grid row
+              height: '100%',
+              // Only apply sticky on desktop (lg and up)
+              display: { xs: 'block', lg: 'block' }
+              
+            }}>
+            <Box sx={{
+              // This is the actual element that sticks
+              position: { xs: 'static', lg: 'sticky' },
+              // 24px + the height of your navbar (e.g., 64px) 
+              // Use a higher number if you have a sticky Header
+              top: 110,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 3
+            }}>
 
               {/* Tombol Aksi */}
-              <Stack spacing={2} sx={{ mb: 4 }}>
+              <Stack spacing={2} sx={{ mb: 1 }}>
                 <Button
                   fullWidth variant="contained" startIcon={<AutoAwesomeIcon />}
                   onClick={() => setOpenQuizDialog(true)} disabled={quizMutation.isPending}
                   sx={{
-                    bgcolor: 'secondary.main', color: 'white', py: 1.5, borderRadius: '12px', fontWeight: 'bold', textTransform: 'none',
+                    bgcolor: 'secondary.main', color: 'white', py: 1.5, borderRadius: '12px',  textTransform: 'none',
                     '&:hover': { bgcolor: 'secondary.dark' }
                   }}
                 >
                   {quizMutation.isPending ? 'Generating...' : 'Generate New Quiz'}
                 </Button>
                 <Button
-                  fullWidth variant="contained" startIcon={<StyleIcon />}
+                  fullWidth variant="outlined" startIcon={<StyleIcon />}
                   onClick={handleCreateFlashcard} disabled={flashcardMutation.isPending}
                   sx={{
-                    bgcolor: 'action.selected', color: 'text.primary', py: 1.5, borderRadius: '12px', fontWeight: 'bold', textTransform: 'none',
+                    borderColor: 'primary.main', color: 'primary.main', py: 1, borderRadius: '12px', textTransform: 'none',
                     '&:hover': { bgcolor: 'action.hover' }
                   }}
                 >
@@ -452,9 +528,6 @@ function MaterialDetailPage(): React.JSX.Element {
 
               {/* Widget Focus */}
               <FocusSessionWidget />
-
-              {/* Widget Chatbot */}
-              <ChatWidget materialId={Number(materialId)} />
 
             </Box>
           </Box>
@@ -467,6 +540,114 @@ function MaterialDetailPage(): React.JSX.Element {
           onSubmit={handleGenerateSubmit}
           isLoading={quizMutation.isPending}
         />
+
+        {!hasSeenChatSuggestions && (
+          <Paper
+            elevation={0}
+            sx={{
+              position: 'fixed',
+              right: 24,
+              bottom: { xs: 196, md: 100 },
+              width: { xs: 'calc(100vw - 32px)', sm: 320 },
+              maxWidth: 320,
+              p: 2,
+              border: '1px solid',
+              borderColor: 'divider',
+              boxShadow: '0 14px 34px rgba(0, 0, 0, 0.14)',
+              zIndex: (theme) => theme.zIndex.modal - 2,
+              '&::after': {
+                content: '""',
+                position: 'absolute',
+                right: 24,
+                bottom: -10,
+                width: 20,
+                height: 20,
+                bgcolor: 'background.paper',
+                borderRight: '1px solid',
+                borderBottom: '1px solid',
+                borderColor: 'divider',
+                transform: 'rotate(45deg)',
+              },
+            }}
+          >
+            <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 1, mb: 1.5 }}>
+              <Box>
+                <Typography variant="subtitle2" fontWeight="bold" sx={{ color: 'text.primary' }}>
+                  Need help with this material?
+                </Typography>
+                <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                  Try one of these prompts with the AI tutor.
+                </Typography>
+              </Box>
+              <IconButton size="small" onClick={handleCloseChatSuggestions} sx={{ mt: -0.5, mr: -0.5 }}>
+                <CloseIcon fontSize="small" />
+              </IconButton>
+            </Box>
+
+            <Stack spacing={1}>
+              {CHAT_SUGGESTIONS.map((suggestion) => (
+                <Button
+                  key={suggestion}
+                  fullWidth
+                  variant="outlined"
+                  onClick={() => handleSuggestionClick(suggestion)}
+                  sx={{
+                    justifyContent: 'flex-start',
+                    textAlign: 'left',
+                    textTransform: 'none',
+                    borderColor: 'divider',
+                    color: 'text.primary',
+                    bgcolor: 'background.default',
+                    '&:hover': {
+                      borderColor: 'secondary.main',
+                      bgcolor: 'action.hover',
+                    },
+                  }}
+                >
+                  {suggestion}
+                </Button>
+              ))}
+            </Stack>
+          </Paper>
+        )}
+
+        <Fab
+          color="secondary"
+          aria-label="Open AI tutor"
+          onClick={handleOpenChat}
+          sx={{
+            position: 'fixed',
+            right: 24,
+            bottom: { xs: 120, md: 24 },
+            zIndex: (theme) => theme.zIndex.modal - 1,
+            color: 'white',
+            boxShadow: '0 10px 24px rgba(0, 0, 0, 0.18)',
+            '&:hover': { bgcolor: 'secondary.dark' },
+          }}
+        >
+          <SmartToyIcon />
+        </Fab>
+
+        <Dialog
+          open={openChatDialog}
+          onClose={() => setOpenChatDialog(false)}
+          fullWidth
+          maxWidth="sm"
+          PaperProps={{
+            sx: {
+              bgcolor: 'transparent',
+              boxShadow: 'none',
+              overflow: 'visible',
+            },
+          }}
+        >
+          <ChatWidget
+            materialId={Number(materialId)}
+            withTopMargin={false}
+            initialPrompt={selectedSuggestion || undefined}
+            onPromptConsumed={() => setSelectedSuggestion(null)}
+          />
+        </Dialog>
       </Box>
     </Box>
   );

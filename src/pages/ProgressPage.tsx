@@ -27,14 +27,6 @@ import StudyHeatmap from '../components/progress/StudyHeatmap';
 
 function ProgressPage(): React.JSX.Element {
   const theme = useTheme();
-  const streakSurfaceTransition = theme.transitions.create('background-color', {
-    duration: theme.transitions.duration.standard,
-    easing: theme.transitions.easing.easeInOut,
-  });
-  const streakAccentTransition = theme.transitions.create('color', {
-    duration: theme.transitions.duration.standard,
-    easing: theme.transitions.easing.easeInOut,
-  });
 
   const [filter, setFilter] = useState<'day' | 'week' | 'month' | 'year'>('week');
 
@@ -112,7 +104,7 @@ function ProgressPage(): React.JSX.Element {
               borderRadius: '16px',
               border: '1px solid',
               borderColor: 'divider',
-              transition: streakSurfaceTransition
+              transition: 'background-color 0.3s'
             }}
           >
             <Box>
@@ -125,9 +117,9 @@ function ProgressPage(): React.JSX.Element {
             </Box>
 
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              <LocalFireDepartmentIcon sx={{ fontSize: 40, color: '#FFA726', transition: streakAccentTransition }} />
+              <LocalFireDepartmentIcon sx={{ fontSize: 40, color: '#FFA726', transition: 'color 0.3s' }} />
 
-              <Typography variant="h3" fontWeight="bold" sx={{ color: '#FFA726', transition: streakAccentTransition }}>
+              <Typography variant="h3" fontWeight="bold" sx={{ color: '#FFA726', transition: 'color 0.3s' }}>
                 {adjustedStreak}
               </Typography>
             </Box>

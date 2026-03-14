@@ -180,16 +180,15 @@ function FocusSessionWidget(): React.JSX.Element {
 
   return (
     <Paper
-      elevation={0}
+      elevation={1}
       sx={{
         bgcolor: 'background.paper',
-        border: '1px solid',
         borderColor: 'divider',
         display: 'flex', 
         flexDirection: 'column', // Force column layout untuk sidebar
         alignItems: 'center', 
         justifyContent: 'center', 
-        gap: 3,
+        gap: 2,
         position: 'relative', 
         overflow: 'hidden',
         width: '100%'
@@ -204,19 +203,19 @@ function FocusSessionWidget(): React.JSX.Element {
         
         {/* Header Widget */}
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1, mb: 1 }}>
-          <Typography variant="subtitle2" fontWeight="bold" sx={{ color: 'secondary.main', textTransform: 'uppercase', letterSpacing: 1 }}>
+          <Typography variant="subtitle2" sx={{ color: 'primary.main', letterSpacing: 1 }}>
             Focus Timer
           </Typography>
           {isTimerRunning && (
             <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: 'error.main', animation: 'pulse 1.5s infinite' }} />
           )}
-          <IconButton size="small" onClick={() => setOpenSettings(true)} sx={{ color: 'text.secondary', p: 0.5 }}>
-            <SettingsIcon fontSize="small" />
+          <IconButton size="small" onClick={() => setOpenSettings(true)} sx={{ color: 'primary.main', p: 0.5 }}>
+            <SettingsIcon fontSize="small" sx={{ color: 'primary.main' }} />
           </IconButton>
         </Box>
 
         {/* Big Timer */}
-        <Typography variant="h1" fontWeight="800" sx={{ color: 'text.primary', letterSpacing: 2, fontSize: '3.5rem', lineHeight: 1 }}>
+        <Typography variant="h4" fontWeight="500" sx={{ color: 'text.primary', letterSpacing: 2, fontSize: '3.5rem', lineHeight: 1 }}>
           {formatTime(timeLeft)}
         </Typography>
 
@@ -257,12 +256,11 @@ function FocusSessionWidget(): React.JSX.Element {
       {/* === MUSIC PLAYER SECTION (COMPACT CARD) === */}
       <Box 
         sx={{ 
-          width: '100%', 
-          bgcolor: 'background.default',
-          p: 2, 
-          borderRadius: '16px', 
-          border: '1px solid',
-          borderColor: 'divider'
+          width: '90%', 
+          p:1,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center', 
         }}
       >
         <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center', mb: 2 }}>
@@ -271,17 +269,12 @@ function FocusSessionWidget(): React.JSX.Element {
             width: 48, height: 48, borderRadius: '10px', 
             bgcolor: 'background.paper', display: 'flex', alignItems: 'center', 
             justifyContent: 'center', overflow: 'hidden', flexShrink: 0,
-            border: '1px solid',
-            borderColor: 'divider'
+            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)'
           }}>
-             {isPlaying ? 
-               <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExazF5ZHR0aDhmaDhmaDhmaDhmaDhmaDhmaDhmaDhmaDhmaC9lcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/XMaB779YcmP9m/giphy.gif" alt="playing" style={{ width: '100%', opacity: 0.8 }} /> 
-               : <VolumeUpIcon sx={{ color: 'text.secondary', fontSize: 20 }} />
-             }
+            <VolumeUpIcon sx={{ color: 'primary.main', fontSize: 20 }} />
           </Box>
-          
-          {/* Info Text */}
-          <Box sx={{ flexGrow: 1, minWidth: 0 }}>
+
+          <Box sx={{ width: '100%' }}>
             <Typography variant="body2" fontWeight="bold" sx={{ color: 'text.primary', lineHeight: 1.2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
               {currentInfo.name}
             </Typography>
@@ -292,42 +285,43 @@ function FocusSessionWidget(): React.JSX.Element {
         </Box>
 
         {/* Music Controls */}
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+        <Box sx={{ display: 'flex', width: '100%', alignItems: 'center', gap: 1.5 }}>
            <IconButton 
              onClick={toggleMusic} 
              size="small"
              sx={{ 
-               color: 'text.primary', 
-               bgcolor: 'action.selected', 
-               '&:hover': { bgcolor: 'action.hover' }, 
+               color: 'white', 
+               bgcolor: 'text.primary', 
+               '&:hover': { bgcolor: 'text.secondary' }, 
                width: 32, height: 32 
              }}
            >
              {isPlaying ? <PauseIcon fontSize="small" /> : <PlayArrowIcon fontSize="small" />}
            </IconButton>
 
-           <LinearProgress 
-             variant="determinate" 
-             value={isPlaying ? 100 : 0} 
-             sx={{ 
-               flexGrow: 1, height: 4, borderRadius: 2, 
-               bgcolor: 'background.paper', 
-               '& .MuiLinearProgress-bar': { bgcolor: '#10B981' } 
-             }} 
-           />
-           
-           <IconButton onClick={handleSkip} size="small" sx={{ color: 'text.secondary', '&:hover': { color: 'text.primary' } }}>
-             <SkipNextIcon fontSize="small" />
-           </IconButton>
+          <LinearProgress
+            variant="determinate"
+            value={isPlaying ? 100 : 0}
+            sx={{
+              flexGrow: 1,
+              height: 6,
+              borderRadius: 999,
+              bgcolor: 'rgba(0, 0, 0, 0.12)',
+              '& .MuiLinearProgress-bar': { bgcolor: 'text.primary' },
+            }}
+          />
+
+          <IconButton onClick={handleSkip} sx={{ color: 'text.secondary', '&:hover': { color: 'text.primary' } }}>
+            <SkipNextIcon />
+          </IconButton>
         </Box>
 
-        {/* Search Toggle */}
-        <Button 
+        <Button
           fullWidth
           size="small"
           onClick={() => setOpenMusicSearch(true)}
           startIcon={<MusicNoteIcon fontSize="small" />}
-          sx={{ mt: 1.5, fontSize: '0.7rem', color: 'secondary.main', textTransform: 'none', py: 0.5, '&:hover': { color: 'text.secondary', bgcolor: 'transparent' } }}
+          sx={{ mt: 1.5, fontSize: '0.7rem', color: 'primary.main', textTransform: 'none', py: 0.5, '&:hover': { color: 'text.secondary', bgcolor: 'transparent' } }}
         >
           Change Station
         </Button>
