@@ -416,7 +416,7 @@ function LandingPage(): React.JSX.Element {
                 { step: '03', title: 'Start Learning', desc: 'Take quizzes or review summaries to master the topic.' }
               ].map((item, idx) => (
                 <Box key={idx} sx={{ display: 'flex', gap: 3 }}>
-                  <Typography variant="h2" fontWeight="900" sx={{ color: 'rgba(255,255,255,0.05)' }}>{item.step}</Typography>
+                  <Typography variant="h2" fontWeight="900" sx={{ color: 'rgba(15, 23, 42, 0.1)' }}>{item.step}</Typography>
                   <Box>
                     <Typography variant="h5" fontWeight="bold" sx={{ mb: 1, color: idx === 1 ? COLORS.primary : 'inherit' }}>{item.title}</Typography>
                     <Typography sx={{ color: COLORS.textMuted }}>{item.desc}</Typography>
