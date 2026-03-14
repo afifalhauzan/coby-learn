@@ -73,13 +73,14 @@ function Navbar(): React.JSX.Element {
         position="sticky" // Sticky to the top, stays visible when scrolling
         elevation={1} // Use shadow elevation 1 from Material Design theme
         sx={{
-          backgroundColor: 'rgba(255, 255, 255, 0.9)',
+          backgroundColor: 'rgba(255, 255, 255, 0.8)',
           backdropFilter: 'blur(12px)',
           borderBottom: '1px solid',
           borderColor: 'divider',
           color: 'text.primary',
           px: 0, // Remove horizontal padding to let Container handle it
           py: { xs: 0.5, md: 1 },
+          m: 0,
           borderRadius: 0,
           top: 0,
           zIndex: 1100,

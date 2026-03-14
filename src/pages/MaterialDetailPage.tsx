@@ -44,7 +44,6 @@ import { useUiStore } from '../stores/useUiStore';
 
 const CHAT_SUGGESTIONS = [
   'Summarize this material in simple points',
-  'Give me 5 likely quiz questions from this material',
   'Explain the hardest concept in this material',
 ];
 
