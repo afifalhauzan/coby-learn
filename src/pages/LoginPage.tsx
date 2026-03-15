@@ -258,9 +258,6 @@ function LoginPage(): React.JSX.Element {
               >
                 {mutation.isPending ? 'Signing In...' : 'Sign In'}
               </Button>
-
-
-
             </Stack>
           </Box>
 
@@ -270,30 +267,11 @@ function LoginPage(): React.JSX.Element {
               component="button"
               variant="body2"
               onClick={() => navigate('/sign-up')}
-              sx={{ fontWeight: 'bold', textDecoration: 'none', color: 'primary.main' }}
+              sx={{ fontWeight: 'bold', textDecoration: 'none', color: 'primary.main', pb: 0.2, '&:hover': { textDecoration: 'underline' } }}
             >
               Sign Up
             </Link>
           </Typography>
-
-          <Box
-            sx={{
-              width: '100%',
-              borderRadius: 2,
-              px: 2,
-              py: 1.25,
-              bgcolor: 'grey.100',
-              border: '1px solid',
-              borderColor: 'divider',
-            }}
-          >
-            <Typography variant="body2" sx={{ color: 'text.secondary', textAlign: 'center' }}>
-              Dummy User: <strong>admin@gmail.com</strong>
-            </Typography>
-            <Typography variant="body2" sx={{ color: 'text.secondary', textAlign: 'center' }}>
-              Password: <strong>password</strong>
-            </Typography>
-          </Box>
         </Stack>
       </Paper>
     </Box>
