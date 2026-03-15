@@ -36,5 +36,6 @@ export default defineConfig({
         secure: false,
       }
     }
-  }
+  },
+  assetsInclude: ['**/*.lottie']
 })

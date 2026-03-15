@@ -142,7 +142,6 @@ function ProgressPage(): React.JSX.Element {
                   dotLottieRefCallback={(instance) => {
                     streakLottieRef.current = instance;
                   }}
-                  renderer="svg"
                   style={{ width: '100%', height: '100%' }}
                 />
               </Box>
