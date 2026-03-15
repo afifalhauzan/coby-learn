@@ -11,7 +11,7 @@ import {
 import { AnimatePresence, motion } from 'framer-motion';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import logoImage from '../../assets/logo_1.svg';
-import FireStreakLottie from '../../assets/FireStreak.lottie';
+// import FireStreakLottie from '../../assets/FireStreak.lottie';
 import QuizIcon from '@mui/icons-material/Quiz';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 
@@ -78,7 +78,7 @@ function DashboardOnboardingModal({ open, username, onFinish }: DashboardOnboard
       return (
         <Box sx={{ width: 180, height: 150 }}>
           <DotLottieReact
-            src={FireStreakLottie}
+            src="/FireStreak.lottie"
             loop
             autoplay
             style={{ width: '100%', height: '100%' }}

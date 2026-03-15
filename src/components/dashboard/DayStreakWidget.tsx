@@ -3,7 +3,7 @@ import { Paper, Typography, Box, Skeleton, useTheme } from '@mui/material';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { useQuery } from '@tanstack/react-query';
 import { getDailyQuizStatus } from '../../services/apiLibraryService';
-import FireStreakLottie from '../../assets/FireStreak.lottie';
+// import FireStreakLottie from '../../assets/FireStreak.lottie';
 
 function DayStreakWidget(): React.JSX.Element {
   const theme = useTheme();
@@ -101,7 +101,7 @@ function DayStreakWidget(): React.JSX.Element {
           }}
         >
           <DotLottieReact
-            src={FireStreakLottie}
+            src="/FireStreak.lottie"
             loop={false}
             autoplay={false}
             dotLottieRefCallback={(instance) => {

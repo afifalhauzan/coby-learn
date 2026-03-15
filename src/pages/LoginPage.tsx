@@ -14,7 +14,7 @@ import { useMutation } from '@tanstack/react-query';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { loginUser, resendVerification } from '../services/apiAuthService';
 import apiClient from '../lib/axios';
-import userLoginLottie from '../assets/UserLogin.lottie';
+// import userLoginLottie from '../assets/UserLogin.lottie';
 
 
 interface FormErrors {
@@ -139,7 +139,7 @@ function LoginPage(): React.JSX.Element {
           {/* Header */}
           <Box sx={{ textAlign: 'center', gap: '8px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <Box sx={{ width: 64, height: 64, mx: 'auto', mb: 2 }}>
-              <DotLottieReact src={userLoginLottie} loop autoplay style={{ width: '100%', height: '100%' }} />
+              <DotLottieReact src="/UserLogin.lottie" loop autoplay style={{ width: '100%', height: '100%' }} />
             </Box>
             <Typography variant="h4" fontWeight="600" sx={{ color: 'text.primary' }}>
               Welcome Back

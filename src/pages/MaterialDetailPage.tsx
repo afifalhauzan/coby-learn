@@ -415,22 +415,33 @@ function MaterialDetailPage(): React.JSX.Element {
                   position: 'sticky',
                   top: isMobile? '0': '100px',
                   zIndex: 2,
-                  height: 4,
-                  borderRadius: 999,
-                  bgcolor: 'action.hover',
-                  overflow: 'hidden',
                   mb: 2,
-                  z: 10
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 1,
                 }}
               >
                 <Box
                   sx={{
-                    width: `${summaryScrollProgress}%`,
-                    height: '100%',
-                    bgcolor: '#9cadca',
-                    transition: 'width 120ms linear',
+                    flex: 1,
+                    height: 4,
+                    borderRadius: 999,
+                    bgcolor: 'action.hover',
+                    overflow: 'hidden',
                   }}
-                />
+                >
+                  <Box
+                    sx={{
+                      width: `${summaryScrollProgress}%`,
+                      height: '100%',
+                      bgcolor: '#9cadca',
+                      transition: 'width 120ms linear',
+                    }}
+                  />
+                </Box>
+                <Typography variant="caption" sx={{ color: 'text.secondary', minWidth: 30, textAlign: 'right', fontSize: '0.7rem', lineHeight: 1 }}>
+                  {Math.round(summaryScrollProgress)}%
+                </Typography>
               </Box>
 
               <Typography variant="h6" fontWeight="bold" sx={{ mb: 3, color: 'text.primary' }}>

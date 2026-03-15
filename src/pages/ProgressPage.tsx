@@ -25,7 +25,7 @@ import { getDailyQuizStatus } from '../services/apiLibraryService';
 import StatCard from '../components/progress/StatCard';
 import StudyHeatmap from '../components/progress/StudyHeatmap';
 
-import FireStreakLottie from '../assets/FireStreak.lottie';
+// import FireStreakLottie from '../assets/FireStreak.lottie';
 
 function ProgressPage(): React.JSX.Element {
   const theme = useTheme();
@@ -138,7 +138,7 @@ function ProgressPage(): React.JSX.Element {
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 0 }}>
               <Box sx={{ width: 64, height: 64 }}>
                 <DotLottieReact
-                  src={FireStreakLottie}
+                  src="/FireStreak.lottie"
                   loop={false}
                   autoplay={false}
                   dotLottieRefCallback={(instance) => {
