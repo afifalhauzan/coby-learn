@@ -1,23 +1,47 @@
 # Coby Learn AI Frontend
 
-Frontend web app for Coby Learn AI, an AI-assisted learning platform where students can upload study materials, generate quizzes and flashcards, chat with an AI tutor, and track progress.
+CobyLearnAi is a integrated AI-assisted learning platform to bridge the gap between passive reading and active mastering. Students can upload study materials, generate quizzes and flashcards, chat with an AI tutor, and track progress. By leveraging the power of Gemini AI and modern frontend engineering, it empowers students to turn dense PDFs, YouTube lectures, and raw notes into structured study guides, adaptive quizzes, and interactive flashcards.
 
-**Website Name:** Coby Learn AI (also shown in UI as CobyLearnAi)
+**Website Name:** Coby Learn AI (shown in UI as CobyLearnAi)
 
 **Team Name:** hmm, apa ya
 
-**With Backend:** Not in code base, in seperate service
+**With Backend:** Not in code base, in seperate repository ([The Backend Repository](https://github.com/mohamadarif03/focus-room-be))
 
-**Main Features:**
-- Personalized dashboard with daily quiz status, streak, tasks summary & quick actions.
-- Material upload and management for PDF, text, and YouTube sources.
-- AI-generated summary display and AI Tutor chat tied to a specific material.
-- AI quiz generation, quiz attempt submission, and detailed quiz result view.
-- AI flashcard generation.
-- Task planner with list and calendar views, filtering, grouping, and Google Calendar shortcut.
-- Progress analytics with heatmap, streak card, and key learning stats.
-- Responsive design for desktop and mobile.
-- Mobile PWA support via Vite PWA. 
+---
+
+## **Main Features**
+
+### 📖 **Intelligent Material Management**
+
+* **Multi-Source Input:** Seamlessly upload PDFs, raw text, or YouTube links.
+* **Smart Summarization:** AI extracts core concepts, definitions, and key takeaways for efficient learning.
+* **Library Organization:** A clean, folder-based system for efficient study material management.
+
+---
+
+### 🎯 **Active Learning & Evaluation**
+
+* **Adaptive Quiz Generation:** Instantly generate multiple-choice quizzes from any material.
+* **Flashcard System:** Flashcards created automatically by AI.
+* **AI Tutor:** A chatbot companion tied to specific materials that acts as a personalized study partner.
+
+---
+
+### 📊 **Progress & Habit Tracker**
+
+* **Personalized Dashboard:** One-glance view of daily quiz status, focus streaks, and pending tasks.
+* **Productivity Heatmap:** Comprehensive task planning with Google Calendar integration and visualization to track consistency over time.
+* **Pomodoro Integration:** Focus timer and Lofi Radio to facilitate study sessions.
+
+---
+
+### 🎨 **Intuitive User Experience**
+
+* **Material UI Design:** Utilizes a native-based design to provide a familiar, intuitive, and high-performance interface.
+* **PWA Support:** Full Progressive Web App support for seamless mobile use, ensuring students can stay productive anytime, anywhere with increased access.
+
+---
 
 ## Tech Stack
 
@@ -72,8 +96,6 @@ npm install
 ```bash
 npm run dev
 ```
-
-App runs on Vite dev server (host enabled).
 
 ### Build Production
 
