@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Box, Container, useMediaQuery } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 
@@ -8,6 +8,7 @@ import DailyQuizWidget from '../components/dashboard/DailyQuizWidget';
 import DayStreakWidget from '../components/dashboard/DayStreakWidget';
 import ToDoWidget from '../components/dashboard/ToDoWidget';
 import TasksWidget from '../components/dashboard/TasksWidget';
+import SpotlightCallout from '../components/dashboard/SpotlightCallout';
 import QuickActionsWidget from '../components/dashboard/QuickActionsWidget';
 import FocusSessionWidget from '../components/dashboard/FocusSessionWidget';
 
@@ -28,11 +29,14 @@ const getTodayDate = () => {
 };
 
 function Dashboard(): React.JSX.Element {
+  const addTaskRef = useRef<HTMLButtonElement | null>(null);
   const todayDate = getTodayDate();
   const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
   const hasCompletedOnboarding = useDashboardOnboardingStore((state) => state.hasCompletedOnboarding);
+  const hasSeenAddTaskSpotlight = useDashboardOnboardingStore((state) => state.hasSeenAddTaskSpotlight);
   const hasHydrated = useDashboardOnboardingStore((state) => state.hasHydrated);
   const completeOnboarding = useDashboardOnboardingStore((state) => state.completeOnboarding);
+  const completeSpotlight = useDashboardOnboardingStore((state) => state.completeSpotlight);
 
   const { data: dailyStatus } = useQuery({
     queryKey: ['dailyQuizStatus'],
@@ -47,6 +51,8 @@ function Dashboard(): React.JSX.Element {
   const totalTasks = tasks?.length || 0;
   const completedTasks = tasks?.filter((t) => t.completed).length || 0;
   const shouldShowOnboarding = hasHydrated && !hasCompletedOnboarding;
+  const shouldShowAddTaskSpotlight =
+    hasHydrated && hasCompletedOnboarding && !hasSeenAddTaskSpotlight;
 
   if (isMobile) {
     return (
@@ -73,12 +79,18 @@ function Dashboard(): React.JSX.Element {
             <DayStreakWidget />
             <FocusSessionWidget />
 
-            <TasksWidget />
+            <TasksWidget addTaskButtonRef={addTaskRef} />
 
             <DailyQuizWidget />
             <QuickActionsWidget />
           </Box>
         </Container>
+
+        <SpotlightCallout
+          open={shouldShowAddTaskSpotlight}
+          targetRef={addTaskRef}
+          onOverlayClick={completeSpotlight}
+        />
       </Box>
     );
   }
@@ -119,7 +131,7 @@ function Dashboard(): React.JSX.Element {
             </Box>
 
             {/* Middle: Today's Tasks */}
-            <TasksWidget />
+            <TasksWidget addTaskButtonRef={addTaskRef} />
           </Box>
 
           {/* --- RIGHT AREA: Sidebar --- */}
@@ -142,6 +154,12 @@ function Dashboard(): React.JSX.Element {
 
         </Box>
       </Container>
+
+      <SpotlightCallout
+        open={shouldShowAddTaskSpotlight}
+        targetRef={addTaskRef}
+        onOverlayClick={completeSpotlight}
+      />
     </Box>
   );
 }

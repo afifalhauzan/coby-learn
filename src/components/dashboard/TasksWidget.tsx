@@ -43,7 +43,11 @@ const getPriorityColor = (priority: string) => {
   }
 };
 
-function TasksWidget(): React.JSX.Element {
+interface TasksWidgetProps {
+  addTaskButtonRef?: React.RefObject<HTMLButtonElement | null>;
+}
+
+function TasksWidget({ addTaskButtonRef }: TasksWidgetProps): React.JSX.Element {
   const theme = useTheme();
   const queryClient = useQueryClient();
   const todayDate = getTodayDate();
@@ -167,6 +171,7 @@ function TasksWidget(): React.JSX.Element {
           Today's Tasks
         </Typography>
         <Button
+          ref={addTaskButtonRef}
           variant="contained"
           color="primary"
           size="small"

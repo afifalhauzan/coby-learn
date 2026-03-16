@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   Box,
   Typography,
@@ -10,6 +10,7 @@ import {
   Alert,
   Grow,
   useTheme,
+  useMediaQuery,
 } from '@mui/material';
 
 // Icons
@@ -27,12 +28,28 @@ import { getFolders, createFolder, updateFolder, deleteFolder } from '../service
 import FolderDialog from '../components/library/FolderDialog';
 import FileUploadDialog from '../components/library/FileUploadDialog';
 import DeleteConfirmDialog from '../components/common/DeleteConfirmDialog'; // Import the new dialog
+import SpotlightCallout from '../components/dashboard/SpotlightCallout';
 import type { Folder } from '../types/folder.types';
+import { useDashboardOnboardingStore } from '../stores/useDashboardOnboardingStore';
 
 function LibraryPage(): React.JSX.Element {
   const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const desktopAddFolderRef = useRef<HTMLButtonElement | null>(null);
+  const mobileAddFolderRef = useRef<HTMLButtonElement | null>(null);
+  const spotlightTargetRef = isMobile ? mobileAddFolderRef : desktopAddFolderRef;
+  const hasHydrated = useDashboardOnboardingStore((state) => state.hasHydrated);
+  const hasCompletedOnboarding = useDashboardOnboardingStore((state) => state.hasCompletedOnboarding);
+  const hasSeenAddTaskSpotlight = useDashboardOnboardingStore((state) => state.hasSeenAddTaskSpotlight);
+  const hasSeenLibrarySpotlight = useDashboardOnboardingStore((state) => state.hasSeenLibrarySpotlight);
+  const completeLibrarySpotlight = useDashboardOnboardingStore((state) => state.completeLibrarySpotlight);
+  const shouldShowLibrarySpotlight =
+    hasHydrated &&
+    hasCompletedOnboarding &&
+    hasSeenAddTaskSpotlight &&
+    !hasSeenLibrarySpotlight;
   const folderCardTransition = theme.transitions.create(
     ['transform', 'box-shadow', 'border-color', 'background-color'],
     {
@@ -154,6 +171,7 @@ function LibraryPage(): React.JSX.Element {
       {/* Action Buttons */}
       <Box sx={{ display: 'flex', gap: 2, mb: 4 }}>
         <Button
+          ref={desktopAddFolderRef}
           variant="contained"
           startIcon={<AddIcon />}
           onClick={() => {
@@ -186,6 +204,7 @@ function LibraryPage(): React.JSX.Element {
       </Box>
 
       <Fab
+        ref={mobileAddFolderRef}
         color="primary"
         aria-label="Add Folder"
         onClick={() => {
@@ -423,6 +442,15 @@ function LibraryPage(): React.JSX.Element {
         onConfirm={handleConfirmDelete}
         title="Delete Folder?"
         description="Are you sure you want to delete this folder? All files inside will also be removed."
+      />
+
+      <SpotlightCallout
+        open={shouldShowLibrarySpotlight}
+        targetRef={spotlightTargetRef}
+        onOverlayClick={completeLibrarySpotlight}
+        title="Second step: organize your material"
+        description="Create your own folders and add materials so your library stays tidy and easy to review."
+        dismissAriaLabel="Dismiss library spotlight"
       />
 
     </Box>
