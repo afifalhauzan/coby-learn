@@ -2,7 +2,7 @@
 
 CobyLearnAi is a integrated AI-assisted learning platform to bridge the gap between passive reading and active mastering. Students can upload study materials, generate quizzes and flashcards, chat with an AI tutor, and track progress. By leveraging the power of Gemini AI and modern frontend engineering, it empowers students to turn dense PDFs, YouTube lectures, and raw notes into structured study guides, adaptive quizzes, and interactive flashcards.
 
-**Website Name:** Coby Learn AI (shown in UI as CobyLearnAi)
+**Website Name:** Coby Learn AI
 
 **Team Name:** hmm, apa ya
 
