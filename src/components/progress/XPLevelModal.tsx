@@ -17,6 +17,7 @@ import SchoolIcon from '@mui/icons-material/School';
 import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import LockIcon from '@mui/icons-material/Lock';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import type { XPMilestone } from '../../stores/useXPStore';
 
 interface XPLevelModalProps {
@@ -25,6 +26,8 @@ interface XPLevelModalProps {
   totalXP: number;
   currentLevel: XPMilestone;
   milestones: XPMilestone[];
+  seasonMonthLabel: string;
+  daysRemainingInSeason: number;
 }
 
 const iconByLevel: Record<number, React.JSX.Element> = {
@@ -35,7 +38,15 @@ const iconByLevel: Record<number, React.JSX.Element> = {
   5: <EmojiEventsIcon fontSize="small" />,
 };
 
-function XPLevelModal({ open, onClose, totalXP, currentLevel, milestones }: XPLevelModalProps): React.JSX.Element {
+function XPLevelModal({
+  open,
+  onClose,
+  totalXP,
+  currentLevel,
+  milestones,
+  seasonMonthLabel,
+  daysRemainingInSeason,
+}: XPLevelModalProps): React.JSX.Element {
   return (
     <Modal
       open={open}
@@ -71,6 +82,30 @@ function XPLevelModal({ open, onClose, totalXP, currentLevel, milestones }: XPLe
         <Typography variant="body2" color="text.secondary" sx={{ mt: 0.25 }}>
           Total XP: {totalXP}
         </Typography>
+
+        <Box
+          sx={{
+            mt: 1.5,
+            p: 1.25,
+            borderRadius: 1,
+            display: 'flex',
+            alignItems: 'flex-start',
+            gap: 1,
+            bgcolor: 'rgba(25, 118, 210, 0.08)',
+            border: '1px solid',
+            borderColor: 'rgba(25, 118, 210, 0.22)',
+          }}
+        >
+          <InfoOutlinedIcon sx={{ mt: 0.1, fontSize: 18, color: 'primary.main' }} />
+          <Box>
+            <Typography variant="caption" sx={{ color: 'text.primary', fontWeight: 600, display: 'block' }}>
+              XP and Levels reset at the start of every month. Keep the momentum to reach Gemstone Master this season!
+            </Typography>
+            <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 0.5 }}>
+              {daysRemainingInSeason} days left in {seasonMonthLabel} Season
+            </Typography>
+          </Box>
+        </Box>
 
         <Divider sx={{ my: 2 }} />
 

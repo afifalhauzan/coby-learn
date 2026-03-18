@@ -62,6 +62,11 @@ function ProgressPage(): React.JSX.Element {
     queryFn: () => getStudentStats(filter),
   });
 
+  const { data: monthlyStats } = useQuery({
+    queryKey: ['studentStats', 'month'],
+    queryFn: () => getStudentStats('month'),
+  });
+
   const { data: streakData } = useQuery({
     queryKey: ['dailyQuizStatus'],
     queryFn: getDailyQuizStatus,
@@ -111,21 +116,33 @@ function ProgressPage(): React.JSX.Element {
   };
 
   useEffect(() => {
-    if (!stats) {
+    if (!monthlyStats) {
       return;
     }
 
     setXPFromStats({
-      hours: parseStudyHours(stats.total_study_hours),
-      tasks: stats.tasks_completed,
-      quizzes: stats.quizzes_taken,
+      hours: parseStudyHours(monthlyStats.total_study_hours),
+      tasks: monthlyStats.tasks_completed,
+      quizzes: monthlyStats.quizzes_taken,
     });
-  }, [stats, setXPFromStats]);
+  }, [monthlyStats, setXPFromStats]);
 
   const currentXPLevel = useMemo(() => getCurrentLevelFromXP(totalXP), [getCurrentLevelFromXP, totalXP]);
   const nextXPLevel = useMemo(() => getNextLevelFromXP(totalXP), [getNextLevelFromXP, totalXP]);
   const xpProgressToNext = useMemo(() => getProgressToNext(totalXP), [getProgressToNext, totalXP]);
   const xpToNextLevel = nextXPLevel ? Math.max(0, nextXPLevel.xp - totalXP) : 0;
+  const seasonDate = useMemo(() => new Date(), []);
+  const seasonMonthLabel = useMemo(
+    () => seasonDate.toLocaleString('en-US', { month: 'long' }),
+    [seasonDate]
+  );
+  const daysRemainingInSeason = useMemo(() => {
+    const year = seasonDate.getFullYear();
+    const month = seasonDate.getMonth();
+    const today = seasonDate.getDate();
+    const totalDays = new Date(year, month + 1, 0).getDate();
+    return totalDays - today;
+  }, [seasonDate]);
 
   useEffect(() => {
     const controls = animate(0, xpProgressToNext, {
@@ -163,6 +180,8 @@ function ProgressPage(): React.JSX.Element {
         totalXP={totalXP}
         currentLevel={currentXPLevel}
         milestones={milestones}
+        seasonMonthLabel={seasonMonthLabel}
+        daysRemainingInSeason={daysRemainingInSeason}
       />
 
       <Snackbar
@@ -232,10 +251,13 @@ function ProgressPage(): React.JSX.Element {
           <Typography variant="subtitle1" fontWeight={700}>
             Level {currentXPLevel.level} - {currentXPLevel.name}
           </Typography>
-          <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 600 }}>
+          <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 600, textAlign: 'right' }}>
             {nextXPLevel ? `Next Level in ${xpToNextLevel} XP` : 'Max Level Reached'}
           </Typography>
         </Box>
+        <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 1 }}>
+          {daysRemainingInSeason} days left in {seasonMonthLabel} Season
+        </Typography>
         <LinearProgress
           variant="determinate"
           value={animatedProgress}
