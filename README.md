@@ -10,7 +10,7 @@ Universitas Brawijaya
 
 ## Deskripsi Karya 
 
-CobyLearnAi adalah platform pembelajaran terintegrasi berbasis AI untuk menjembatani kesenjangan antara membaca pasif dan penguasaan aktif. Siswa dapat mengunggah materi belajar, membuat kuis dan kartu flash, mengobrol dengan tutor AI, dan melacak kemajuan. Dengan memanfaatkan kekuatan AI Gemini dan rekayasa frontend modern, platform ini memberdayakan siswa untuk mengubah PDF yang padat, kuliah YouTube, dan catatan mentah menjadi panduan belajar terstruktur, kuis adaptif, dan kartu flash interaktif.
+CobyLearnAi adalah platform pembelajaran terintegrasi berbasis AI untuk memfasilitasi proses belajar. Siswa dapat mengunggah materi belajar, mengobrol dengan tutor AI, dan melacak kemajuan. Dengan memanfaatkan kekuatan AI Gemini dan teknologi frontend modern, platform ini memberdayakan siswa untuk mengubah PDF materi, video YouTube, dan catatan pembelajaran menjadi panduan belajar terstruktur, kuis adaptif, dan kartu flash interaktif.
 
 ### 1. **Manajemen Materi Cerdas**
 
