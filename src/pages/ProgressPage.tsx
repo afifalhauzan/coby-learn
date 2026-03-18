@@ -200,7 +200,7 @@ function ProgressPage(): React.JSX.Element {
           }}
           severity="success"
           variant="filled"
-          sx={{ width: '100%' }}
+          sx={{ width: '100%', textTransform: 'none',  textColor : 'white', fontWeight: 600, borderRadius: 3, boxShadow: '0 4px 12px rgba(25, 118, 210, 0.3)' }}
         >
           {levelUpEvent
             ? `Level Up! You reached Level ${levelUpEvent.toLevel} - ${levelUpEvent.toName}`
@@ -233,11 +233,11 @@ function ProgressPage(): React.JSX.Element {
         elevation={0}
         onClick={() => setIsXPModalOpen(true)}
         sx={{
-          p: 2,
+          p: 3,
           mb: 3,
-          borderRadius: '24px',
           border: '1px solid',
           borderColor: 'divider',
+          background: 'linear-gradient(135deg, rgba(25, 118, 210, 0.04), rgba(25, 118, 210, 0.08))',
           boxShadow: '0 8px 22px rgba(25, 118, 210, 0.12)',
           cursor: 'pointer',
           transition: 'transform 0.2s ease, box-shadow 0.2s ease',
