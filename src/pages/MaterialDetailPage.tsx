@@ -515,7 +515,7 @@ function MaterialDetailPage(): React.JSX.Element {
                 ))
               ) : (
                 <Paper sx={{ p: 4, textAlign: 'center', bgcolor: 'background.paper', border: '1px dashed', borderColor: 'divider' }}>
-                  <Typography color="text.secondary">Belum ada riwayat kuis.</Typography>
+                  <Typography color="text.secondary">No quiz history available. Generate a new quiz to get started!</Typography>
                 </Paper>
               )}
             </Stack>

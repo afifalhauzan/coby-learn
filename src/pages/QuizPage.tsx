@@ -244,7 +244,7 @@ function QuizPage(): React.JSX.Element {
         ) : (
           // === TAMPILAN HASIL (DATA DARI BACKEND) ===
           <Box sx={{ textAlign: 'center', py: 4 }}>
-            <Box sx={{ width: 80, height: 80, borderRadius: '50%', bgcolor: 'rgba(249, 115, 22, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', mx: 'auto', mb: 3 }}>
+            <Box sx={{ width: 80, height: 80, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', mx: 'auto', mb: 3 }}>
               <LocalFireDepartmentIcon sx={{ fontSize: 48, color: 'primary.main' }} />
             </Box>
 

@@ -16,6 +16,52 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import { useQuery } from '@tanstack/react-query';
 import { getQuizResultDetail } from '../services/apiLibraryService';
 
+/**
+ * Refined Copywriting for Coby Learn AI
+ * Themes: Crystalline Knowledge, Playful Mastery, Mascot (Coby) Encouragement
+ */
+
+const scoreRangeMessages = {
+  low: [
+    "Raw shards gathered! Every mistake is just a step toward a solid crystal.",
+    "Coby's tip: Mistakes are the best data points for deep learning. Let's retry!",
+    "Your knowledge garden starts here. Every expert was once a beginner.",
+    "The structure is still settling. Review the summary and let's try again!",
+    "No crystal is formed without pressure. Keep showing up—you've got this!",
+  ],
+  mid: [
+    "The crystal is forming! You are starting to see the core patterns.",
+    "Great momentum! Coby sees those connections becoming clearer.",
+    "Solid recall! A little more polish and this will be a Stage 5 crystal.",
+    "You're in the Flow Zone. Consistency is turning this info into mastery.",
+    "Steady glow! Tighten those weak spots and let's reach for the top range.",
+  ],
+  high: [
+    "Mega Crystal achieved! You have reached peak mastery of this material.",
+    "Stage 5 Performance! Coby is doing a backflip for that score.",
+    "Absolute clarity. Your knowledge structure is rock solid.",
+    "Fantastic result! Your active recall strategy is working perfectly.",
+    "Brilliant! Your streak is glowing as bright as your knowledge crystals.",
+  ],
+};
+
+const pickTwoRandomMessages = (messages: string[]): string[] => {
+  const shuffled = [...messages].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, 1);
+};
+
+const getMotivationalMessagesByScore = (score: number): string[] => {
+  if (score <= 30) {
+    return pickTwoRandomMessages(scoreRangeMessages.low);
+  }
+
+  if (score < 70) {
+    return pickTwoRandomMessages(scoreRangeMessages.mid);
+  }
+
+  return pickTwoRandomMessages(scoreRangeMessages.high);
+};
+
 function QuizResultPage(): React.JSX.Element {
   const { resultId } = useParams<{ resultId: string }>();
   const navigate = useNavigate();
@@ -51,6 +97,7 @@ function QuizResultPage(): React.JSX.Element {
 
   const correctCount = result.questions.filter(q => q.is_correct).length;
   const totalCount = result.questions.length;
+  const motivationalMessages = getMotivationalMessagesByScore(result.score);
 
   return (
     <Box sx={{ maxWidth: 600, mx: 'auto', pb: 8, px: 2 }}>
@@ -82,6 +129,13 @@ function QuizResultPage(): React.JSX.Element {
         <Typography variant="body1" sx={{ color: 'text.secondary', mt: 1 }}>
           You answered {correctCount} out of {totalCount} questions correctly.
         </Typography>
+        <Stack spacing={0.5} sx={{ mt: 1.5, alignItems: 'center' }}>
+          {motivationalMessages.map((message, index) => (
+            <Typography key={`${index}-${message}`} variant="body2" sx={{ color: 'text.secondary' }}>
+              {message}
+            </Typography>
+          ))}
+        </Stack>
         <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 2 }}>
           Completed on {new Date(result.created_at).toLocaleString('id-ID')}
         </Typography>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   Box,
   Typography,
@@ -8,7 +8,9 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   Skeleton,
-  Alert
+  Alert,
+  LinearProgress,
+  Snackbar,
 } from '@mui/material';
 
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
@@ -17,12 +19,15 @@ import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 
 import { useQuery } from '@tanstack/react-query';
+import { animate } from 'framer-motion';
 
 import { getStudentStats } from '../services/apiStatsService';
 import { getDailyQuizStatus } from '../services/apiLibraryService';
 
 import StatCard from '../components/progress/StatCard';
 import StudyHeatmap from '../components/progress/StudyHeatmap';
+import XPLevelModal from '../components/progress/XPLevelModal';
+import { useXPStore } from '../stores/useXPStore';
 
 // import FireStreakLottie from '../assets/FireStreak.lottie';
 
@@ -39,6 +44,18 @@ function ProgressPage(): React.JSX.Element {
   const theme = useTheme();
 
   const [filter, setFilter] = useState<'day' | 'week' | 'month' | 'year'>('week');
+  const [isXPModalOpen, setIsXPModalOpen] = useState(false);
+  const [animatedProgress, setAnimatedProgress] = useState(0);
+  const [isLevelUpToastOpen, setIsLevelUpToastOpen] = useState(false);
+
+  const totalXP = useXPStore((state) => state.totalXP);
+  const milestones = useXPStore((state) => state.milestones);
+  const levelUpEvent = useXPStore((state) => state.levelUpEvent);
+  const setXPFromStats = useXPStore((state) => state.setXPFromStats);
+  const getCurrentLevelFromXP = useXPStore((state) => state.getCurrentLevel);
+  const getNextLevelFromXP = useXPStore((state) => state.getNextLevel);
+  const getProgressToNext = useXPStore((state) => state.getProgressToNext);
+  const clearLevelUpEvent = useXPStore((state) => state.clearLevelUpEvent);
 
   const { data: stats, isLoading, isError, error } = useQuery({
     queryKey: ['studentStats', filter],
@@ -66,6 +83,66 @@ function ProgressPage(): React.JSX.Element {
     most_productive_day: "-"
   };
 
+  const parseStudyHours = (value: string): number => {
+    if (!value) {
+      return 0;
+    }
+
+    const lower = value.toLowerCase().replace(',', '.');
+    const hourMatch = lower.match(/(\d+(?:\.\d+)?)\s*h/);
+    const minuteMatch = lower.match(/(\d+(?:\.\d+)?)\s*m/);
+
+    let totalHours = 0;
+
+    if (hourMatch) {
+      totalHours += Number(hourMatch[1]);
+    }
+
+    if (minuteMatch) {
+      totalHours += Number(minuteMatch[1]) / 60;
+    }
+
+    if (!hourMatch && !minuteMatch) {
+      const numericOnly = Number.parseFloat(lower.replace(/[^0-9.]/g, ''));
+      return Number.isNaN(numericOnly) ? 0 : numericOnly;
+    }
+
+    return totalHours;
+  };
+
+  useEffect(() => {
+    if (!stats) {
+      return;
+    }
+
+    setXPFromStats({
+      hours: parseStudyHours(stats.total_study_hours),
+      tasks: stats.tasks_completed,
+      quizzes: stats.quizzes_taken,
+    });
+  }, [stats, setXPFromStats]);
+
+  const currentXPLevel = useMemo(() => getCurrentLevelFromXP(totalXP), [getCurrentLevelFromXP, totalXP]);
+  const nextXPLevel = useMemo(() => getNextLevelFromXP(totalXP), [getNextLevelFromXP, totalXP]);
+  const xpProgressToNext = useMemo(() => getProgressToNext(totalXP), [getProgressToNext, totalXP]);
+  const xpToNextLevel = nextXPLevel ? Math.max(0, nextXPLevel.xp - totalXP) : 0;
+
+  useEffect(() => {
+    const controls = animate(0, xpProgressToNext, {
+      duration: 0.9,
+      ease: 'easeInOut',
+      onUpdate: (latest) => setAnimatedProgress(latest),
+    });
+
+    return () => controls.stop();
+  }, [xpProgressToNext]);
+
+  useEffect(() => {
+    if (levelUpEvent) {
+      setIsLevelUpToastOpen(true);
+    }
+  }, [levelUpEvent]);
+
 
   const handleFilterChange = (
     _: React.MouseEvent<HTMLElement>,
@@ -80,6 +157,38 @@ function ProgressPage(): React.JSX.Element {
 
   return (
     <Box>
+      <XPLevelModal
+        open={isXPModalOpen}
+        onClose={() => setIsXPModalOpen(false)}
+        totalXP={totalXP}
+        currentLevel={currentXPLevel}
+        milestones={milestones}
+      />
+
+      <Snackbar
+        open={isLevelUpToastOpen}
+        autoHideDuration={2800}
+        onClose={() => {
+          setIsLevelUpToastOpen(false);
+          clearLevelUpEvent();
+        }}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert
+          onClose={() => {
+            setIsLevelUpToastOpen(false);
+            clearLevelUpEvent();
+          }}
+          severity="success"
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          {levelUpEvent
+            ? `Level Up! You reached Level ${levelUpEvent.toLevel} - ${levelUpEvent.toName}`
+            : 'Level Up!'}
+        </Alert>
+      </Snackbar>
+
       {/* Header */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3, flexWrap: 'wrap', gap: 2 }}>
         <Typography variant="h4">
@@ -100,6 +209,47 @@ function ProgressPage(): React.JSX.Element {
           <ToggleButton value="year" sx={{ textTransform: 'none', px: 2 }}>Year</ToggleButton>
         </ToggleButtonGroup>
       </Box>
+
+      <Paper
+        elevation={0}
+        onClick={() => setIsXPModalOpen(true)}
+        sx={{
+          p: 2,
+          mb: 3,
+          borderRadius: '24px',
+          border: '1px solid',
+          borderColor: 'divider',
+          boxShadow: '0 8px 22px rgba(25, 118, 210, 0.12)',
+          cursor: 'pointer',
+          transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+          '&:hover': {
+            transform: 'translateY(-1px)',
+            boxShadow: '0 12px 28px rgba(25, 118, 210, 0.16)',
+          },
+        }}
+      >
+        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
+          <Typography variant="subtitle1" fontWeight={700}>
+            Level {currentXPLevel.level} - {currentXPLevel.name}
+          </Typography>
+          <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 600 }}>
+            {nextXPLevel ? `Next Level in ${xpToNextLevel} XP` : 'Max Level Reached'}
+          </Typography>
+        </Box>
+        <LinearProgress
+          variant="determinate"
+          value={animatedProgress}
+          sx={{
+            height: 11,
+            borderRadius: 999,
+            bgcolor: 'rgba(25, 118, 210, 0.14)',
+            '& .MuiLinearProgress-bar': {
+              borderRadius: 999,
+              background: `linear-gradient(90deg, ${theme.palette.primary.main}, ${theme.palette.info.main})`,
+            },
+          }}
+        />
+      </Paper>
 
       <Box
         sx={{
