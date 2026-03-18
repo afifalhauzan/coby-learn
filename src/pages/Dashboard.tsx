@@ -11,6 +11,7 @@ import TasksWidget from '../components/dashboard/TasksWidget';
 import SpotlightCallout from '../components/dashboard/SpotlightCallout';
 import QuickActionsWidget from '../components/dashboard/QuickActionsWidget';
 import FocusSessionWidget from '../components/dashboard/FocusSessionWidget';
+import DailyMissionsPanel from '../components/dashboard/DailyMissionsPanel';
 
 import { getTasks } from '../services/apiTaskService';
 import { getDailyQuizStatus } from '../services/apiLibraryService';
@@ -80,6 +81,7 @@ function Dashboard(): React.JSX.Element {
             <FocusSessionWidget />
 
             <TasksWidget addTaskButtonRef={addTaskRef} />
+            <DailyMissionsPanel dailyQuizDone={dailyStatus?.is_done} />
 
             <DailyQuizWidget />
             <QuickActionsWidget />
@@ -132,6 +134,9 @@ function Dashboard(): React.JSX.Element {
 
             {/* Middle: Today's Tasks */}
             <TasksWidget addTaskButtonRef={addTaskRef} />
+
+            {/* Missions */}
+            <DailyMissionsPanel dailyQuizDone={dailyStatus?.is_done} />
           </Box>
 
           {/* --- RIGHT AREA: Sidebar --- */}

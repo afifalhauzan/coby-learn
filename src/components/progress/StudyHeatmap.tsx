@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Box, Typography, Tooltip } from '@mui/material';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface HeatmapDay {
   level: number;
@@ -87,16 +88,95 @@ const generateHeatmapData = (year: number, month: number): HeatmapDay[] => {
 
 const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-const getColorForLevel = (level: number) => {
-  switch (level) {
-    case 0: return '#E5F4F9';
-    case 1: return '#AFD3E9';
-    case 2: return '#86B4DA';
-    case 3: return '#609ED0';
-    case 4: return '#3B6C9E';
-    default: return '#164C81';
+const getCrystalForLevel = (level: number): string | null => {
+  if (level <= 0) {
+    return null;
   }
+
+  return `/crystal${Math.min(level, 3)}.svg`;
 };
+
+interface CrystalTileProps {
+  activityCount: number;
+}
+
+function CrystalTile({ activityCount }: CrystalTileProps): React.JSX.Element | null {
+  const level = Math.min(Math.max(activityCount, 0), 4);
+
+  if (level === 0) {
+    return null;
+  }
+
+  if (activityCount > 6) {
+    return (
+      <Box sx={{ position: 'absolute', inset: 0 }}>
+        <Box
+          component="img"
+          src="/crystal4_bg.svg"
+          alt="Crystal level 4 background"
+          sx={{
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'contain',
+            pointerEvents: 'none',
+          }}
+        />
+
+        <Box
+          component={motion.img}
+          src="/crystal4_isolate.svg"
+          alt="Crystal level 4"
+          animate={{
+            y: [0, -3, 0],
+            filter: [
+              'drop-shadow(0 0 8px rgba(0, 255, 255, 0.35))',
+              'drop-shadow(0 0 15px rgba(0, 255, 255, 0.7))',
+              'drop-shadow(0 0 8px rgba(0, 255, 255, 0.35))',
+            ],
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            repeatType: 'loop',
+            ease: 'easeInOut',
+          }}
+          style={{
+            position: 'absolute',
+            inset: 0,
+            top: '8%',
+            left: '8%',
+            width: '85%',
+            height: '85%',
+            objectFit: 'contain',
+            pointerEvents: 'none',
+          }}
+        />
+      </Box>
+    );
+  }
+
+  return (
+    <Box
+      component={motion.img}
+      src={getCrystalForLevel(level) || undefined}
+      alt={`Crystal level ${level}`}
+      initial={{ opacity: 0, scale: 0.92 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      transition={{ duration: 0.2, ease: 'easeOut' }}
+      sx={{
+        position: 'absolute',
+        inset: 0,
+        width: '100%',
+        height: '100%',
+        objectFit: 'contain',
+        pointerEvents: 'none',
+      }}
+    />
+  );
+}
 
 function StudyHeatmap(): React.JSX.Element {
   // State for current month view
@@ -164,31 +244,36 @@ function StudyHeatmap(): React.JSX.Element {
               sx={{
                 width: '100%',
                 paddingBottom: '100%',
-                bgcolor: getColorForLevel(dayData.level),
-                borderRadius: '4px',
-                transition: 'background-color 0.3s',
+                bgcolor: dayData.level === 0 ? '#E5F4F9' : '#E5F4F9',
+                border: '1px solid',
+                borderColor: dayData.level === 0 ? 'divider' : 'rgba(59, 130, 246, 0.15)',
+                position: 'relative',
+                transition: 'transform 0.2s ease, opacity 0.2s ease',
                 cursor: 'pointer',
                 '&:hover': {
-                  opacity: 0.8,
-                  transform: 'scale(1.05)'
-                }
+                  opacity: 0.9,
+                  transform: 'scale(1.05)',
+                },
               }}
-            />
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                <CrystalTile key={`${dayData.level}-${dayData.tasks}`} activityCount={dayData.tasks} />
+              </AnimatePresence>
+            </Box>
           </Tooltip>
         ))}
       </Box>
 
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 1 }}>
         <Typography variant="body2" color="text.secondary">Less</Typography>
-        {[0, 1, 2, 3, 4].map(level => (
+        <Box sx={{ width: 15, height: 15, borderRadius: '3px', bgcolor: 'rgba(0,0,0,0.04)', border: '1px solid', borderColor: 'divider' }} />
+        {[1, 2, 3, 4].map((level) => (
           <Box
             key={level}
-            sx={{
-              width: 15,
-              height: 15,
-              bgcolor: getColorForLevel(level),
-              borderRadius: '3px',
-            }}
+            component="img"
+            src={`/crystal${level}.svg`}
+            alt={`Legend crystal level ${level}`}
+            sx={{ width: 15, height: 15, objectFit: 'contain' }}
           />
         ))}
         <Typography variant="body2" color="text.secondary">More</Typography>

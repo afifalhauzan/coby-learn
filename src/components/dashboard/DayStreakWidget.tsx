@@ -12,7 +12,6 @@ import {
   Divider,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import { useQuery } from '@tanstack/react-query';
 import { getDailyQuizStatus } from '../../services/apiLibraryService';
 // import FireStreakLottie from '../../assets/FireStreak.lottie';
@@ -27,12 +26,21 @@ const getCurrentLevel = (streak: number): number => {
 };
 
 const fireLevels = [
-  { id: 0, range: '0 Days', label: 'Embers', desc: 'Start your streak journey.' },
-  { id: 1, range: '1-2 Days', label: 'Spark', desc: 'Your consistency starts glowing.' },
-  { id: 2, range: '3-4 Days', label: 'Flame', desc: 'Momentum is building.' },
-  { id: 3, range: '5-6 Days', label: 'Blaze', desc: 'You are in a strong flow.' },
-  { id: 4, range: '7-8 Days', label: 'Inferno', desc: 'Serious commitment unlocked.' },
-  { id: 5, range: '9+ Days', label: 'Supernova', desc: 'Top-tier streak consistency.' },
+  { id: 0, range: '0 Days', label: 'Embers', desc: 'Start your streak journey' },
+  { id: 1, range: '1-2 Days', label: 'Spark', desc: 'It starts glowing' },
+  { id: 2, range: '3-4 Days', label: 'Flame', desc: 'Momentum is building' },
+  { id: 3, range: '5-6 Days', label: 'Blaze', desc: 'Strong flow' },
+  { id: 4, range: '7-8 Days', label: 'Inferno', desc: 'Serious commitment' },
+  { id: 5, range: '9+ Days', label: 'Supernova', desc: 'Amazing streak consistency!' },
+];
+
+const motivationByLevel = [
+  'One small step starts the fire.',
+  'Great start. Keep the spark alive!',
+  'You are building real momentum.',
+  'Strong streak. Keep it burning!',
+  'Incredible consistency. Stay locked in!',
+  'Legendary streak. You are unstoppable!',
 ];
 
 function DayStreakWidget(): React.JSX.Element {
@@ -66,10 +74,10 @@ function DayStreakWidget(): React.JSX.Element {
     );
   }
 
-  const isDone = status?.is_done ?? false;
   // [TESTING] Start streak from 12 for dummy realism
   const streakCount = status?.streak || 0;
   const currentLevel = getCurrentLevel(streakCount);
+  const motivationalText = motivationByLevel[currentLevel];
 
   return (
     <>
@@ -158,6 +166,18 @@ function DayStreakWidget(): React.JSX.Element {
             Day Streak
           </Typography>
 
+          <Typography
+            variant="caption"
+            sx={{
+              display: 'block',
+              mt: 0.5,
+              color: 'warning.dark',
+              fontWeight: 600,
+            }}
+          >
+            {motivationalText}
+          </Typography>
+
           <Button
             variant="text"
             size="small"
@@ -170,7 +190,7 @@ function DayStreakWidget(): React.JSX.Element {
               minWidth: 'auto',
             }}
           >
-            Your Streaks
+            Check Your Streaks
           </Button>
         </Box>
       </Paper>
@@ -186,89 +206,96 @@ function DayStreakWidget(): React.JSX.Element {
             width: '100%',
             maxWidth: 420,
             maxHeight: '80vh',
-            overflowY: 'auto',
             position: 'relative',
-            p: 3,
+            display: 'flex',
+            flexDirection: 'column',
+            overflow: 'hidden',
             boxShadow: 24,
           }}
         >
           <IconButton
             onClick={() => setIsModalOpen(false)}
-            sx={{ position: 'absolute', right: 8, top: 8 }}
+            sx={{ position: 'absolute', right: 8, top: 8, zIndex: 2 }}
             aria-label="Close streak levels"
           >
             <CloseIcon />
           </IconButton>
 
-          <Typography id="streak-levels-title" variant="h6" fontWeight={700} mb={0.5}>
-            Streak Levels
-          </Typography>
-          <Typography variant="body2" color="text.secondary" mb={2}>
-            Fire level is based on your day streak.
-          </Typography>
+          <Box sx={{ pb: 2, borderBottom: '1px solid', borderColor: 'divider' }}>
+            <Typography id="streak-levels-title" variant="h6" fontWeight={700} mb={0.5}>
+              Streak Levels
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              Fire level is based on your day streak.
+            </Typography>
+          </Box>
 
-          <Stack spacing={1.5}>
-            {fireLevels.map((level) => {
-              const isReached = currentLevel >= level.id;
-              const isCurrent = currentLevel === level.id;
+          <Box sx={{  overflowY: 'auto', flex: 1, minHeight: 0 }}>
+            <Stack spacing={1.5}>
+              {fireLevels.map((level) => {
+                const isReached = currentLevel >= level.id;
+                const isCurrent = currentLevel === level.id;
 
-              return (
-                <Box
-                  key={level.id}
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 1.5,
-                    p: 1.25,
-                    borderRadius: 2,
-                    border: '1px solid',
-                    borderColor: isCurrent ? 'warning.main' : 'divider',
-                    bgcolor: isReached ? 'rgba(255, 152, 0, 0.08)' : 'action.hover',
-                  }}
-                >
+                return (
                   <Box
-                    component="img"
-                    src={`/fire${level.id}.png`}
-                    alt={`${level.label} level`}
+                    key={level.id}
                     sx={{
-                      width: 56,
-                      height: 56,
-                      objectFit: 'contain',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: 1.5,
+                      p: 1.25,
+                      borderRadius: 1,
+                      border: '1px solid',
+                      borderColor: isCurrent ? 'warning.main' : 'divider',
+                      bgcolor: isReached ? 'rgba(255, 152, 0, 0.08)' : 'action.hover',
                     }}
-                  />
-                  <Box sx={{ minWidth: 0, flexGrow: 1 }}>
-                    <Typography variant="subtitle2" fontWeight={700} color={isReached ? 'text.primary' : 'text.disabled'}>
-                      {level.label} ({level.range})
-                    </Typography>
-                    <Typography variant="caption" color={isReached ? 'text.secondary' : 'text.disabled'}>
-                      {level.desc}
-                    </Typography>
-                  </Box>
-                  {isCurrent && (
-                    <Typography
-                      variant="caption"
+                  >
+                    <Box
+                      component="img"
+                      src={`/fire${level.id}.png`}
+                      alt={`${level.label} level`}
                       sx={{
-                        fontWeight: 700,
-                        color: 'warning.dark',
-                        bgcolor: 'rgba(255, 152, 0, 0.18)',
-                        px: 1,
-                        py: 0.35,
-                        borderRadius: 1,
-                        textTransform: 'uppercase',
+                        width: 56,
+                        height: 56,
+                        objectFit: 'contain',
                       }}
-                    >
-                      Current
-                    </Typography>
-                  )}
-                </Box>
-              );
-            })}
-          </Stack>
+                    />
+                    <Box sx={{ minWidth: 0, flexGrow: 1 }}>
+                      <Typography variant="subtitle2" fontWeight={700} color={isReached ? 'text.primary' : 'text.disabled'}>
+                        {level.label} ({level.range})
+                      </Typography>
+                      <Typography variant="caption" color={isReached ? 'text.secondary' : 'text.disabled'}>
+                        {level.desc}
+                      </Typography>
+                    </Box>
+                    {isCurrent && (
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          fontWeight: 700,
+                          color: 'warning.dark',
+                          bgcolor: 'rgba(255, 152, 0, 0.18)',
+                          px: 1,
+                          py: 0.35,
+                          borderRadius: 1,
+                          textTransform: 'uppercase',
+                        }}
+                      >
+                        Current
+                      </Typography>
+                    )}
+                  </Box>
+                );
+              })}
+            </Stack>
+          </Box>
 
-          <Divider sx={{ my: 2 }} />
-          <Button fullWidth variant="contained" onClick={() => setIsModalOpen(false)} sx={{ fontWeight: 700 }}>
-            Close
-          </Button>
+          <Box sx={{ position: 'sticky', bottom: 0, bgcolor: 'background.paper' }}>
+            <Divider sx={{ mb: 2 }} />
+            <Button fullWidth variant="contained" onClick={() => setIsModalOpen(false)} sx={{ fontWeight: 700 }}>
+              Close
+            </Button>
+          </Box>
         </Paper>
       </Modal>
     </>
