@@ -1,99 +1,54 @@
-# Coby Learn AI Frontend
+# CobyLearnAI
 
-CobyLearnAi is a integrated AI-assisted learning platform to bridge the gap between passive reading and active mastering. Students can upload study materials, generate quizzes and flashcards, chat with an AI tutor, and track progress. By leveraging the power of Gemini AI and modern frontend engineering, it empowers students to turn dense PDFs, YouTube lectures, and raw notes into structured study guides, adaptive quizzes, and interactive flashcards.
+## Institusi
+Universitas Brawijaya
 
-**Website Name:** Coby Learn AI
+## Anggota Tim
+- Ketua : Afiif Al Hauzaan Alfian
+- Anggota 1 : Shananda Putri Aisyah
+- Anggota 2 : Mohamad Arif
 
-**Team Name:** hmm, apa ya
+## Deskripsi Karya 
 
-**With Backend:** Not in code base, in seperate repository ([The Backend Repository](https://github.com/mohamadarif03/focus-room-be))
+CobyLearnAi adalah platform pembelajaran terintegrasi berbasis AI untuk memfasilitasi proses belajar. Siswa dapat mengunggah materi belajar, mengobrol dengan tutor AI, dan melacak kemajuan. Dengan memanfaatkan kekuatan AI Gemini dan teknologi frontend modern, platform ini memberdayakan siswa untuk mengubah PDF materi, video YouTube, dan catatan pembelajaran menjadi panduan belajar terstruktur, kuis adaptif, dan kartu flash interaktif.
 
----
+### 1. **Manajemen Materi Cerdas**
 
-## **Main Features**
+* **Input Multi-Sumber:** Unggah PDF, teks mentah, atau tautan YouTube dengan mudah.
 
-### 1. **Intelligent Material Management**
+* **Ringkasan Cerdas:** AI mengekstrak konsep inti, definisi, dan poin penting untuk pembelajaran yang efisien.
 
-* **Multi-Source Input:** Seamlessly upload PDFs, raw text, or YouTube links.
-* **Smart Summarization:** AI extracts core concepts, definitions, and key takeaways for efficient learning.
-* **Library Organization:** A clean, folder-based system for efficient study material management.
-
----
-
-### 2. **Active Learning & Evaluation**
-
-* **Adaptive Quiz Generation:** Instantly generate multiple-choice quizzes from any material.
-* **Flashcard System:** Flashcards created automatically by AI.
-* **AI Tutor:** A chatbot companion tied to specific materials that acts as a personalized study partner.
+* **Organisasi Perpustakaan:** Sistem berbasis folder yang rapi untuk manajemen materi belajar yang efisien.
 
 ---
 
-### 3. **Progress & Habit Tracker**
+### 2. **Pembelajaran & Evaluasi Aktif**
 
-* **Personalized Dashboard:** One-glance view of daily quiz status, focus streaks, and pending tasks.
-* **Productivity Heatmap:** Comprehensive task planning with Google Calendar integration and visualization to track consistency over time.
-* **Pomodoro Integration:** Focus timer and Lofi Radio to facilitate study sessions.
+* **Pembuatan Kuis Adaptif:** Buat kuis pilihan ganda secara instan dari materi apa pun.
 
----
+* **Sistem Kartu Flash:** Kartu flash dibuat secara otomatis oleh AI.
 
-### 4. **Intuitive User Experience**
-
-* **Material UI Design:** Utilizes a native-based design to provide a familiar and intuitive interface.
-* **PWA Support:** Full Progressive Web App support for seamless mobile use, ensuring students can stay productive anytime, anywhere with increased access.
+* **Tutor AI:** Chatbot pendamping yang terhubung dengan materi tertentu yang bertindak sebagai mitra belajar pribadi.
 
 ---
 
-## Tech Stack
+### 3. **Pelacak Kemajuan & Kebiasaan**
 
-- React 19 + TypeScript
-- Vite 7
-- MUI 7 (Material UI)
-- React Router 7
-- TanStack Query
-- Axios
-- Zustand
-- Framer Motion
-- Vite PWA plugin
+* **Dasbor yang Dipersonalisasi:** Tampilan sekilas status kuis harian, rangkaian fokus, dan tugas yang tertunda.
 
+* **Peta Panas Produktivitas:** Perencanaan tugas komprehensif dengan integrasi Google Kalender dan visualisasi untuk melacak konsistensi dari waktu ke waktu.
 
-## Project Structure
+* **Integrasi Pomodoro:** Pengatur waktu fokus dan Radio Lofi untuk memfasilitasi sesi belajar.
 
-```text
-src/
-  components/
-    auth/            # Route protection middleware
-    dashboard/       # Dashboard widgets and onboarding
-    landing-page/    # Marketing landing sections
-    library/         # Folder/material dialogs and items
-    progress/        # Stat cards and heatmap
-    tasks/           # Task dialogs, list items, calendar
-    common/          # Shared UI widgets/dialogs
-  pages/             # Route-level pages
-  services/          # API service layer by domain
-  stores/            # Zustand stores
-  theme/             # MUI theme customization
-  lib/               # Axios client and app-level utilities
-  utils/             # Helper utilities
-public/
-  manifest.webmanifest
-  *.lottie assets
-```
+---
 
-## Getting Started
+### 4. **Pengalaman Pengguna yang Intuitif**
 
-### Prerequisites
-- Node.js 20+
-- npm 10+
+* **Desain Material UI:** Menggunakan desain berbasis native untuk menyediakan antarmuka yang familiar dan intuitif.
 
-### Install
+* **Dukungan PWA:** Dukungan penuh Progressive Web App untuk penggunaan seluler yang lancar, memastikan siswa dapat tetap produktif kapan saja, di mana saja dengan akses yang lebih luas.
 
-```bash
-npm install
-```
+---
 
-## Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Type-check and build
-- `npm run preview` - Preview build output
-- `npm run lint` - Run ESLint
+## Link Website
+https://cobylearn.vercel.app/
