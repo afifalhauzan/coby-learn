@@ -10,6 +10,7 @@ import {
   Box,
   Typography,
   Tooltip,
+  LinearProgress,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import FolderOutlinedIcon from '@mui/icons-material/FolderOutlined'; 
@@ -59,6 +60,7 @@ function FolderDialog({
 
   const iconColors = DEFAULT_COLORS;
   const isExtendedPaletteUnlocked = masteryFolderCount >= MASTERY_UNLOCK_TARGET;
+  const masteryProgress = (Math.min(masteryFolderCount, MASTERY_UNLOCK_TARGET) / MASTERY_UNLOCK_TARGET) * 100;
 
   const handleColorSelect = (color: string, isLocked: boolean) => {
     if (isLocked) {
@@ -211,9 +213,28 @@ function FolderDialog({
             );
           })}
         </Box>
-        <Typography variant="caption" sx={{ display: 'block', color: 'text.secondary', mt: 1.25 }}>
-          Progress: {Math.min(masteryFolderCount, MASTERY_UNLOCK_TARGET)}/{MASTERY_UNLOCK_TARGET} Mastery Folders
-        </Typography>
+        <Box sx={{ mt: 1.25 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 0.5 }}>
+            <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+              Mastery Progress
+            </Typography>
+            <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 600 }}>
+              {Math.min(masteryFolderCount, MASTERY_UNLOCK_TARGET)}/{MASTERY_UNLOCK_TARGET}
+            </Typography>
+          </Box>
+          <LinearProgress
+            variant="determinate"
+            value={masteryProgress}
+            sx={{
+              height: 6,
+              borderRadius: 99,
+              bgcolor: 'action.hover',
+              '& .MuiLinearProgress-bar': {
+                borderRadius: 99,
+              },
+            }}
+          />
+        </Box>
       </DialogContent>
 
       <DialogActions sx={{ p: 2, display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
