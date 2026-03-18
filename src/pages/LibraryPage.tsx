@@ -121,6 +121,16 @@ function LibraryPage(): React.JSX.Element {
   };
 
   const isEmpty = !isLoading && folders?.length === 0;
+  const masteryFolderCount =
+    folders?.filter((folder) => {
+      const materialsInFolder = typeof folder.material_count === 'number'
+        ? folder.material_count
+        : Array.isArray((folder as Folder & { items?: unknown[] }).items)
+          ? (folder as Folder & { items?: unknown[] }).items!.length
+          : 0;
+
+      return materialsInFolder >= 2;
+    }).length || 0;
 
   // -----------------------------
   // LOADING SKELETON
@@ -425,6 +435,7 @@ function LibraryPage(): React.JSX.Element {
         onClose={handleCloseDialog}
         onSave={handleSaveDialog}
         initialData={editingFolder}
+        masteryFolderCount={masteryFolderCount}
       />
 
       <FileUploadDialog

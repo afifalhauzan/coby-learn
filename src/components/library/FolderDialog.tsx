@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -9,10 +9,13 @@ import {
   IconButton,
   Box,
   Typography,
+  Tooltip,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import FolderOutlinedIcon from '@mui/icons-material/FolderOutlined'; 
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useTheme } from '@mui/material/styles';
+import { motion } from 'framer-motion';
 import type { Folder } from '../../types/folder.types';
 
 const DEFAULT_COLORS = [
@@ -24,14 +27,25 @@ const DEFAULT_COLORS = [
   '#9e9e9e', 
 ];
 
+const DEFAULT_UNLOCKED_COLOR_COUNT = 3;
+const MASTERY_UNLOCK_TARGET = 5;
+const LOCKED_TOOLTIP_MESSAGE = 'Mastery required: Have 5 folders with at least 2 materials each to unlock more colors.';
+
 interface FolderDialogProps {
   open: boolean;
   onClose: () => void;
   onSave: (data: { name: string; iconColor: string }) => void;
   initialData?: Folder | null;
+  masteryFolderCount: number;
 }
 
-function FolderDialog({ open, onClose, onSave, initialData }: FolderDialogProps): React.JSX.Element {
+function FolderDialog({
+  open,
+  onClose,
+  onSave,
+  initialData,
+  masteryFolderCount,
+}: FolderDialogProps): React.JSX.Element {
   const theme = useTheme(); // (Opsional) Anda bisa hapus ini jika DEFAULT_COLORS sudah cukup
 
   const isEditMode = Boolean(initialData);
@@ -39,8 +53,24 @@ function FolderDialog({ open, onClose, onSave, initialData }: FolderDialogProps)
   const [folderName, setFolderName] = useState('');
   
   const [selectedIconColor, setSelectedIconColor] = useState<string>(DEFAULT_COLORS[0]);
+  const [shakeColor, setShakeColor] = useState<string | null>(null);
+  const [showUnlockGlow, setShowUnlockGlow] = useState(false);
+  const previousUnlockedStateRef = useRef(masteryFolderCount >= MASTERY_UNLOCK_TARGET);
 
   const iconColors = DEFAULT_COLORS;
+  const isExtendedPaletteUnlocked = masteryFolderCount >= MASTERY_UNLOCK_TARGET;
+
+  const handleColorSelect = (color: string, isLocked: boolean) => {
+    if (isLocked) {
+      setShakeColor(color);
+      window.setTimeout(() => {
+        setShakeColor((prev) => (prev === color ? null : prev));
+      }, 350);
+      return;
+    }
+
+    setSelectedIconColor(color);
+  };
 
   useEffect(() => {
     if (open) {
@@ -53,6 +83,21 @@ function FolderDialog({ open, onClose, onSave, initialData }: FolderDialogProps)
       }
     }
   }, [open, isEditMode, initialData]); // Hapus 'theme' dari dependency
+
+  useEffect(() => {
+    if (!open) {
+      previousUnlockedStateRef.current = isExtendedPaletteUnlocked;
+      setShowUnlockGlow(false);
+      return;
+    }
+
+    if (!previousUnlockedStateRef.current && isExtendedPaletteUnlocked) {
+      setShowUnlockGlow(true);
+      window.setTimeout(() => setShowUnlockGlow(false), 1400);
+    }
+
+    previousUnlockedStateRef.current = isExtendedPaletteUnlocked;
+  }, [open, isExtendedPaletteUnlocked]);
 
   const handleSave = () => {
     if (folderName.trim() && selectedIconColor) { // Tambahkan cek selectedIconColor
@@ -94,22 +139,81 @@ function FolderDialog({ open, onClose, onSave, initialData }: FolderDialogProps)
 
         <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 'bold' }}>Folder Icon</Typography>
         <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
-          {iconColors.map((color) => (
-            <IconButton
-              key={color}
-              onClick={() => setSelectedIconColor(color)}
-              sx={{
-                p: 1.5,
-                borderRadius: '8px',
-                border: 2,
-                borderColor: selectedIconColor === color ? 'primary.main' : 'transparent',
-                backgroundColor: selectedIconColor === color ? theme.palette.primary.light + '22' : 'transparent',
-              }}
-            >
-              <FolderOutlinedIcon sx={{ color: color, fontSize: 30 }} />
-            </IconButton>
-          ))}
+          {iconColors.map((color, index) => {
+            const isLockedColor = index >= DEFAULT_UNLOCKED_COLOR_COUNT && !isExtendedPaletteUnlocked;
+
+            return (
+              <Box
+                key={color}
+                component={motion.div}
+                animate={shakeColor === color ? { x: [0, -5, 5, -4, 4, 0] } : { x: 0 }}
+                transition={{ duration: 0.28 }}
+              >
+                <Tooltip title={isLockedColor ? LOCKED_TOOLTIP_MESSAGE : ''} arrow placement="top">
+                  <Box sx={{ position: 'relative' }}>
+                    <IconButton
+                      onClick={() => handleColorSelect(color, isLockedColor)}
+                      aria-disabled={isLockedColor}
+                      sx={{
+                        p: 1.5,
+                        borderRadius: '8px',
+                        border: 2,
+                        opacity: isLockedColor ? 0.4 : 1,
+                        borderColor: selectedIconColor === color ? 'primary.main' : 'transparent',
+                        backgroundColor: selectedIconColor === color ? theme.palette.primary.light + '22' : 'transparent',
+                        cursor: isLockedColor ? 'not-allowed' : 'pointer',
+                      }}
+                    >
+                      <FolderOutlinedIcon sx={{ color: color, fontSize: 30 }} />
+                    </IconButton>
+
+                    {isLockedColor && (
+                      <Box
+                        sx={{
+                          position: 'absolute',
+                          right: 2,
+                          bottom: 2,
+                          width: 16,
+                          height: 16,
+                          borderRadius: '50%',
+                          bgcolor: 'background.paper',
+                          border: '1px solid',
+                          borderColor: 'divider',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          pointerEvents: 'none',
+                        }}
+                      >
+                        <LockOutlinedIcon sx={{ fontSize: 11, color: 'text.secondary' }} />
+                      </Box>
+                    )}
+
+                    {showUnlockGlow && index >= DEFAULT_UNLOCKED_COLOR_COUNT && isExtendedPaletteUnlocked && (
+                      <Box
+                        component={motion.div}
+                        initial={{ opacity: 0.8, scale: 0.94 }}
+                        animate={{ opacity: 0, scale: 1.12 }}
+                        transition={{ duration: 0.8 }}
+                        sx={{
+                          position: 'absolute',
+                          inset: -2,
+                          borderRadius: '10px',
+                          border: '2px solid',
+                          borderColor: 'primary.main',
+                          pointerEvents: 'none',
+                        }}
+                      />
+                    )}
+                  </Box>
+                </Tooltip>
+              </Box>
+            );
+          })}
         </Box>
+        <Typography variant="caption" sx={{ display: 'block', color: 'text.secondary', mt: 1.25 }}>
+          Progress: {Math.min(masteryFolderCount, MASTERY_UNLOCK_TARGET)}/{MASTERY_UNLOCK_TARGET} Mastery Folders
+        </Typography>
       </DialogContent>
 
       <DialogActions sx={{ p: 2, display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
