@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Typography,
@@ -11,7 +11,6 @@ import {
   Alert
 } from '@mui/material';
 
-import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
@@ -27,10 +26,17 @@ import StudyHeatmap from '../components/progress/StudyHeatmap';
 
 // import FireStreakLottie from '../assets/FireStreak.lottie';
 
+const getCurrentLevel = (streak: number): number => {
+  if (streak === 0) {
+    return 0;
+  }
+
+  const level = Math.floor((streak - 1) / 2) + 1;
+  return Math.min(level, 5);
+};
+
 function ProgressPage(): React.JSX.Element {
   const theme = useTheme();
-  const [isStreakHovered, setIsStreakHovered] = useState(false);
-  const streakLottieRef = useRef<any>(null);
 
   const [filter, setFilter] = useState<'day' | 'week' | 'month' | 'year'>('week');
 
@@ -46,6 +52,12 @@ function ProgressPage(): React.JSX.Element {
 
   // [TESTING] Dummy Data Override & Streak Adjustment
   const adjustedStreak = streakData?.streak || 0;
+  const currentLevel = getCurrentLevel(adjustedStreak);
+
+  const accentTransition = theme.transitions.create(['background-color', 'color', 'transform'], {
+    duration: theme.transitions.duration.standard,
+    easing: theme.transitions.easing.easeInOut,
+  });
 
   const displayStats = stats || {
     total_study_hours: "0h",
@@ -65,19 +77,6 @@ function ProgressPage(): React.JSX.Element {
   };
 
   const isStreakDone = streakData?.is_done ?? false;
-
-  useEffect(() => {
-    if (!streakLottieRef.current) {
-      return;
-    }
-
-    if (isStreakHovered) {
-      streakLottieRef.current.setLoop(true);
-      streakLottieRef.current.play();
-    } else {
-      streakLottieRef.current.pause();
-    }
-  }, [isStreakHovered]);
 
   return (
     <Box>
@@ -113,8 +112,6 @@ function ProgressPage(): React.JSX.Element {
 
           <Paper
             elevation={0}
-            onMouseEnter={() => setIsStreakHovered(true)}
-            onMouseLeave={() => setIsStreakHovered(false)}
             sx={{
               p: 3,
               display: 'flex',
@@ -136,16 +133,52 @@ function ProgressPage(): React.JSX.Element {
             </Box>
 
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 0 }}>
-              <Box sx={{ width: 64, height: 64 }}>
-                <DotLottieReact
-                  src="/FireStreak.lottie"
-                  loop={false}
-                  autoplay={false}
-                  dotLottieRefCallback={(instance) => {
-                    streakLottieRef.current = instance;
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  height: 64,
+                  width: 64,
+                  minWidth: 64,
+                  mr: 1,
+                  transition: accentTransition,
+                  '.MuiPaper-root:hover &': {
+                    transform: 'scale(1.06)',
+                  },
+                }}
+              >
+                <Box
+                  sx={{
+                    width: 56,
+                    height: 56,
+                    transition: accentTransition,
+                    animation: 'streakFireFloat 3.4s ease-in-out infinite',
+                    '@keyframes streakFireFloat': {
+                      '0%, 100%': {
+                        transform: 'translateY(0)',
+                      },
+                      '50%': {
+                        transform: 'translateY(-6px)',
+                      },
+                    },
+                    '.MuiPaper-root:hover &': {
+                      transform: 'rotate(-8deg) translateY(-4px)',
+                    },
+                    mx: 'auto',
                   }}
-                  style={{ width: '100%', height: '100%' }}
-                />
+                >
+                  <Box
+                    component="img"
+                    src={`/fire${currentLevel}.png`}
+                    alt={`Current fire level ${currentLevel}`}
+                    sx={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'contain',
+                    }}
+                  />
+                </Box>
               </Box>
 
               <Typography variant="h3" fontWeight="bold" sx={{ color: '#FFA726', transition: 'color 0.3s' }}>

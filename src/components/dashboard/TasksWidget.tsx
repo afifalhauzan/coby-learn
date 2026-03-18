@@ -203,9 +203,9 @@ function TasksWidget({ addTaskButtonRef }: TasksWidgetProps): React.JSX.Element 
               <TaskICon sx={{ fontSize: 32, color: 'action.disabled' }} />
             </Box>
             <Typography variant="body1" sx={{ color: 'text.primary' }}>
-              No tasks for today.
+              No tasks for today
             </Typography>
-            <Typography variant="caption">Enjoy your free time!</Typography>
+            <Typography variant="caption">Nice work!</Typography>
           </Box>
         ) : (
           <List sx={{ p: 0, overflowY: 'auto', maxHeight: '300px' }}>
