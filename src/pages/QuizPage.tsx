@@ -19,7 +19,13 @@ import { useNavigate, useLocation, useParams } from 'react-router-dom'; // Tamba
 
 import { useMutation } from '@tanstack/react-query';
 
-import { submitQuiz, type QuizQuestion, type SubmitQuizResponse } from '../services/apiLibraryService';
+import { submitQuiz, getDailyQuizStatus, type QuizQuestion, type SubmitQuizResponse } from '../services/apiLibraryService';
+import StreakShareDialog from '../components/streak/StreakShareDialog';
+import { useStreakStore } from '../stores/useStreakStore';
+import { useQuery } from '@tanstack/react-query';
+
+// Temporary dev toggle: set true to show share modal after every successful quiz submit.
+const FORCE_SHOW_SHARE_MODAL_EVERY_QUIZ = true;
 
 const scoreRangeMessages = {
   low: [
@@ -73,14 +79,31 @@ function QuizPage(): React.JSX.Element {
   const [quizResult, setQuizResult] = useState<SubmitQuizResponse | null>(null);
   const [showResults, setShowResults] = useState(false);
   const [isReviewMode, setIsReviewMode] = useState(false);
+  const [forceShareModalOpen, setForceShareModalOpen] = useState(false);
 
   const [userAnswers, setUserAnswers] = useState<(string | null)[]>([]);
+
+  const currentStreak = useStreakStore((state) => state.currentStreak);
+  const showShareModal = useStreakStore((state) => state.showShareModal);
+  const activeMilestone = useStreakStore((state) => state.activeMilestone);
+  const checkMilestoneAfterQuiz = useStreakStore((state) => state.checkMilestoneAfterQuiz);
+  const closeShareModal = useStreakStore((state) => state.closeShareModal);
+  const markMilestoneShared = useStreakStore((state) => state.markMilestoneShared);
+
+  const { data: dailyStatus } = useQuery({
+    queryKey: ['dailyQuizStatus'],
+    queryFn: getDailyQuizStatus,
+  });
 
   const submitMutation = useMutation({
     mutationFn: submitQuiz,
     onSuccess: (data) => {
       setQuizResult(data);
       setShowResults(true);
+      checkMilestoneAfterQuiz();
+      if (FORCE_SHOW_SHARE_MODAL_EVERY_QUIZ) {
+        setForceShareModalOpen(true);
+      }
     },
     onError: (error: any) => {
       console.error("Submit error:", error);
@@ -186,6 +209,22 @@ function QuizPage(): React.JSX.Element {
   // === RENDER ===
   return (
     <Box sx={{ maxWidth: 600, mx: 'auto', pb: 8 }}>
+      <StreakShareDialog
+        open={showShareModal || forceShareModalOpen}
+        onClose={() => {
+          closeShareModal();
+          setForceShareModalOpen(false);
+        }}
+        username={dailyStatus?.username || 'Learner'}
+        streak={currentStreak}
+        dateLabel={new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+        onShared={() => {
+          if (activeMilestone) {
+            markMilestoneShared(activeMilestone);
+          }
+          setForceShareModalOpen(false);
+        }}
+      />
 
       {!showResults && (
         <Button

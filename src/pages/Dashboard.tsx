@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Box, Container, useMediaQuery } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 
@@ -20,6 +20,7 @@ import { getDailyQuizStatus } from '../services/apiLibraryService';
 import './dashboard.css';
 import { theme } from '../theme/theme';
 import { useDashboardOnboardingStore } from '../stores/useDashboardOnboardingStore';
+import { useStreakStore } from '../stores/useStreakStore';
 
 const getTodayDate = () => {
   const d = new Date();
@@ -38,6 +39,11 @@ function Dashboard(): React.JSX.Element {
   const hasHydrated = useDashboardOnboardingStore((state) => state.hasHydrated);
   const completeOnboarding = useDashboardOnboardingStore((state) => state.completeOnboarding);
   const completeSpotlight = useDashboardOnboardingStore((state) => state.completeSpotlight);
+  const validateStreakWindow = useStreakStore((state) => state.validateStreakWindow);
+
+  useEffect(() => {
+    validateStreakWindow();
+  }, [validateStreakWindow]);
 
   const { data: dailyStatus } = useQuery({
     queryKey: ['dailyQuizStatus'],
