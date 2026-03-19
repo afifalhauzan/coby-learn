@@ -117,6 +117,8 @@ const ChatWidget = ({
     chatMutation.mutate(userText);
   };
 
+  const chatMascotSrc = chatMutation.isPending ? '/think.svg' : '/base_chatbot.svg';
+
   useEffect(() => {
     if (!initialPrompt || chatMutation.isPending) return;
 
@@ -153,13 +155,21 @@ const ChatWidget = ({
       }}
     >
       {/* Chat Header */}
-      <Box sx={{ p: { sx: 1, md: 2 }, borderBottom: '1px solid', borderColor: 'divider', display: 'flex', alignItems: 'center', gap: 1.5, bgcolor: 'background.default' }}>
-        <Avatar sx={{ bgcolor: 'secondary.main', width: 32, height: 32 }}>
-          <SmartToyIcon sx={{ fontSize: 20 }} />
-        </Avatar>
-        <Box>
+      <Box sx={{ px: { sx: 1, md: 2 }, borderBottom: '1px solid', borderColor: 'divider', display: 'flex', alignItems: 'center', gap: 1.5, bgcolor: 'background.default' }}>
+          <Box
+            component="img"
+            src={chatMascotSrc}
+            alt={chatMutation.isPending ? 'Coby thinking mascot' : 'Coby chat mascot'}
+            onError={(event: React.SyntheticEvent<HTMLImageElement>) => {
+              if (!chatMutation.isPending) {
+                event.currentTarget.src = '/base_chat.svg';
+              }
+            }}
+            sx={{ width: 60, objectFit: 'contain', p: 0, m: 0 }}
+          />
+        <Box sx={{ display: 'flex', flexDirection: 'column', lineHeight: 1, ml: 1 }}>
           <Typography variant="subtitle2" fontWeight="bold" sx={{ color: 'text.primary' }}>AI Tutor</Typography>
-          <Typography variant="caption" sx={{ color: 'success.main', display: 'flex', alignItems: 'center', gap: 0.5 }}>
+          <Typography variant="caption" sx={{ color: 'success.main', display: 'flex', alignItems: 'center', gap: 1 }}>
             <Box component="span" sx={{ width: 6, height: 6, borderRadius: '50%', bgcolor: 'success.main' }} />
             Online
           </Typography>
@@ -343,7 +353,7 @@ function MaterialDetailPage(): React.JSX.Element {
     });
   };
 
-  if (isLoading) return <Box sx={{ p: 4, bgcolor: 'background.default', minHeight: '100vh' }}><Skeleton height={400}/></Box>;
+  if (isLoading) return <Box sx={{ p: 4, bgcolor: 'background.default', minHeight: '100vh' }}><Skeleton height={400} /></Box>;
   if (isError || !material) return <Alert severity="error">Gagal memuat materi.</Alert>;
 
   return (
@@ -360,7 +370,7 @@ function MaterialDetailPage(): React.JSX.Element {
           </Button>
 
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-            <Typography variant="h4" sx={{ color: 'text.primary', fontSize: { xs: '1.8rem', md: '2.5rem' }, height: 'auto'}}>
+            <Typography variant="h4" sx={{ color: 'text.primary', fontSize: { xs: '1.8rem', md: '2.5rem' }, height: 'auto' }}>
               {material.title}
             </Typography>
 
@@ -413,7 +423,7 @@ function MaterialDetailPage(): React.JSX.Element {
               <Box
                 sx={{
                   position: 'sticky',
-                  top: isMobile? '0': '100px',
+                  top: isMobile ? '0' : '100px',
                   zIndex: 2,
                   mb: 2,
                   display: 'flex',
@@ -528,7 +538,7 @@ function MaterialDetailPage(): React.JSX.Element {
               height: '100%',
               // Only apply sticky on desktop (lg and up)
               display: { xs: 'block', lg: 'block' }
-              
+
             }}>
             <Box sx={{
               // This is the actual element that sticks
@@ -547,7 +557,7 @@ function MaterialDetailPage(): React.JSX.Element {
                   fullWidth variant="contained" startIcon={<AutoAwesomeIcon />}
                   onClick={() => setOpenQuizDialog(true)} disabled={quizMutation.isPending}
                   sx={{
-                    bgcolor: 'secondary.main', color: 'white', py: 1.5, borderRadius: '12px',  textTransform: 'none',
+                    bgcolor: 'secondary.main', color: 'white', py: 1.5, borderRadius: '12px', textTransform: 'none',
                     '&:hover': { bgcolor: 'secondary.dark' }
                   }}
                 >

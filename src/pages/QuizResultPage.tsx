@@ -98,6 +98,8 @@ function QuizResultPage(): React.JSX.Element {
   const correctCount = result.questions.filter(q => q.is_correct).length;
   const totalCount = result.questions.length;
   const motivationalMessages = getMotivationalMessagesByScore(result.score);
+  const isHighScore = result.score > 70;
+  const resultMascot = isHighScore ? '/quizhigh.svg' : '/quizlow.svg';
 
   return (
     <Box sx={{ maxWidth: 600, mx: 'auto', pb: 8, px: 2 }}>
@@ -118,27 +120,54 @@ function QuizResultPage(): React.JSX.Element {
           bgcolor: '#ffffff',
           border: '1px solid #e4e4e4',
           mb: 4,
-          textAlign: 'center',
-          color: 'white'
+          color: 'white',
         }}
       >
-        <Typography variant="h6" sx={{ color: 'text.secondary', mb: 1 }}>Quiz Result</Typography>
-        <Typography variant="h2" fontWeight="bold" sx={{ color: result.score >= 70 ? '#4ADE80' : '#F87171' }}>
-          {result.score}
-        </Typography>
-        <Typography variant="body1" sx={{ color: 'text.secondary', mt: 1 }}>
-          You answered {correctCount} out of {totalCount} questions correctly.
-        </Typography>
-        <Stack spacing={0.5} sx={{ mt: 1.5, alignItems: 'center' }}>
-          {motivationalMessages.map((message, index) => (
-            <Typography key={`${index}-${message}`} variant="body2" sx={{ color: 'text.secondary' }}>
-              {message}
+        <Typography variant="h6" sx={{ color: 'text.secondary', mb: 2, textAlign: 'center' }}>Quiz Result</Typography>
+
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: { xs: 'column-reverse', sm: 'row' },
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: 2,
+            mb: 1,
+          }}
+        >
+          <Box sx={{ textAlign: { xs: 'center', sm: 'left' } }}>
+            <Typography variant="h2" fontWeight="bold" sx={{ color: isHighScore ? '#4ADE80' : '#F87171', lineHeight: 1 }}>
+              {result.score}
             </Typography>
-          ))}
-        </Stack>
-        <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 2 }}>
-          Completed on {new Date(result.created_at).toLocaleString('id-ID')}
-        </Typography>
+            <Typography variant="body1" sx={{ color: 'text.secondary', mt: 1 }}>
+              You answered {correctCount} out of {totalCount} questions correctly.
+            </Typography>
+
+            <Stack spacing={0.5} sx={{ mt: 1.5, alignItems: 'left' }}>
+              {motivationalMessages.map((message, index) => (
+                <Typography key={`${index}-${message}`} variant="body2" sx={{ color: 'text.secondary' }}>
+                  {message}
+                </Typography>
+              ))}
+            </Stack>
+            <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 2 }}>
+              Completed on {new Date(result.created_at).toLocaleString('id-ID')}
+            </Typography>
+          </Box>
+
+          <Box
+            component="img"
+            src={resultMascot}
+            alt={isHighScore ? 'High score mascot' : 'Low score mascot'}
+            sx={{
+              width: { xs: 120, sm: 140 },
+              objectFit: 'contain',
+              flexShrink: 0,
+            }}
+          />
+        </Box>
+
+
       </Paper>
 
       <Stack spacing={3}>

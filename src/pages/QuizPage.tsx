@@ -21,6 +21,44 @@ import { useMutation } from '@tanstack/react-query';
 
 import { submitQuiz, type QuizQuestion, type SubmitQuizResponse } from '../services/apiLibraryService';
 
+const scoreRangeMessages = {
+  low: [
+    'Raw shards gathered! Every attempt makes your understanding stronger.',
+    'Coby says: mistakes are data, and data builds mastery.',
+    'You are building the base. Keep going one step at a time.',
+    'No crystal forms instantly. Review and try again.',
+  ],
+  mid: [
+    'Great momentum. Your crystal is forming.',
+    'Solid progress! You are close to top-tier results.',
+    'Nice recall. Refine weak spots and push higher.',
+    'Steady growth. Consistency will level this up fast.',
+  ],
+  high: [
+    'Amazing performance! Your mastery is shining.',
+    'Stage 5 energy. Coby is proud of this score.',
+    'Excellent precision. Your strategy is working.',
+    'Brilliant result. Keep this momentum alive.',
+  ],
+};
+
+const pickRandomMessages = (messages: string[], count = 2): string[] => {
+  const shuffled = [...messages].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, 1);
+};
+
+const getMotivationalMessagesByScore = (score: number): string[] => {
+  if (score <= 30) {
+    return pickRandomMessages(scoreRangeMessages.low);
+  }
+
+  if (score < 70) {
+    return pickRandomMessages(scoreRangeMessages.mid);
+  }
+
+  return pickRandomMessages(scoreRangeMessages.high);
+};
+
 function QuizPage(): React.JSX.Element {
   const navigate = useNavigate();
   const location = useLocation();
@@ -62,6 +100,10 @@ function QuizPage(): React.JSX.Element {
 
   const totalQuestions = questions.length;
   const currentQuestion = questions[currentQuestionIndex];
+  const finalScore = quizResult?.score || 0;
+  const isHighScore = finalScore > 70;
+  const resultMascot = isHighScore ? '/quizhigh.svg' : '/quizlow.svg';
+  const motivationalMessages = getMotivationalMessagesByScore(finalScore);
 
   // === HANDLERS ===
 
@@ -120,7 +162,7 @@ function QuizPage(): React.JSX.Element {
     if (!isReviewMode) {
       if (selectedKey === optionKey) {
         borderColor = 'primary.main';
-        bgcolor = 'rgba(249, 115, 22, 0.1)';
+        bgcolor = 'rgba(22, 162, 249, 0.1)';
       }
     } else {
       // Mode Review: Cek jawaban benar/salah berdasarkan data lokal (karena review mode client-side)
@@ -244,16 +286,44 @@ function QuizPage(): React.JSX.Element {
         ) : (
           // === TAMPILAN HASIL (DATA DARI BACKEND) ===
           <Box sx={{ textAlign: 'center', py: 4 }}>
-            <Box sx={{ width: 80, height: 80, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', mx: 'auto', mb: 3 }}>
-              <LocalFireDepartmentIcon sx={{ fontSize: 48, color: 'primary.main' }} />
-            </Box>
+            <Box
+              sx={{
+                display: 'flex',
+                flexDirection: { xs: 'column-reverse', sm: 'row' },
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                gap: 2,
+                mb: 4,
+                px: { xs: 0, sm: 1 },
+              }}
+            >
+              <Box sx={{ textAlign: { xs: 'center', sm: 'left' } }}>
+                <Typography variant="h4" fontWeight="bold" sx={{ mb: 1 }}>
+                  Quiz Completed!
+                </Typography>
+                <Typography variant="body1" color="text.secondary" sx={{ mb: 1 }}>
+                  You answered {quizResult?.correct} out of {totalQuestions} questions correctly.
+                </Typography>
+                <Stack spacing={0.5} sx={{ alignItems: { xs: 'center', sm: 'flex-start' } }}>
+                  {motivationalMessages.map((message, index) => (
+                    <Typography key={`${index}-${message}`} variant="body2" sx={{ color: 'text.secondary' }}>
+                      {message}
+                    </Typography>
+                  ))}
+                </Stack>
+              </Box>
 
-            <Typography variant="h4" fontWeight="bold" sx={{ mb: 1 }}>
-              Quiz Completed!
-            </Typography>
-            <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-              You answered {quizResult?.correct} out of {totalQuestions} questions correctly.
-            </Typography>
+              <Box
+                component="img"
+                src={resultMascot}
+                alt={isHighScore ? 'High score mascot' : 'Low score mascot'}
+                sx={{
+                  width: { xs: 120, sm: 160 },
+                  objectFit: 'contain',
+                  flexShrink: 0,
+                }}
+              />
+            </Box>
 
             {/* Score Stats (Dinamis dari quizResult) */}
             <Stack direction="row" spacing={4} justifyContent="center" sx={{ mb: 6 }}>
