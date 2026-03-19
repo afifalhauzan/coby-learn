@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../components/auth/AuthMiddleware';
 import LandingNavbar from '../components/landing-page/LandingNavbar';
 import Hero from '../components/landing-page/Hero';
+import Mascot from '../components/landing-page/Mascot';
 import FeaturesSection from '../components/landing-page/FeaturesSection';
 import HowItWorksSection from '../components/landing-page/HowItWorksSection';
 import FaqSection from '../components/landing-page/FaqSection';
@@ -42,6 +43,7 @@ function LandingPage(): React.JSX.Element {
         onPrimaryClick={() => navigate(isLoggedIn ? '/dashboard' : '/sign-up')}
         onSecondaryClick={() => scrollToSection('features')}
       />
+      <Mascot />
       <FeaturesSection />
       <HowItWorksSection />
       <FaqSection />

@@ -17,21 +17,36 @@ import { getDailyQuizStatus } from '../../services/apiLibraryService';
 // import FireStreakLottie from '../../assets/FireStreak.lottie';
 
 const getCurrentLevel = (streak: number): number => {
-  if (streak === 0) {
+  if (streak <= 0) {
     return 0;
   }
 
-  const level = Math.floor((streak - 1) / 2) + 1;
-  return Math.min(level, 5);
+  if (streak >= 30) {
+    return 5;
+  }
+
+  if (streak >= 15) {
+    return 4;
+  }
+
+  if (streak >= 7) {
+    return 3;
+  }
+
+  if (streak >= 3) {
+    return 2;
+  }
+
+  return 1;
 };
 
 const fireLevels = [
-  { id: 0, range: '0 Days', label: 'Embers', desc: 'Start your streak journey' },
-  { id: 1, range: '1-2 Days', label: 'Spark', desc: 'It starts glowing' },
-  { id: 2, range: '3-4 Days', label: 'Flame', desc: 'Momentum is building' },
-  { id: 3, range: '5-6 Days', label: 'Blaze', desc: 'Strong flow' },
-  { id: 4, range: '7-8 Days', label: 'Inferno', desc: 'Serious commitment' },
-  { id: 5, range: '9+ Days', label: 'Supernova', desc: 'Amazing streak consistency!' },
+  { id: 0, range: '0 Day', label: 'Embers', desc: 'Start your streak journey' },
+  { id: 1, range: '1 Day', label: 'Spark', desc: 'It starts glowing' },
+  { id: 2, range: '3 Day', label: 'Flame', desc: 'Momentum is building' },
+  { id: 3, range: '7 Day', label: 'Blaze', desc: 'Strong flow' },
+  { id: 4, range: '15 Day', label: 'Inferno', desc: 'Serious commitment' },
+  { id: 5, range: '30+ Day', label: 'Supernova', desc: 'Amazing streak consistency!' },
 ];
 
 const motivationByLevel = [

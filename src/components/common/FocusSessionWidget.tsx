@@ -30,6 +30,7 @@ import TimerIcon from '@mui/icons-material/Timer';
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import YouTube from 'react-youtube';
 
 const RADIO_STATIONS = [
@@ -42,10 +43,10 @@ const RADIO_STATIONS = [
 ];
 
 const ALARM_SOUND_URL = "https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3";
-const PRESET_DURATIONS = [5, 10, 25, 30, 45, 60]; 
+const PRESET_DURATIONS = [5, 10, 25, 30, 45, 60];
 
 function FocusSessionWidget(): React.JSX.Element {
-  
+
   // States Dialog
   const [openSettings, setOpenSettings] = useState(false);
   const [openMusicSearch, setOpenMusicSearch] = useState(false);
@@ -53,9 +54,9 @@ function FocusSessionWidget(): React.JSX.Element {
 
   // Timer States
   const [focusDuration, setFocusDuration] = useState(25);
-  const [timeLeft, setTimeLeft] = useState(25 * 60); 
+  const [timeLeft, setTimeLeft] = useState(25 * 60);
   const [isTimerRunning, setIsTimerRunning] = useState(false);
-  
+
   // Audio Ref
   const alarmAudio = useRef(new Audio(ALARM_SOUND_URL));
 
@@ -63,7 +64,7 @@ function FocusSessionWidget(): React.JSX.Element {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     let val = parseInt(event.target.value, 10);
     if (isNaN(val)) val = 0;
-    if (val > 180) val = 180; 
+    if (val > 180) val = 180;
     setFocusDuration(val);
   };
 
@@ -79,13 +80,13 @@ function FocusSessionWidget(): React.JSX.Element {
   };
 
   useEffect(() => {
-  let interval: ReturnType<typeof setInterval>;
+    let interval: ReturnType<typeof setInterval>;
 
     if (isTimerRunning && timeLeft > 0) {
       interval = setInterval(() => {
         setTimeLeft((prev) => prev - 1);
       }, 1000);
-    } 
+    }
     else if (timeLeft === 0 && isTimerRunning) {
       setIsTimerRunning(false);
       triggerAlarm();
@@ -129,7 +130,7 @@ function FocusSessionWidget(): React.JSX.Element {
   const [currentStationIndex, setCurrentStationIndex] = useState(0);
   const [currentVideoId, setCurrentVideoId] = useState(RADIO_STATIONS[0].id);
   const [currentInfo, setCurrentInfo] = useState({ name: RADIO_STATIONS[0].name, desc: RADIO_STATIONS[0].desc });
-  
+
   const [inputVideoUrl, setInputVideoUrl] = useState('');
   const [isPlaying, setIsPlaying] = useState(false);
   const [player, setPlayer] = useState<any>(null);
@@ -167,7 +168,7 @@ function FocusSessionWidget(): React.JSX.Element {
       const urlObj = new URL(inputVideoUrl);
       if (urlObj.hostname.includes('youtube.com')) videoId = urlObj.searchParams.get('v') || videoId;
       else if (urlObj.hostname.includes('youtu.be')) videoId = urlObj.pathname.slice(1) || videoId;
-    } catch (e) {}
+    } catch (e) { }
 
     if (videoId) {
       setCurrentVideoId(videoId);
@@ -184,12 +185,12 @@ function FocusSessionWidget(): React.JSX.Element {
       sx={{
         bgcolor: 'background.paper',
         borderColor: 'divider',
-        display: 'flex', 
+        display: 'flex',
         flexDirection: 'column', // Force column layout untuk sidebar
-        alignItems: 'center', 
-        justifyContent: 'center', 
+        alignItems: 'center',
+        justifyContent: 'center',
         gap: 2,
-        position: 'relative', 
+        position: 'relative',
         overflow: 'hidden',
         width: '100%'
       }}
@@ -200,47 +201,100 @@ function FocusSessionWidget(): React.JSX.Element {
 
       {/* === TIMER SECTION === */}
       <Box sx={{ width: '100%', textAlign: 'center' }}>
-        
-        {/* Header Widget */}
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1, mb: 1 }}>
-          <Typography variant="subtitle2" sx={{ color: 'primary.main', letterSpacing: 1 }}>
-            Focus Timer
-          </Typography>
-          {isTimerRunning && (
-            <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: 'error.main', animation: 'pulse 1.5s infinite' }} />
-          )}
-          <IconButton size="small" onClick={() => setOpenSettings(true)} sx={{ color: 'primary.main', p: 0.5 }}>
-            <SettingsIcon fontSize="small" sx={{ color: 'primary.main' }} />
-          </IconButton>
-        </Box>
+        {/* Big Timer + Mascot in separate containers */}
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: { xs: 'column', md: 'row' },
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 1.75,
+          }}
+        >
+          <Box
+            sx={{
+              width: 120,
+              minWidth: 120,
+              position: 'relative', // Necessary for layering
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              objectFit: 'contain',
+            }}
+          >
+            {/* The Static Image - Visible only when NOT running */}
+            <Box
+              component="img"
+              src="/base.svg"
+              alt="Coby mascot"
+              sx={{
+                width: '80%',
+                objectFit: 'contain',
+                display: isTimerRunning ? 'none' : 'block'
+              }}
+            />
 
-        {/* Big Timer */}
-        <Typography variant="h4" fontWeight="500" sx={{ color: 'text.primary', letterSpacing: 2, fontSize: '3.5rem', lineHeight: 1 }}>
-          {formatTime(timeLeft)}
-        </Typography>
+              <DotLottieReact
+                src="/coby_learn_2.lottie"
+                loop
+                autoplay
+                style={{
+                  display: isTimerRunning ? 'block' : 'none',
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'contain',
+                  transform: 'scale(2)', // Adjust this number until it matches base.svg
+                }}
+              />
+          </Box>
+
+          <Box
+            sx={{
+              minWidth: 250,
+              px: 2.25,
+              py: 1.5,
+            }}
+          >
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1, mb: 1 }}>
+              <Typography variant="subtitle2" sx={{ color: 'primary.main', letterSpacing: 1 }}>
+                Focus Timer
+              </Typography>
+              {isTimerRunning && (
+                <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: 'error.main', animation: 'pulse 1.5s infinite' }} />
+              )}
+              <IconButton size="small" onClick={() => setOpenSettings(true)} sx={{ color: 'primary.main', p: 0.5 }}>
+                <SettingsIcon fontSize="small" sx={{ color: 'primary.main' }} />
+              </IconButton>
+            </Box>
+
+            <Typography variant="h4" fontWeight="500" sx={{ color: 'text.primary', letterSpacing: 2, fontSize: '3.5rem', lineHeight: 1 }}>
+              {formatTime(timeLeft)}
+            </Typography>
+          </Box>
+        </Box>
 
         {/* Controls */}
         <Stack direction="row" spacing={1} sx={{ mt: 3, justifyContent: 'center' }}>
-          <Button 
-            variant="contained" 
+          <Button
+            variant="contained"
             fullWidth
-            onClick={toggleTimer} 
-            startIcon={isTimerRunning ? <PauseIcon /> : <PlayArrowIcon />} 
-            sx={{ 
-              bgcolor: 'secondary.main', color: 'white', fontWeight: 'bold', 
-              borderRadius: '12px', py: 1, textTransform: 'none', 
+            onClick={toggleTimer}
+            startIcon={isTimerRunning ? <PauseIcon /> : <PlayArrowIcon />}
+            sx={{
+              bgcolor: 'secondary.main', color: 'white', fontWeight: 'bold',
+              borderRadius: '12px', py: 1, textTransform: 'none',
               boxShadow: 4,
-              '&:hover': { bgcolor: 'secondary.dark' } 
+              '&:hover': { bgcolor: 'secondary.dark' }
             }}
           >
             {isTimerRunning ? 'Pause' : 'Start Focus'}
           </Button>
-          
-          <IconButton 
-            onClick={handleResetTimer} 
-            sx={{ 
-              color: 'text.secondary', 
-              border: '1px solid', 
+
+          <IconButton
+            onClick={handleResetTimer}
+            sx={{
+              color: 'text.secondary',
+              border: '1px solid',
               borderColor: 'divider',
               borderRadius: '12px',
               width: 42,
@@ -254,20 +308,20 @@ function FocusSessionWidget(): React.JSX.Element {
       </Box>
 
       {/* === MUSIC PLAYER SECTION (COMPACT CARD) === */}
-      <Box 
-        sx={{ 
-          width: '90%', 
-          p:1,
+      <Box
+        sx={{
+          width: '90%',
+          p: 1,
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'center', 
+          alignItems: 'center',
         }}
       >
         <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'center', mb: 2 }}>
           {/* Album Art / Icon */}
-          <Box sx={{ 
-            width: 48, height: 48, borderRadius: '10px', 
-            bgcolor: 'background.paper', display: 'flex', alignItems: 'center', 
+          <Box sx={{
+            width: 48, height: 48, borderRadius: '10px',
+            bgcolor: 'background.paper', display: 'flex', alignItems: 'center',
             justifyContent: 'center', overflow: 'hidden', flexShrink: 0,
             boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)'
           }}>
@@ -286,18 +340,18 @@ function FocusSessionWidget(): React.JSX.Element {
 
         {/* Music Controls */}
         <Box sx={{ display: 'flex', width: '100%', alignItems: 'center', gap: 1.5 }}>
-           <IconButton 
-             onClick={toggleMusic} 
-             size="small"
-             sx={{ 
-               color: 'white', 
-               bgcolor: 'text.primary', 
-               '&:hover': { bgcolor: 'text.secondary' }, 
-               width: 32, height: 32 
-             }}
-           >
-             {isPlaying ? <PauseIcon fontSize="small" /> : <PlayArrowIcon fontSize="small" />}
-           </IconButton>
+          <IconButton
+            onClick={toggleMusic}
+            size="small"
+            sx={{
+              color: 'white',
+              bgcolor: 'text.primary',
+              '&:hover': { bgcolor: 'text.secondary' },
+              width: 32, height: 32
+            }}
+          >
+            {isPlaying ? <PauseIcon fontSize="small" /> : <PlayArrowIcon fontSize="small" />}
+          </IconButton>
 
           <LinearProgress
             variant="determinate"
@@ -328,20 +382,20 @@ function FocusSessionWidget(): React.JSX.Element {
       </Box>
 
       {/* === 1. MODAL WAKTU HABIS (ALARM) === */}
-      <Dialog 
-        open={openTimeUpDialog} 
-        onClose={() => {}} 
-        maxWidth="xs" 
+      <Dialog
+        open={openTimeUpDialog}
+        onClose={() => { }}
+        maxWidth="xs"
         fullWidth
         PaperProps={{
-          sx: { 
-            bgcolor: 'background.paper', 
+          sx: {
+            bgcolor: 'background.paper',
             color: 'text.primary',
             textAlign: 'center',
             p: 2,
             border: '2px solid',
             borderColor: 'secondary.main',
-            boxShadow: 10 
+            boxShadow: 10
           }
         }}
       >
@@ -355,15 +409,15 @@ function FocusSessionWidget(): React.JSX.Element {
           </Typography>
         </DialogContent>
         <DialogActions sx={{ justifyContent: 'center', pb: 3 }}>
-          <Button 
-            variant="contained" 
-            size="large" 
+          <Button
+            variant="contained"
+            size="large"
             onClick={stopAlarmAndReset}
             startIcon={<CheckCircleIcon />}
-            sx={{ 
-              bgcolor: 'secondary.main', color: 'white', fontWeight: 'bold', 
+            sx={{
+              bgcolor: 'secondary.main', color: 'white', fontWeight: 'bold',
               borderRadius: 50, px: 4,
-              '&:hover': { bgcolor: 'secondary.dark' } 
+              '&:hover': { bgcolor: 'secondary.dark' }
             }}
           >
             Stop Alarm
@@ -406,7 +460,7 @@ function FocusSessionWidget(): React.JSX.Element {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setOpenMusicSearch(false)}>Cancel</Button>
-          <Button onClick={handleChangeMusic} variant="contained" sx={{color:'white'}}>Play</Button>
+          <Button onClick={handleChangeMusic} variant="contained" sx={{ color: 'white' }}>Play</Button>
         </DialogActions>
       </Dialog>
 
