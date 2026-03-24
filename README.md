@@ -10,7 +10,22 @@ Universitas Brawijaya
 
 ## Deskripsi Karya 
 
-CobyLearnAi adalah platform pembelajaran terintegrasi berbasis AI untuk memfasilitasi proses belajar. Siswa dapat mengunggah materi belajar, mengobrol dengan tutor AI, dan melacak kemajuan. Dengan memanfaatkan kekuatan AI Gemini dan teknologi frontend modern, platform ini memberdayakan siswa untuk mengubah PDF materi, video YouTube, dan catatan pembelajaran menjadi panduan belajar terstruktur, kuis adaptif, dan kartu flash interaktif.
+CobyLearnAI berangkat dari permasalahan dalam proses belajar digital yang sering kali terasa monoton dan kurang mendorong konsistensi pengguna. Banyak pelajar mengalami kesulitan untuk mempertahankan motivasi belajar karena materi disajikan secara pasif, minim interaksi, dan tidak memberikan apresiasi atas progres yang telah dicapai. Akibatnya, keterlibatan siswa rendah, penyelesaian materi tidak optimal, dan proses belajar menjadi kurang efektif. Oleh karena itu, diperlukan sebuah platform manajemen belajar yang tidak hanya menyimpan materi, tetapi juga mampu meningkatkan motivasi melalui pendekatan yang lebih interaktif dan menyenangkan, salah satunya dengan penerapan gamifikasi.
+
+CobyLearnAI adalah platform manajemen belajar terintegrasi berbasis AI dan gamifikasi untuk memfasilitasi proses belajar. Siswa dapat mengunggah materi belajar, mengobrol dengan tutor AI, dan melacak kemajuan. 
+
+Platform ini bertujuan untuk merancang pembelajaran yang menyediakan struktur eksternal yang diperlukan untuk mengelola materi pembelajaran sekaligus mendorong motivasi pengguna melalui gamifikasi interaktif dan apresiasi kemajuan. CobyLearnAI bermanfaat untuk:
+
+#### 1. **Menyediakan manajemen terpusat PDF, tautan YouTube, dan tugas sebagai struktur eksternal yang dibutuhkan untuk mempertahankan fokus.**
+#### 2. **Mendapatkan umpan balik langsung melalui interaksi XP dan Mascot menggantikan monoton digital dengan rasa apresiasi untuk setiap tugas yang diselesaikan.**
+#### 3. **Melacak kemajuan belajar jangka panjang dengan mengubah materi studi menjadi serangkaian "Misi" dan "Level" yang dapat dicapai.**
+#### 4. **Mendukung manajemen waktu yang lebih baik dan mendorong semangat belajar.**
+
+CobyLearnAI selaras dengan tema Pendidikan yang lebih luas dimana tujuan teknologi berfungsi sebagai pendukung bagi keberhasilan siswa. Platform ini menyediakan struktur eksternal yang seringkali kurang dimiliki siswa di lingkungan digital yang tidak terstruktur. Platform ini bertindak sebagai asisten digital yang mengatur informasi sehingga siswa dapat fokus pada pemahaman. Dengan menggamifikasi proses manajemen (bukan hanya hasilnya), platform ini membangun kebiasaan untuk mengorganisasikan materi dan melatih konsistensi belajar. 
+
+---
+
+Fitur terdiri dari : 
 
 ### 1. **Manajemen Materi Cerdas**
 
@@ -20,33 +35,36 @@ CobyLearnAi adalah platform pembelajaran terintegrasi berbasis AI untuk memfasil
 
 * **Organisasi Perpustakaan:** Sistem berbasis folder yang rapi untuk manajemen materi belajar yang efisien.
 
----
 
 ### 2. **Pembelajaran & Evaluasi Aktif**
 
-* **Pembuatan Kuis Adaptif:** Buat kuis pilihan ganda secara instan dari materi apa pun.
+* **Pembuatan Kuis & Flashcard Adaptif:** Buat kuis pilihan ganda dan Flashcard secara instan dari materi apa pun.
 
-* **Sistem Kartu Flash:** Kartu flash dibuat secara otomatis oleh AI.
+* **Umpan Balik Maskot:** Maskot Coby bereaksi secara kontekstual terhadap hasil kuis, dengan memberikan dorongan untuk skor rendah dan merayakan untuk skor tinggi.
 
-* **Tutor AI:** Chatbot pendamping yang terhubung dengan materi tertentu yang bertindak sebagai mitra belajar pribadi.
+* **Tutor AI:** Pendamping chatbot yang memberikan rangkuman dan membantu menjawab pertanyaan dari materi, membantu siswa menavigasi konsep-konsep sulit.
 
----
 
-### 3. **Pelacak Kemajuan & Kebiasaan**
+### 3. **Gamifikasi Produktivitas Belajar**
 
-* **Dasbor yang Dipersonalisasi:** Tampilan sekilas status kuis harian, rangkaian fokus, dan tugas yang tertunda.
+* **Dasbor:** Menampilkan sekilas status misi harian, rangkaian fokus (siklus api), dan tugas yang tertunda.
 
-* **Peta Panas Produktivitas:** Perencanaan tugas komprehensif dengan integrasi Google Kalender dan visualisasi untuk melacak konsistensi dari waktu ke waktu.
+* **Misi Harian:** Panel "Daily Mission" yang menampilkan misi spesifik seperti mengerjakan Quiz atau belajar selama 25 menit untuk memberikan arahan yang jelas untuk setiap sesi belajar.
 
-* **Integrasi Pomodoro:** Pengatur waktu fokus dan Radio Lofi untuk memfasilitasi sesi belajar.
+* **Sistem Api Harian:** Sebuah siklus api ala TikTok di mana nyala api berevolusi berdasarkan konsistensi harian untuk menjaga keterlibatan siswa. Serta dapat dibagikan berupa kartu setelah mengerjakan kuis untuk merayakan pencapaian mereka di media sosial, menciptakan lingkaran sosial yang positif.
 
----
+* **Sistem Level Bulanan:** Sistem bulanan yang direset setiap bulan untuk mempertahankan lingkungan belajar yang konsisten dalam jangka panjang
+  
+* **Peta Produktivitas:** Perencanaan tugas dengan integrasi Google Kalender dan visualisasi Kristal untuk melacak konsistensi dari waktu ke waktu.
 
-### 4. **Pengalaman Pengguna yang Intuitif**
+* **Integrasi Pomodoro:** Belajar dengan waktu fokus dan Radio Lofi bersama Maskot Coby untuk memfasilitasi sesi belajar.
 
-* **Desain Material UI:** Menggunakan desain berbasis native untuk menyediakan antarmuka yang familiar dan intuitif.
 
-* **Dukungan PWA:** Dukungan penuh Progressive Web App untuk penggunaan seluler yang lancar, memastikan siswa dapat tetap produktif kapan saja, di mana saja dengan akses yang lebih luas.
+### 4. **Pengalaman Pengguna**
+
+* **Desain Material UI:** Menggunakan desain berbasis native dengan teknologi MUI 7 dan Framer Motion untuk menyediakan tampilan yang familiar dan intuitif.
+
+* **Dukungan PWA:** Dukungan penuh Progressive Web App untuk penggunaan HP/mobile yang lancar dengan aplikasi yang dapat diinstall, memastikan siswa dapat tetap produktif kapan saja, di mana saja dengan akses yang lebih luas.
 
 ---
 
