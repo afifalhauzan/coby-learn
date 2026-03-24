@@ -12,7 +12,6 @@ import {
   Alert,
   Divider,
   TextField,
-  Avatar,
   Chip,
   Dialog,
 } from '@mui/material';

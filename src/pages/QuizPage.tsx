@@ -48,7 +48,7 @@ const scoreRangeMessages = {
   ],
 };
 
-const pickRandomMessages = (messages: string[], count = 2): string[] => {
+const pickRandomMessages = (messages: string[]): string[] => {
   const shuffled = [...messages].sort(() => Math.random() - 0.5);
   return shuffled.slice(0, 1);
 };
