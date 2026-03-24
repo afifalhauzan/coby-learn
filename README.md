@@ -21,7 +21,7 @@ Platform ini bertujuan untuk menyediakan sistem pengorganisasian dalam mengelola
 CobyLearnAI bermanfaat untuk:
 
 #### 1. **Menyediakan manajemen terpusat PDF, tautan YouTube, dan tugas sebagai struktur eksternal yang dibutuhkan untuk mempertahankan fokus.**
-#### 2. **Mendapatkan umpan balik langsung melalui interaksi XP dan Mascot menggantikan monoton digital dengan rasa apresiasi untuk setiap tugas yang diselesaikan.**
+#### 2. **Mendapatkan umpan balik langsung melalui interaksi XP dan Mascot dengan rasa apresiasi untuk setiap tugas yang diselesaikan.**
 #### 3. **Melacak kemajuan belajar jangka panjang dengan mengubah materi studi menjadi serangkaian "Misi" dan "Level" yang dapat dicapai.**
 #### 4. **Mendukung manajemen waktu yang lebih baik dan mendorong semangat belajar.**
 
@@ -73,4 +73,4 @@ Fitur terdiri dari :
 ---
 
 ## Link Website
-https://cobylearn.vercel.app/
+https://coby-learn.vercel.app/
