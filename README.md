@@ -14,14 +14,18 @@ CobyLearnAI berangkat dari permasalahan dalam proses belajar digital yang sering
 
 CobyLearnAI adalah platform manajemen belajar terintegrasi berbasis AI dan gamifikasi untuk memfasilitasi proses belajar. Siswa dapat mengunggah materi belajar, mengobrol dengan tutor AI, dan melacak kemajuan. 
 
-Platform ini bertujuan untuk merancang pembelajaran yang menyediakan struktur eksternal yang diperlukan untuk mengelola materi pembelajaran sekaligus mendorong motivasi pengguna melalui gamifikasi interaktif dan apresiasi kemajuan. CobyLearnAI bermanfaat untuk:
+Platform ini bertujuan untuk menyediakan sistem pengorganisasian dalam mengelola materi pembelajaran sekaligus mendorong motivasi pengguna melalui gamifikasi interaktif dan apresiasi kemajuan.
+
+---
+
+CobyLearnAI bermanfaat untuk:
 
 #### 1. **Menyediakan manajemen terpusat PDF, tautan YouTube, dan tugas sebagai struktur eksternal yang dibutuhkan untuk mempertahankan fokus.**
-#### 2. **Mendapatkan umpan balik langsung melalui interaksi XP dan Mascot menggantikan monoton digital dengan rasa apresiasi untuk setiap tugas yang diselesaikan.**
+#### 2. **Mendapatkan umpan balik langsung melalui interaksi XP dan Mascot dengan rasa apresiasi untuk setiap tugas yang diselesaikan.**
 #### 3. **Melacak kemajuan belajar jangka panjang dengan mengubah materi studi menjadi serangkaian "Misi" dan "Level" yang dapat dicapai.**
 #### 4. **Mendukung manajemen waktu yang lebih baik dan mendorong semangat belajar.**
 
-CobyLearnAI selaras dengan tema Pendidikan yang lebih luas dimana tujuan teknologi berfungsi sebagai pendukung bagi keberhasilan siswa. Platform ini menyediakan struktur eksternal yang seringkali kurang dimiliki siswa di lingkungan digital yang tidak terstruktur. Platform ini bertindak sebagai asisten digital yang mengatur informasi sehingga siswa dapat fokus pada pemahaman. Dengan menggamifikasi proses manajemen (bukan hanya hasilnya), platform ini membangun kebiasaan untuk mengorganisasikan materi dan melatih konsistensi belajar. 
+CobyLearnAI selaras dengan subtema Pendidikan yang lebih luas dimana tujuan teknologi berfungsi sebagai pendukung bagi keberhasilan siswa. Platform ini menyediakan struktur eksternal yang seringkali kurang dimiliki siswa di lingkungan digital yang tidak terstruktur. Platform ini bertindak sebagai asisten digital yang mengatur informasi sehingga siswa dapat fokus pada pemahaman. Dengan menggamifikasi proses manajemen (bukan hanya hasilnya), platform ini membangun kebiasaan untuk mengorganisasikan materi dan melatih konsistensi belajar. 
 
 ---
 
@@ -69,4 +73,4 @@ Fitur terdiri dari :
 ---
 
 ## Link Website
-https://cobylearn.vercel.app/
+https://coby-learn.vercel.app/
