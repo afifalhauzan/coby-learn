@@ -1,0 +1,130 @@
+{
+  "hero": {
+    "imageAlt": "Siswa belajar dengan AI",
+    "stats": {
+      "aiGenerated": {
+        "label": "Dihasilkan AI",
+        "value": "50+ Flashcard"
+      },
+      "studyProgress": {
+        "label": "Progres Belajar",
+        "value": "87% Selesai"
+      }
+    },
+    "subtitleLine1": "Unggah materi belajarmu dan biarkan AI langsung mengubahnya menjadi ringkasan, kuis, dan flashcard.",
+    "subtitleLine2": "Ubah jam membaca menjadi menit untuk benar-benar menguasai.",
+    "titlePrefix": "Belajar",
+    "titleSuffix": "Bukan Lebih Sulit",
+    "words": {
+      "better": "Efisien,",
+      "smarter": "Cerdas,"
+    }
+  },
+  "navbar": {
+    "navItems": {
+      "faq": "FAQ",
+      "features": "Fitur",
+      "how-it-works": "Cara Kerjanya"
+    }
+  },
+  "features": {
+    "items": {
+      "aiSummarization": {
+        "description": "Ubah PDF atau teks panjang menjadi ringkasan singkat yang mudah dipahami dalam hitungan detik.",
+        "title": "Ringkasan AI"
+      },
+      "fileSupport": {
+        "description": "Mendukung PDF, Teks, dan bahkan tautan Video Youtube (segera hadir).",
+        "title": "Dukungan File"
+      },
+      "flashcards": {
+        "description": "Hafalkan konsep penting lebih cepat dengan flashcard yang dibuat otomatis.",
+        "title": "Flashcard"
+      },
+      "gamifiedLearning": {
+        "description": "Kumpulkan XP dan jaga streak-mu tetap hidup agar tetap termotivasi setiap hari.",
+        "title": "Belajar Bergamifikasi"
+      },
+      "smartQuizzes": {
+        "description": "Uji pemahamanmu dengan kuis buatan AI yang disesuaikan dengan materimu.",
+        "title": "Kuis Cerdas"
+      },
+      "trackProgress": {
+        "description": "Lihat perjalanan belajarmu melalui streak, heatmap, dan statistik performa.",
+        "title": "Lacak Progres"
+      }
+    },
+    "subtitle": "Semua yang kamu butuhkan untuk menaklukkan ujian dalam satu platform.",
+    "title": "Kenapa CobyLearnAi?"
+  },
+  "howItWorks": {
+    "quizVisual": {
+      "correctLabel": "Benar",
+      "flashcardLabel": "Flashcard",
+      "flashcardQuestion": "\"Apa istilah untuk pergerakan air melintasi membran semipermeabel?\"",
+      "options": {
+        "option1": "Untuk mengontrol pembelahan sel",
+        "option2": "Untuk menghasilkan ATP (energi)",
+        "option3": "Untuk mensintesis protein"
+      },
+      "questionProgress": "PERTANYAAN 1/10",
+      "questionTitle": "Apa fungsi utama mitokondria dalam sel?",
+      "showAnswer": "Lihat Jawaban"
+    },
+    "sections": {
+      "quiz": {
+        "desktopDescription": "Membaca statis itu pasif. Sistem kami membuat kuis dan flashcard dinamis yang secara spesifik berdasarkan materimu untuk memastikan active recall dan retensi jangka panjang.",
+        "desktopTitle": "Latihan Lebih Cerdas Dengan Kuis AI",
+        "eyebrow": "Active Recall",
+        "fallbackDescription": "Berlatih dengan kuis yang dihasilkan otomatis.",
+        "mobileDescription": "Membaca statis itu pasif. Sistem ini membuat kuis dan flashcard dinamis berdasarkan materimu sendiri untuk membangun retensi jangka panjang.",
+        "mobileTitle": "Latihan Lebih Cerdas Dengan Kuis Buatan AI"
+      },
+      "summary": {
+        "desktopDescription": "Jangan tenggelam dalam ratusan halaman. AI kami mengekstrak konsep inti, definisi, dan poin penting agar kamu bisa memahami gambaran besarnya dalam hitungan menit.",
+        "desktopTitle": "Langsung Ubah Catatan Belajar Menjadi Ringkasan",
+        "eyebrow": "Hemat Jam Setiap Minggu",
+        "fallbackDescription": "AI mengekstrak konsep inti secara instan.",
+        "mobileDescription": "Jangan tenggelam dalam ratusan halaman. AI mengekstrak konsep inti dan poin penting agar kamu bisa memahami gambaran besarnya dalam hitungan menit.",
+        "mobileTitle": "Langsung Ubah Catatan Belajar Menjadi Ringkasan Jelas"
+      }
+    },
+    "summaryVisual": {
+      "aiSummary": "Ringkasan AI (5 Poin Utama)",
+      "originalDocument": "Dokumen Asli (45 halaman)"
+    },
+    "title": "Cara Kerjanya"
+  },
+  "faq": {
+    "items": {
+      "answer1": "Ya! Kamu bisa mulai gratis. Kami juga berencana menghadirkan fitur premium untuk pengguna tingkat lanjut di masa depan.",
+      "answer2": "Saat ini kami mendukung PDF berbasis teks dan teks mentah. Pengenalan tulisan tangan ada di roadmap kami!",
+      "answer3": "Kami menggunakan LLM canggih untuk memastikan akurasi tinggi, tetapi kami tetap menyarankan untuk meninjau ringkasan dengan catatan aslimu.",
+      "question1": "Apakah CobyLearnAi gratis digunakan?",
+      "question2": "Bisakah saya mengunggah catatan tulisan tangan?",
+      "question3": "Seberapa akurat AI-nya?"
+    },
+    "title": "Pertanyaan yang Sering Diajukan"
+  },
+  "finalCta": {
+    "cta": "Mulai Sekarang",
+    "subtitle": "Bergabunglah dengan komunitas pelajar kami dan mulai belajar lebih cerdas hari ini.",
+    "title": "Siap Mengubah Nilaimu?"
+  },
+  "footer": {
+    "copyright": "© {{year}} CobyLearnAi. Seluruh hak cipta dilindungi.",
+    "links": {
+      "about": "Tentang",
+      "contact": "Kontak",
+      "privacy": "Privasi",
+      "terms": "Syarat"
+    },
+    "logoAlt": "CobyLearnAi",
+    "tagline": "Memberdayakan perjalanan belajarmu dengan AI"
+  },
+  "mascot": {
+    "description": "Coby membantu kamu tetap fokus dengan panduan yang ramah saat kamu merangkum, mengerjakan kuis, dan meninjau materi. Belajar lebih cepat tanpa merasa kewalahan.",
+    "imageAlt": "Maskot Coby melambaikan tangan",
+    "title": "Kenalan dengan teman belajarmu"
+  }
+}

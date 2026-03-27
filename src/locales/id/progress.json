@@ -1,0 +1,75 @@
+{
+	"actions": {
+		"close": "Tutup",
+		"next": "Berikutnya",
+		"previous": "Sebelumnya"
+	},
+	"heatmap": {
+		"noActivity": "Tidak ada aktivitas pada {{date}}",
+		"studyActivity": "{{count}} tugas pada {{date}}",
+        "studyActivity_other": "{{count}} aktivitas belajar"
+	},
+	"labels": {
+		"aiQuizzesTaken": "Kuis AI Dikerjakan",
+		"crystalLevel": "Kristal level {{level}}",
+		"crystalLevelBackground": "Latar kristal level {{level}}",
+		"currentFireLevel": "Level api saat ini {{level}}",
+		"currentStreak": "Streak Saat Ini!",
+		"dailyProgress": "Progres Harian",
+		"day": "Hari",
+		"fri": "Jum",
+		"keyStats": "Statistik Kunci ({{filter}})",
+		"legendCrystalLevel": "Legenda kristal level {{level}}",
+		"less": "Sedikit",
+		"level": "Level",
+		"mon": "Sen",
+		"month": "Bulan",
+		"more": "Banyak",
+		"mostProductiveDay": "Hari Paling Produktif",
+		"myProgress": "Progres Saya",
+		"sat": "Sab",
+		"studyHeatmap": "Heatmap Belajar",
+		"sun": "Min",
+		"tasksCompleted": "Tugas Selesai",
+		"thu": "Kam",
+		"totalStudyHours": "Total Jam Belajar",
+		"tue": "Sel",
+		"wed": "Rab",
+		"week": "Minggu",
+		"xp": "XP",
+		"year": "Tahun"
+	},
+	"messages": {
+		"completeDailyQuizToIgnite": "Selesaikan kuis harian untuk menyalakan api!",
+		"daysLeftInSeason": "Tersisa {{days}} hari di Season {{month}}",
+		"failedToLoadStatistics": "Gagal memuat statistik: {{message}}",
+		"keepFlameAlive": "Jaga apinya tetap menyala.",
+		"levelUp": "Naik Level!",
+		"levelUpReached": "Naik Level! Kamu mencapai Level {{level}} - {{name}}",
+		"maxLevel": "Level maksimum tercapai",
+		"nextLevel": "Level berikutnya dalam {{xp}} XP"
+	},
+	"states": {
+		"empty": "Belum ada data",
+		"loading": "Memuat..."
+	},
+	"xpModal": {
+		"aria": {
+			"closeXpLevels": "Tutup level XP"
+		},
+		"labels": {
+			"levelName": "Level {{level}}: {{name}}",
+			"requiresXp": "Butuh {{xp}} XP",
+			"title": "Level XP",
+			"totalXp": "Total XP: {{xp}}"
+		},
+		"messages": {
+			"monthlyResetInfo": "XP dan level direset di awal setiap bulan. Jaga momentum untuk mencapai Gemstone Master musim ini!"
+		},
+		"states": {
+			"current": "Saat Ini",
+			"locked": "Terkunci",
+			"unlocked": "Terbuka"
+		}
+	}
+}

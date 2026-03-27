@@ -20,6 +20,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 import Confetti from 'react-confetti'; // Opsional: Efek visual (jika diinstall), kalau tidak hapus saja
+import { useTranslation } from 'react-i18next';
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getDailyQuiz, claimDailyQuiz } from '../../services/apiLibraryService';
@@ -31,6 +32,7 @@ interface DailyQuizDialogProps {
 }
 
 function DailyQuizDialog({ open, onClose }: DailyQuizDialogProps): React.JSX.Element {
+  const { t } = useTranslation();
   const theme = useTheme();
   const queryClient = useQueryClient();
   const optionTransition = theme.transitions.create(['transform', 'border-color', 'background-color', 'box-shadow'], {
@@ -61,7 +63,7 @@ function DailyQuizDialog({ open, onClose }: DailyQuizDialogProps): React.JSX.Ele
     },
     onError: (err) => {
       console.error("Gagal klaim:", err);
-      alert("Terjadi kesalahan saat menyimpan progress.");
+      alert(t('quiz:messages.claimError', { defaultValue: 'Terjadi kesalahan saat menyimpan progress.' }));
     }
   });
 
@@ -173,7 +175,7 @@ function DailyQuizDialog({ open, onClose }: DailyQuizDialogProps): React.JSX.Ele
   if (isLoading) {
     content = <Box sx={{ textAlign: 'center', py: 5 }}><CircularProgress /></Box>;
   } else if (isError || !quizData) {
-    content = <Alert severity="error">Gagal memuat Daily Quiz.</Alert>;
+    content = <Alert severity="error">{t('quiz:messages.loadFailed', { defaultValue: 'Gagal memuat Daily Quiz.' })}</Alert>;
   } else if (quizData.is_done || isCompleted) {
     // Tampilan Selesai / Sudah Dikerjakan
     content = (
@@ -182,13 +184,13 @@ function DailyQuizDialog({ open, onClose }: DailyQuizDialogProps): React.JSX.Ele
 
         <LocalFireDepartmentIcon sx={{ fontSize: 80, color: 'primary.main', mb: 2 }} />
         <Typography variant="h4" fontWeight="bold" gutterBottom>
-          Streak Saved!
+          {t('quiz:completion.title', { defaultValue: 'Streak Saved!' })}
         </Typography>
         <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-          You've completed today's challenge. Come back tomorrow to keep the fire burning!
+          {t('quiz:completion.description', { defaultValue: "You've completed today's challenge. Come back tomorrow to keep the fire burning!" })}
         </Typography>
         <Button variant="contained" onClick={onClose} sx={{ borderRadius: 50, px: 4, py: 1.5 }}>
-          Awesome!
+          {t('quiz:completion.actions.awesome', { defaultValue: 'Awesome!' })}
         </Button>
       </Box>
     );
@@ -203,8 +205,14 @@ function DailyQuizDialog({ open, onClose }: DailyQuizDialogProps): React.JSX.Ele
         {/* Header Progress */}
         <Box sx={{ mb: 3 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-            <Typography variant="caption" fontWeight="bold" color="primary">QUESTION {currentIdx + 1}/{totalQ}</Typography>
-            <Typography variant="caption" color="text.secondary">Daily Challenge</Typography>
+            <Typography variant="caption" fontWeight="bold" color="primary">
+              {t('quiz:labels.questionProgress', {
+                current: currentIdx + 1,
+                total: totalQ,
+                defaultValue: 'QUESTION {{current}}/{{total}}',
+              })}
+            </Typography>
+            <Typography variant="caption" color="text.secondary">{t('dashboard:dailyQuizWidget.challengeLabel', { defaultValue: 'Daily Challenge' })}</Typography>
           </Box>
           <LinearProgress variant="determinate" value={progress} sx={{ height: 8, borderRadius: 4 }} />
         </Box>
@@ -224,7 +232,7 @@ function DailyQuizDialog({ open, onClose }: DailyQuizDialogProps): React.JSX.Ele
           {answerStatus === 'wrong' && (
             <Fade in>
               <Alert severity="error" icon={false} sx={{ py: 0, px: 2 }}>
-                Salah. Coba lagi!
+                {t('quiz:messages.wrongTryAgain', { defaultValue: 'Salah. Coba lagi!' })}
               </Alert>
             </Fade>
           )}
@@ -246,7 +254,11 @@ function DailyQuizDialog({ open, onClose }: DailyQuizDialogProps): React.JSX.Ele
                   '&:active': { transform: 'translateY(0)' },
                 }}
               >
-                {currentIdx === totalQ - 1 ? (claimMutation.isPending ? 'Claiming...' : 'Finish & Claim') : 'Next Question'}
+                {currentIdx === totalQ - 1
+                  ? (claimMutation.isPending
+                    ? t('quiz:actions.claiming', { defaultValue: 'Claiming...' })
+                    : t('quiz:actions.finishAndClaim', { defaultValue: 'Finish & Claim' }))
+                  : t('quiz:actions.nextQuestion', { defaultValue: 'Next Question' })}
               </Button>
             </Fade>
           )}

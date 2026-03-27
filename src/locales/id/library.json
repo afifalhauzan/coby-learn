@@ -1,0 +1,79 @@
+{
+  "actions": {
+    "addFolder": "Tambah Folder"
+  },
+  "deleteDialog": {
+    "description": "Apakah Anda yakin ingin menghapus ini? Semua materi di dalamnya akan dihapus secara permanen.",
+    "title": "Hapus Folder"
+  },
+  "emptyState": {
+    "description": "Perpustakaan Anda kosong. Buat folder untuk mulai mengatur materi belajar Anda.",
+    "title": "Folder Tidak Ditemukan"
+  },
+  "fileUpload": {
+    "customTitleLabel": "Judul Materi",
+    "customTitlePlaceholder": "contoh: Sejarah Kemerdekaan Indonesia",
+    "dropzone": {
+      "clickOrDragPdf": "Klik atau seret file PDF ke sini",
+      "supportedFormats": "Hanya mendukung file PDF (maks. 10MB)"
+    },
+    "generateSummary": "Buat Ringkasan & Kuis AI",
+    "loading": {
+      "analyzingDescription": "AI sedang membaca konten materi Anda...",
+      "analyzingTitle": "Menganalisis Materi",
+      "generatingDescription": "Membuat ringkasan, flashcard, dan kuis Anda...",
+      "generatingTitle": "Menyusun Insight",
+      "uploadingDescription": "Mengirim file Anda ke server aman kami...",
+      "uploadingTitle": "Mengunggah File"
+    },
+    "pasteTextLabel": "Tempel Konten",
+    "pasteTextPlaceholder": "Tempel catatan belajar atau teks artikel di sini...",
+    "subtitle": "Ubah materimu menjadi alat belajar yang interaktif.",
+    "tabs": {
+      "pdfFile": "File PDF",
+      "textNote": "Teks/Catatan",
+      "youtube": "Video YouTube"
+    },
+    "title": "Tambah Materi Baru",
+    "youtubeUrlLabel": "URL YouTube"
+  },
+  "folder": {
+    "itemCount_one": "{{count}} item",
+    "itemCount_other": "{{count}} item"
+  },
+  "folderDialog": {
+    "actions": {
+      "cancel": "Batal",
+      "create": "Buat",
+      "saveChanges": "Simpan Perubahan"
+    },
+    "aria": {
+      "close": "Tutup"
+    },
+    "labels": {
+      "folderIcon": "Ikon Folder",
+      "folderName": "Nama Folder",
+      "masteryProgress": "Progres Mastery"
+    },
+    "messages": {
+      "lockedColorTooltip": "Mastery diperlukan: Miliki {{target}} folder dengan minimal {{minMaterials}} materi di tiap folder untuk membuka lebih banyak warna."
+    },
+    "placeholders": {
+      "folderName": "contoh: Persiapan UTS Biologi"
+    },
+    "titles": {
+      "createNewFolder": "Buat Folder Baru",
+      "editFolder": "Edit Folder"
+    }
+  },
+  "messages": {
+    "failedToLoadLibrary": "Gagal memuat perpustakaan. Silakan coba lagi nanti."
+  },
+  "pageSubtitle": "Atur materi belajarmu dengan rapi dan efisien.",
+  "pageTitle": "Perpustakaan Saya",
+  "spotlight": {
+    "description": "Klik di sini untuk membuat folder pertama dan mulai mengatur materimu.",
+    "dismissAriaLabel": "Tutup sorotan",
+    "title": "Buat Folder"
+  }
+}

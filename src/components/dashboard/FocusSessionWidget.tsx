@@ -3,9 +3,11 @@ import { Paper, Typography, Box, Skeleton, IconButton } from '@mui/material';
 import { ChevronLeft, ChevronRight } from '@mui/icons-material';
 import { useQuery } from '@tanstack/react-query';
 import { getDailyQuizStatus } from '../../services/apiLibraryService';
+import { useTranslation } from 'react-i18next';
 
 function FocusSessionWidget(): React.JSX.Element {
   const [weekOffset, setWeekOffset] = React.useState(0);
+  const { t } = useTranslation();
 
   const { data: status, isLoading } = useQuery({
     queryKey: ['dailyQuizStatus'],
@@ -37,7 +39,13 @@ function FocusSessionWidget(): React.JSX.Element {
   const startOfWeek = new Date(selectedDate);
   startOfWeek.setDate(selectedDate.getDate() - currentDay); // Go back to Sunday
 
-  const weekDays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+  const weekDays = [
+    t('dashboard:focusSession.weekdays.mon'),
+    t('dashboard:focusSession.weekdays.tue'),
+    t('dashboard:focusSession.weekdays.wed'),
+    t('dashboard:focusSession.weekdays.thu'),
+    t('dashboard:focusSession.weekdays.fri'),
+  ];
   const weekDates: Date[] = [];
   
   // Generate week dates starting from Monday (skip Sunday)
@@ -88,7 +96,7 @@ function FocusSessionWidget(): React.JSX.Element {
               lineHeight: 1.2
             }}
           >
-            You're on a
+            {t('dashboard:focusSession.youAreOnA')}
           </Typography>
           <Typography
             variant="h6"
@@ -99,7 +107,7 @@ function FocusSessionWidget(): React.JSX.Element {
               lineHeight: 1.2
             }}
           >
-            {streakCount}-day streak
+            {t('dashboard:focusSession.dayStreak', { count: streakCount })}
           </Typography>
         </Box>
         
@@ -108,7 +116,7 @@ function FocusSessionWidget(): React.JSX.Element {
           <IconButton 
             size="small" 
             onClick={handlePrevWeek}
-            aria-label="Previous week"
+            aria-label={t('dashboard:focusSession.previousWeek')}
             sx={{ 
               width: 32, 
               height: 32,
@@ -121,7 +129,7 @@ function FocusSessionWidget(): React.JSX.Element {
           <IconButton 
             size="small" 
             onClick={handleNextWeek}
-            aria-label="Next week"
+            aria-label={t('dashboard:focusSession.nextWeek')}
             sx={{ 
               width: 32, 
               height: 32,

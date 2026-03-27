@@ -1,0 +1,110 @@
+{
+  "dailyQuizWidget": {
+    "doneDescription": "You've completed today's challenge. Come back tomorrow to keep your streak alive!",
+    "doneTitle": "Challenge Completed",
+    "challengeLabel": "Daily Challenge",
+    "pendingDescription": "A new daily challenge is waiting for you.",
+    "startButton": "Start Quiz",
+    "title": "Daily Quiz"
+  },
+  "spotlight": {
+    "title": "Start here: Add your first task",
+    "description": "Tap the Add Task button to create your next study step. Click the dark area to dismiss this message.",
+    "dismissAriaLabel": "Dismiss spotlight"
+  },
+  "dayStreak": {
+    "checkStreaks": "Check Streaks",
+    "closeStreakLevels": "Close",
+    "currentBadge": "Current Badge",
+    "currentFireLevelAlt": "Current fire level icon",
+    "label": "Streak",
+    "levelAlt": "Streak level icon",
+    "streakLevelsDescription": "Track your daily study consistency to unlock higher fire levels.",
+    "streakLevelsTitle": "Streak Levels",
+    "motivations": {
+      "level1": "Great start! You've officially begun your learning journey.",
+      "level2": "Awesome! Keep the momentum going and see how far you can go!",
+      "level3": "Incredible! 7 days of non-stop learning. You are truly serious about this. Keep it up!",
+      "level4": "Outstanding! Your consistency is unmatched. You're on the fast track to mastery!",
+      "level5": "Legendary! You've reached the peak. Your dedication is an inspiration to other students!"
+    },
+    "levels": {
+      "embers": {
+        "label": "Embers",
+        "range": "0 days",
+        "description": "You've just started your journey. Stay consistent to build a powerful study habit!"
+      },
+      "spark": {
+        "label": "Spark",
+        "range": "1 day",
+        "description": "The first step is taken! This small spark is the beginning of something great."
+      },
+      "flame": {
+        "label": "Flame",
+        "range": "2-3 days",
+        "description": "Momentum is building. Your study fire is starting to burn bright and steady!"
+      },
+      "blaze": {
+        "label": "Blaze",
+        "range": "7 days",
+        "description": "A full week! You've proven that learning is now a part of your daily lifestyle."
+      },
+      "inferno": {
+        "label": "Inferno",
+        "range": "14 days",
+        "description": "Two weeks non-stop! Your focus is burning intense, crushing every academic obstacle."
+      },
+      "supernova": {
+        "label": "Supernova",
+        "range": "20+ days",
+        "description": "Unbelievable! Your passion has gone cosmic. You are a true master of consistency!"
+      }
+    }
+  },
+  "focusSession": {
+    "dayStreak_one": "{{count}} day streak",
+    "dayStreak_other": "{{count}} days streak",
+    "nextWeek": "Next Week",
+    "previousWeek": "Previous Week",
+    "weekdays": {
+      "fri": "Fri",
+      "mon": "Mon",
+      "thu": "Thu",
+      "tue": "Tue",
+      "wed": "Wed"
+    },
+    "youAreOnA": "You are on a"
+  },
+  "header": {
+    "greeting": "Hi, {{name}}!",
+    "studentFallback": "Student"
+  },
+  "missions": {
+    "dailyProgress": "Daily Progress",
+    "title": "Daily Missions",
+    "toggleMission": "Toggle mission status"
+  },
+  "onboarding": {
+    "back": "Back",
+    "next": "Next",
+    "skip": "Skip",
+    "startLearning": "Start Learning"
+  },
+  "quickActions": {
+    "addMaterial": "Add Material",
+    "title": "Quick Actions",
+    "toTaskMenu": "Go to Tasks"
+  },
+  "tasksWidget": {
+    "addTask": "Add Task",
+    "emptySubtitle": "Nice work!",
+    "emptyTitle": "No tasks for today",
+    "errorLoadingTodayTasks": "Failed to load today's tasks.",
+    "priority": {
+      "high": "high",
+      "low": "low",
+      "medium": "medium"
+    },
+    "title": "Today's Tasks"
+  }
+}

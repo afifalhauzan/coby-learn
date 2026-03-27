@@ -14,11 +14,12 @@ import UploadFileIcon from '@mui/icons-material/UploadFile';
 import DocumentIcon from '@mui/icons-material/Description';
 import TimerIcon from '@mui/icons-material/Timer';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 type Mission = {
     id: 'early-bird' | 'researcher' | 'focus-master';
-    title: string;
-    target: string;
+    titleKey: string;
+    targetKey: string;
     Icon: typeof WbTwilightIcon;
 };
 
@@ -29,26 +30,27 @@ interface DailyMissionsPanelProps {
 const missions: Mission[] = [
     {
         id: 'early-bird',
-        title: 'The Task Master',
-        target: 'Complete 1 Task for Today',
+        titleKey: 'dashboard:missions.taskMasterTitle',
+        targetKey: 'dashboard:missions.taskMasterTarget',
         Icon: DocumentIcon,
     },
     {
         id: 'researcher',
-        title: 'The Researcher',
-        target: 'Upload 1 new study material',
+        titleKey: 'dashboard:missions.researcherTitle',
+        targetKey: 'dashboard:missions.researcherTarget',
         Icon: UploadFileIcon,
     },
     {
         id: 'focus-master',
-        title: 'Focus Master',
-        target: 'Complete a 25-minute Pomodoro session',
+        titleKey: 'dashboard:missions.focusMasterTitle',
+        targetKey: 'dashboard:missions.focusMasterTarget',
         Icon: TimerIcon,
     },
 ];
 
 function DailyMissionsPanel({ dailyQuizDone = false }: DailyMissionsPanelProps): React.JSX.Element {
     const theme = useTheme();
+    const { t } = useTranslation();
     const [completed, setCompleted] = useState<Record<Mission['id'], boolean>>({
         'early-bird': dailyQuizDone,
         'researcher': false,
@@ -89,7 +91,7 @@ function DailyMissionsPanel({ dailyQuizDone = false }: DailyMissionsPanelProps):
             }}
         >
             <Typography variant="h6" fontWeight={700} sx={{ color: 'text.primary', mb: 2 }}>
-                Daily Missions
+                {t('dashboard:missions.title')}
             </Typography>
 
             <Stack spacing={1.25}>
@@ -136,11 +138,11 @@ function DailyMissionsPanel({ dailyQuizDone = false }: DailyMissionsPanelProps):
                             <Box sx={{ flexGrow: 1, minWidth: 0 }}>
                                 <Box sx={{ position: 'flex',flexDirection: 'row', alignItems: 'center', display: 'flex', gap: 0.5 }}>
                                     <Typography variant="subtitle2" fontWeight={700} sx={{ color: isDone ? 'text.secondary' : 'text.primary' }}>
-                                        {mission.title}
+                                        {t(mission.titleKey)}
                                     </Typography>
                                 </Box>
                                 <Typography variant="caption" sx={{ color: isDone ? 'text.secondary' : 'text.primary' }}>
-                                    {mission.target}
+                                    {t(mission.targetKey)}
                                 </Typography>
                             </Box>
 
@@ -150,7 +152,7 @@ function DailyMissionsPanel({ dailyQuizDone = false }: DailyMissionsPanelProps):
                                     toggleMission(mission.id);
                                 }}
                                 sx={{ p: 0.5 }}
-                                aria-label={`Toggle ${mission.title} mission`}
+                                aria-label={t('dashboard:missions.toggleMission', { mission: t(mission.titleKey) })}
                             >
                                 <AnimatePresence mode="wait" initial={false}>
                                     {isDone ? (
@@ -186,7 +188,7 @@ function DailyMissionsPanel({ dailyQuizDone = false }: DailyMissionsPanelProps):
             <Box sx={{ mt: 2 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 0.75 }}>
                     <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 700 }}>
-                        Daily Progress
+                        {t('dashboard:missions.dailyProgress')}
                     </Typography>
                     <Typography variant="caption" sx={{ color: 'primary.main', fontWeight: 700 }}>
                         {completedCount}/{missions.length}

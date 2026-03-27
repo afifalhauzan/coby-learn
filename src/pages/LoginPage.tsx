@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import { loginUser, resendVerification } from '../services/apiAuthService';
 import apiClient from '../lib/axios';
@@ -29,7 +30,7 @@ const initialErrors: FormErrors = {
 
 function LoginPage(): React.JSX.Element {
   const navigate = useNavigate();
-
+  const { t } = useTranslation();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -49,7 +50,7 @@ function LoginPage(): React.JSX.Element {
         apiClient.defaults.headers.common['Authorization'] = `Bearer ${token}`;
         navigate('/dashboard');
       } else {
-        setGeneralError('Invalid response from server: Missing token.');
+        setGeneralError(t('auth:errors.invalidResponse'));
       }
     },
     onError: (error: any) => {
@@ -69,12 +70,12 @@ function LoginPage(): React.JSX.Element {
       } else if (responseData?.meta?.message) {
         const message = responseData.meta.message.toLowerCase();
         if (message.includes('verify') || message.includes('verifikasi')) {
-          setGeneralError('Please verify your email address to continue.');
+          setGeneralError(t('auth:errors.verifyEmail'));
         } else {
           setGeneralError(responseData.meta.message);
         }
       } else {
-        setGeneralError('Invalid email or password. Please try again.');
+        setGeneralError(t('auth:errors.invalidCredentials'));
       }
     },
   });
@@ -91,10 +92,10 @@ function LoginPage(): React.JSX.Element {
       // Ideally we should have a success state, but I'll reuse generalError or add a new one?
       // Let's add a local success message state if needed, or just use window.alert or modify the Error Alert to be Success/Info.
       // For better UX, let's use a separate state for success message.
-      setResendSuccess('Verification email sent! Please check your inbox.');
+      setResendSuccess(t('auth:messages.verificationSent'));
     },
     onError: (error: any) => {
-      const message = error.response?.data?.message || 'Failed to resend verification email.';
+      const message = error.response?.data?.message || t('auth:errors.verificationFailed');
       setGeneralError(message);
     }
   });
@@ -105,7 +106,7 @@ function LoginPage(): React.JSX.Element {
     if (email) {
       resendVerificationMutation.mutate(email);
     } else {
-      setGeneralError('Please enter your email address first.');
+      setGeneralError(t('auth:errors.emailRequired'));
     }
   };
 
@@ -149,10 +150,10 @@ function LoginPage(): React.JSX.Element {
               <DotLottieReact src="/UserLogin.lottie" loop autoplay style={{ width: '100%', height: '100%' }} />
             </Box>
             <Typography variant="h4" fontWeight="600" sx={{ color: 'text.primary' }}>
-              Welcome Back
+              {t('auth:login.title')}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Please enter your details to sign in.
+              {t('auth:login.subtitle')}
             </Typography>
           </Box>
 
@@ -176,7 +177,7 @@ function LoginPage(): React.JSX.Element {
                     onClick={handleResendVerification}
                     disabled={resendVerificationMutation.isPending}
                   >
-                    {resendVerificationMutation.isPending ? 'Sending...' : 'Resend Email'}
+                    {resendVerificationMutation.isPending ? t('common:actions.sending') : t('auth:login.resendEmail')}
                   </Button>
                 ) : null
               }
@@ -205,7 +206,7 @@ function LoginPage(): React.JSX.Element {
             <Stack spacing={2.5}>
 
               <TextField
-                label="Email Address"
+                label={t('auth:login.emailLabel')}
                 name="email"
                 type="email"
                 fullWidth
@@ -221,7 +222,7 @@ function LoginPage(): React.JSX.Element {
 
               <Box>
                 <TextField
-                  label="Password"
+                  label={t('auth:login.passwordLabel')}
                   name="password"
                   type="password"
                   fullWidth
@@ -242,7 +243,7 @@ function LoginPage(): React.JSX.Element {
                     underline="hover"
                     onClick={() => navigate('/forgot-password')}
                   >
-                    Forgot password?
+                    {t('auth:login.forgotPassword')}
                   </Link>
                 </Box>
               </Box>
@@ -263,20 +264,20 @@ function LoginPage(): React.JSX.Element {
                   boxShadow: 3
                 }}
               >
-                {mutation.isPending ? 'Signing In...' : 'Sign In'}
+                {mutation.isPending ? t('auth:login.signingIn') : t('auth:login.signIn')}
               </Button>
             </Stack>
           </Box>
 
           <Typography variant="body2" color="text.secondary">
-            Don't have an account?{' '}
+            {t('auth:login.noAccount')}{' '}
             <Link
               component="button"
               variant="body2"
               onClick={() => navigate('/sign-up')}
               sx={{ fontWeight: 'bold', textDecoration: 'none', color: 'primary.main', pb: 0.2, '&:hover': { textDecoration: 'underline' } }}
             >
-              Sign Up
+              {t('auth:login.signUp')}
             </Link>
           </Typography>
         </Stack>

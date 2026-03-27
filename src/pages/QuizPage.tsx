@@ -23,49 +23,25 @@ import { submitQuiz, getDailyQuizStatus, type QuizQuestion, type SubmitQuizRespo
 import StreakShareDialog from '../components/streak/StreakShareDialog';
 import { useStreakStore } from '../stores/useStreakStore';
 import { useQuery } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 
 // Temporary dev toggle: set true to show share modal after every successful quiz submit.
 const FORCE_SHOW_SHARE_MODAL_EVERY_QUIZ = true;
 
-const scoreRangeMessages = {
-  low: [
-    'Raw shards gathered! Every attempt makes your understanding stronger.',
-    'Coby says: mistakes are data, and data builds mastery.',
-    'You are building the base. Keep going one step at a time.',
-    'No crystal forms instantly. Review and try again.',
-  ],
-  mid: [
-    'Great momentum. Your crystal is forming.',
-    'Solid progress! You are close to top-tier results.',
-    'Nice recall. Refine weak spots and push higher.',
-    'Steady growth. Consistency will level this up fast.',
-  ],
-  high: [
-    'Amazing performance! Your mastery is shining.',
-    'Stage 5 energy. Coby is proud of this score.',
-    'Excellent precision. Your strategy is working.',
-    'Brilliant result. Keep this momentum alive.',
-  ],
-};
-
-const pickRandomMessages = (messages: string[]): string[] => {
-  const shuffled = [...messages].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, 1);
-};
-
-const getMotivationalMessagesByScore = (score: number): string[] => {
+const getMotivationLevelByScore = (score: number): 'low' | 'medium' | 'high' => {
   if (score <= 30) {
-    return pickRandomMessages(scoreRangeMessages.low);
+    return 'low';
   }
 
   if (score < 70) {
-    return pickRandomMessages(scoreRangeMessages.mid);
+    return 'medium';
   }
 
-  return pickRandomMessages(scoreRangeMessages.high);
+  return 'high';
 };
 
 function QuizPage(): React.JSX.Element {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -107,7 +83,7 @@ function QuizPage(): React.JSX.Element {
     },
     onError: (error: any) => {
       console.error("Submit error:", error);
-      alert("Gagal mengirim jawaban: " + (error?.response?.data?.message || "Error jaringan"));
+      alert(t('quiz:errors.submitFailed', { message: error?.response?.data?.message || t('quiz:states.error') }));
     }
   });
 
@@ -115,8 +91,8 @@ function QuizPage(): React.JSX.Element {
   if (!questions || questions.length === 0) {
     return (
       <Box sx={{ p: 4 }}>
-        <Alert severity="warning">Data kuis hilang. Silakan generate ulang.</Alert>
-        <Button onClick={() => navigate('/library')} sx={{ mt: 2 }}>Kembali</Button>
+        <Alert severity="warning">{t('quiz:states.empty')}</Alert>
+        <Button onClick={() => navigate('/library')} sx={{ mt: 2 }}>{t('common:actions.back')}</Button>
       </Box>
     );
   }
@@ -126,7 +102,7 @@ function QuizPage(): React.JSX.Element {
   const finalScore = quizResult?.score || 0;
   const isHighScore = finalScore > 70;
   const resultMascot = isHighScore ? '/quizhigh.svg' : '/quizlow.svg';
-  const motivationalMessages = getMotivationalMessagesByScore(finalScore);
+  const motivationLevel = getMotivationLevelByScore(finalScore);
 
   // === HANDLERS ===
 
@@ -215,7 +191,7 @@ function QuizPage(): React.JSX.Element {
           closeShareModal();
           setForceShareModalOpen(false);
         }}
-        username={dailyStatus?.username || 'Learner'}
+        username={dailyStatus?.username || t('quiz:labels.learnerFallback')}
         streak={currentStreak}
         dateLabel={new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
         onShared={() => {
@@ -232,7 +208,7 @@ function QuizPage(): React.JSX.Element {
           onClick={() => navigate(-1)}
           sx={{ mb: 2, textTransform: 'none', color: 'text.secondary' }}
         >
-          Quit Quiz
+          {t('quiz:actions.quitQuiz')}
         </Button>
       )}
 
@@ -242,19 +218,21 @@ function QuizPage(): React.JSX.Element {
         {submitMutation.isPending ? (
           <Box sx={{ textAlign: 'center', py: 8 }}>
             <CircularProgress sx={{ color: 'primary.main', mb: 2 }} />
-            <Typography variant="h6">Submitting your answers...</Typography>
-            <Typography variant="body2" color="text.secondary">Please wait while we calculate your score.</Typography>
+            <Typography variant="h6">{t('quiz:messages.submittingAnswers')}</Typography>
+            <Typography variant="body2" color="text.secondary">{t('quiz:messages.calculatingScore')}</Typography>
           </Box>
         ) : !showResults ? (
           // === TAMPILAN SOAL (Sama seperti sebelumnya) ===
           <Box>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
               <Typography variant="body2" color="text.secondary" fontWeight="bold">
-                {isReviewMode ? 'Reviewing Question' : 'Question'} {currentQuestionIndex + 1} of {totalQuestions}
+                {isReviewMode
+                  ? t('quiz:labels.reviewingQuestion', { count: currentQuestionIndex + 1 })
+                  : t('quiz:labels.questionIndex', { current: currentQuestionIndex + 1, total: totalQuestions })}
               </Typography>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
                 <LocalFireDepartmentIcon sx={{ fontSize: 18, color: 'primary.main' }} />
-                <Typography variant="body2" color="text.secondary">Streak Mode</Typography>
+                <Typography variant="body2" color="text.secondary">{t('quiz:labels.streakMode')}</Typography>
               </Box>
             </Box>
 
@@ -318,7 +296,7 @@ function QuizPage(): React.JSX.Element {
                 disabled={!isReviewMode && !selectedKey}
                 sx={{ textTransform: 'none', bgcolor: 'primary.main', color: 'white', px: 4, py: 1, fontWeight: 'bold', '&:hover': { bgcolor: 'primary.dark' } }}
               >
-                {currentQuestionIndex < totalQuestions - 1 ? 'Next Question' : (isReviewMode ? 'Finish Review' : 'Submit Quiz')}
+                {currentQuestionIndex < totalQuestions - 1 ? t('quiz:actions.nextQuestion') : (isReviewMode ? t('quiz:actions.finishReview') : t('quiz:actions.submitQuiz'))}
               </Button>
             </Box>
           </Box>
@@ -338,24 +316,22 @@ function QuizPage(): React.JSX.Element {
             >
               <Box sx={{ textAlign: { xs: 'center', sm: 'left' } }}>
                 <Typography variant="h4" fontWeight="bold" sx={{ mb: 1 }}>
-                  Quiz Completed!
+                  {t('quiz:messages.quizCompleted')}
                 </Typography>
                 <Typography variant="body1" color="text.secondary" sx={{ mb: 1 }}>
-                  You answered {quizResult?.correct} out of {totalQuestions} questions correctly.
+                  {t('quiz:messages.scoreSummary', { correct: quizResult?.correct || 0, total: totalQuestions })}
                 </Typography>
                 <Stack spacing={0.5} sx={{ alignItems: { xs: 'center', sm: 'flex-start' } }}>
-                  {motivationalMessages.map((message, index) => (
-                    <Typography key={`${index}-${message}`} variant="body2" sx={{ color: 'text.secondary' }}>
-                      {message}
-                    </Typography>
-                  ))}
+                  <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                    {t(`quiz:motivations.${motivationLevel}`)}
+                  </Typography>
                 </Stack>
               </Box>
 
               <Box
                 component="img"
                 src={resultMascot}
-                alt={isHighScore ? 'High score mascot' : 'Low score mascot'}
+                alt={isHighScore ? t('quiz:labels.highScoreMascotAlt') : t('quiz:labels.lowScoreMascotAlt')}
                 sx={{
                   width: { xs: 120, sm: 160 },
                   objectFit: 'contain',
@@ -370,19 +346,19 @@ function QuizPage(): React.JSX.Element {
                 <Typography variant="h3" fontWeight="bold" color="primary.main">
                   {quizResult?.score || 0}%
                 </Typography>
-                <Typography variant="caption" color="text.secondary">Score</Typography>
+                <Typography variant="caption" color="text.secondary">{t('quiz:labels.score')}</Typography>
               </Box>
               <Box>
                 <Typography variant="h3" fontWeight="bold" color="success.main">
                   {quizResult?.correct || 0}
                 </Typography>
-                <Typography variant="caption" color="text.secondary">Correct</Typography>
+                <Typography variant="caption" color="text.secondary">{t('quiz:labels.correct')}</Typography>
               </Box>
               <Box>
                 <Typography variant="h3" fontWeight="bold" color="error.main">
                   {quizResult?.wrong || 0}
                 </Typography>
-                <Typography variant="caption" color="text.secondary">Incorrect</Typography>
+                <Typography variant="caption" color="text.secondary">{t('quiz:labels.incorrect')}</Typography>
               </Box>
             </Stack>
 
@@ -392,7 +368,7 @@ function QuizPage(): React.JSX.Element {
                 onClick={() => materialId ? navigate(`/material/${materialId}`) : navigate(-2)}
                 sx={{ textTransform: 'none', px: 3 }}
               >
-                Back to Material
+                {t('quiz:actions.backToMaterial')}
               </Button>
               <Button
                 variant="contained"
@@ -403,7 +379,7 @@ function QuizPage(): React.JSX.Element {
                 }}
                 sx={{ textTransform: 'none', bgcolor: 'primary.main', color: 'white', px: 4, '&:hover': { bgcolor: 'primary.dark' } }}
               >
-                Review Answers
+                {t('quiz:actions.reviewAnswers')}
               </Button>
             </Stack>
           </Box>

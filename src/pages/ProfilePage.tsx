@@ -12,10 +12,12 @@ import {
 } from '@mui/material';
 import { Save as SaveIcon, AccountCircle as AccountCircleIcon } from '@mui/icons-material';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 import { getProfile, updateProfile } from '../services/apiUserService';
 import type { UpdateProfileData } from '../services/apiUserService';
 
 function ProfilePage(): React.JSX.Element {
+    const { t } = useTranslation();
     const queryClient = useQueryClient();
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
@@ -39,7 +41,7 @@ function ProfilePage(): React.JSX.Element {
     const mutation = useMutation({
         mutationFn: updateProfile,
         onSuccess: () => {
-            setSuccessMessage('Profile updated successfully!');
+            setSuccessMessage(t('profile:messages.updateSuccess', { defaultValue: 'Profile updated successfully!' }));
             setErrorMessage(null);
             // Invalidate relevant queries to refresh data
             queryClient.invalidateQueries({ queryKey: ['userProfile'] });
@@ -47,7 +49,7 @@ function ProfilePage(): React.JSX.Element {
         },
         onError: (error: any) => {
             setSuccessMessage(null);
-            const msg = error?.response?.data?.message || 'Failed to update profile';
+            const msg = error?.response?.data?.message || t('profile:messages.updateFailed', { defaultValue: 'Failed to update profile' });
             setErrorMessage(msg);
         },
     });
@@ -67,7 +69,7 @@ function ProfilePage(): React.JSX.Element {
     return (
         <Box sx={{ maxWidth: 600, mx: 'auto', py: 4 }}>
             <Typography variant="h4" fontWeight="bold" sx={{ mb: 3 }}>
-                Account Settings
+                {t('profile:title', { defaultValue: 'Account Settings' })}
             </Typography>
 
             <Paper
@@ -116,7 +118,7 @@ function ProfilePage(): React.JSX.Element {
                             )}
 
                             <TextField
-                                label="Username"
+                                label={t('profile:fields.username.label', { defaultValue: 'Username' })}
                                 fullWidth
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
@@ -127,7 +129,7 @@ function ProfilePage(): React.JSX.Element {
                             />
 
                             <TextField
-                                label="Email Address"
+                                label={t('profile:fields.email.label', { defaultValue: 'Email Address' })}
                                 type="email"
                                 fullWidth
                                 value={email}
@@ -155,7 +157,9 @@ function ProfilePage(): React.JSX.Element {
                                         boxShadow: 4
                                     }}
                                 >
-                                    {mutation.isPending ? 'Saving...' : 'Save Changes'}
+                                    {mutation.isPending
+                                        ? t('common:states.saving', { defaultValue: 'Saving...' })
+                                        : t('common:actions.save', { defaultValue: 'Save Changes' })}
                                 </Button>
                             </Box>
                         </Stack>

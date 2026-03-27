@@ -1,0 +1,89 @@
+{
+  "actions": {
+    "addTask": "Tambah Tugas",
+    "createTask": "Buat Tugas"
+  },
+  "addTaskDialog": {
+    "addTitle": "Tambah Tugas Baru",
+    "addToGoogleCalendar": "Tambah ke Google Calendar",
+    "descriptionContext": "Deskripsi / Konteks",
+    "dueTime": "Waktu Selesai",
+    "editTitle": "Edit Tugas",
+    "googleCalendarHelpText": "Akan membuka tab Google Calendar dengan waktu yang sesuai.",
+    "priority": "Prioritas",
+    "startTime": "Waktu Mulai",
+    "taskTitle": "Judul Tugas"
+  },
+  "deleteDialog": {
+    "description": "Apakah Anda yakin ingin menghapus tugas ini? Tindakan ini tidak dapat dibatalkan.",
+    "title": "Hapus Tugas"
+  },
+  "filters": {
+    "date": {
+      "allDates": "Semua Tanggal",
+      "label": "Filter Tanggal",
+      "today": "Hari Ini",
+      "tomorrow": "Besok"
+    },
+    "priority": {
+      "allPriorities": "Semua Prioritas",
+      "high": "Tinggi",
+      "label": "Filter Prioritas",
+      "low": "Rendah",
+      "medium": "Sedang"
+    },
+    "status": {
+      "all": "Semua",
+      "completed": "Selesai",
+      "incomplete": "Belum Selesai",
+      "overdue": "Terlambat"
+    }
+  },
+  "messages": {
+    "errorLoadingTasks": "Gagal memuat tugas. Silakan muat ulang halaman.",
+    "noTasksAvailable": "Tidak ada tugas. Tambah tugas untuk mulai mengatur jadwal!"
+  },
+  "pageSubtitle": "Atur jadwal belajarmu dengan rapi dan efisien.",
+  "pageTitle": "Tugas Saya",
+  "priority": {
+    "high": "Tinggi",
+    "low": "Rendah",
+    "medium": "Sedang"
+  },
+  "sections": {
+    "completed": "Selesai",
+    "overdue": "Terlambat",
+    "today": "Hari Ini",
+    "upcoming": "Mendatang"
+  },
+  "taskItem": {
+    "dueLabel": "Batas waktu"
+  },
+  "todoWidget": {
+    "completedSummary": "Kamu telah menyelesaikan tugas hari ini!",
+    "dailyProgress": "Progres Harian",
+    "title": "Daftar Tugas"
+  },
+  "viewModes": {
+    "calendarView": "Tampilan Kalender",
+    "listView": "Tampilan List"
+  },
+  "calendar": {
+    "weekdays": {
+      "sun": "MIN",
+      "mon": "SEN",
+      "tue": "SEL",
+      "wed": "RAB",
+      "thu": "KAM",
+      "fri": "JUM",
+      "sat": "SAB"
+    },
+    "moreTasks": "+ {{count}} lagi",
+    "moreTasks_other": "+ {{count}} more",
+    "tasksForDate": "Tugas untuk {{date}}",
+    "noTasksScheduled": "Tidak ada tugas terjadwal.",
+    "actions": {
+      "addNewTaskForDate": "Tambah Tugas Baru untuk {{date}}"
+    }
+  }
+}

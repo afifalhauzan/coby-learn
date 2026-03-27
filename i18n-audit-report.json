@@ -1,0 +1,540 @@
+{
+  "totals": {
+    "codeFiles": 54,
+    "tKeyUsage": 479,
+    "missing": 8,
+    "badFormat": 0,
+    "hardcodedCandidates": 105,
+    "namespaceWarnings": 11
+  },
+  "missing": [
+    {
+      "file": "src/pages/LibraryPage.tsx",
+      "key": "library:folder.itemCount",
+      "inEn": false,
+      "inId": false
+    },
+    {
+      "file": "src/pages/MaterialDetailPage.tsx",
+      "key": "common:states.error",
+      "inEn": false,
+      "inId": true
+    },
+    {
+      "file": "src/pages/MaterialDetailPage.tsx",
+      "key": "material:quizHistory.questionsAndDate",
+      "inEn": false,
+      "inId": false
+    },
+    {
+      "file": "src/pages/MaterialDetailPage.tsx",
+      "key": "common:states.generating",
+      "inEn": false,
+      "inId": true
+    },
+    {
+      "file": "src/pages/MaterialDetailPage.tsx",
+      "key": "common:states.generating",
+      "inEn": false,
+      "inId": true
+    },
+    {
+      "file": "src/components/dashboard/FocusSessionWidget.tsx",
+      "key": "dashboard:focusSession.dayStreak",
+      "inEn": false,
+      "inId": false
+    },
+    {
+      "file": "src/components/library/GenerateQuizDialog.tsx",
+      "key": "common:states.generating",
+      "inEn": false,
+      "inId": true
+    },
+    {
+      "file": "src/components/library/MaterialItem.tsx",
+      "key": "common:states.saving",
+      "inEn": false,
+      "inId": true
+    }
+  ],
+  "badFormat": [],
+  "namespaceWarnings": [
+    {
+      "file": "src/components/dashboard/ToDoWidget.tsx",
+      "key": "tasks:todoWidget.title",
+      "domain": "dashboard"
+    },
+    {
+      "file": "src/components/dashboard/ToDoWidget.tsx",
+      "key": "tasks:todoWidget.completedSummary",
+      "domain": "dashboard"
+    },
+    {
+      "file": "src/components/dashboard/ToDoWidget.tsx",
+      "key": "tasks:todoWidget.dailyProgress",
+      "domain": "dashboard"
+    },
+    {
+      "file": "src/components/library/GenerateQuizDialog.tsx",
+      "key": "material:generateQuizDialog.title",
+      "domain": "quiz"
+    },
+    {
+      "file": "src/components/library/GenerateQuizDialog.tsx",
+      "key": "material:generateQuizDialog.description",
+      "domain": "quiz"
+    },
+    {
+      "file": "src/components/library/GenerateQuizDialog.tsx",
+      "key": "material:generateQuizDialog.numberOfQuestions",
+      "domain": "quiz"
+    },
+    {
+      "file": "src/components/library/GenerateQuizDialog.tsx",
+      "key": "material:generateQuizDialog.numberOfQuestions",
+      "domain": "quiz"
+    },
+    {
+      "file": "src/components/library/GenerateQuizDialog.tsx",
+      "key": "material:generateQuizDialog.options.quick3",
+      "domain": "quiz"
+    },
+    {
+      "file": "src/components/library/GenerateQuizDialog.tsx",
+      "key": "material:generateQuizDialog.options.standard5",
+      "domain": "quiz"
+    },
+    {
+      "file": "src/components/library/GenerateQuizDialog.tsx",
+      "key": "material:generateQuizDialog.options.deepDive10",
+      "domain": "quiz"
+    },
+    {
+      "file": "src/components/library/GenerateQuizDialog.tsx",
+      "key": "material:generateQuizDialog.startGeneration",
+      "domain": "quiz"
+    }
+  ],
+  "hardcodedCandidates": [
+    {
+      "file": "src/pages/DailyQuizPage.tsx",
+      "text": "(null); const [answerStatus, setAnswerStatus] = useState"
+    },
+    {
+      "file": "src/pages/DailyQuizPage.tsx",
+      "text": "('selection'); const [customTopic, setCustomTopic] = useState(''); const [quizData, setQuizData] = useState"
+    },
+    {
+      "file": "src/pages/DailyQuizPage.tsx",
+      "text": "(null); // Jika error dari backend (misal: materi kosong) const [errorMessage, setErrorMessage] = useState"
+    },
+    {
+      "file": "src/pages/DailyQuizPage.tsx",
+      "text": "Surprise Me"
+    },
+    {
+      "file": "src/pages/FolderDetailsPage.tsx",
+      "text": ") : isError ? ("
+    },
+    {
+      "file": "src/pages/FolderDetailsPage.tsx",
+      "text": ") : !packageData?.materials || packageData.materials.length === 0 ? ("
+    },
+    {
+      "file": "src/pages/LibraryPage.tsx",
+      "text": "(null); const mobileAddFolderRef = useRef"
+    },
+    {
+      "file": "src/pages/LibraryPage.tsx",
+      "text": "(null); // State for Delete Dialog const [deleteFolderId, setDeleteFolderId] = useState"
+    },
+    {
+      "file": "src/pages/LoginPage.tsx",
+      "text": "(initialErrors); const [generalError, setGeneralError] = useState"
+    },
+    {
+      "file": "src/pages/MaterialDetailPage.tsx",
+      "text": "([]); const chatContainerRef = useRef"
+    },
+    {
+      "file": "src/pages/MaterialDetailPage.tsx",
+      "text": "; if (isError || !material) return"
+    },
+    {
+      "file": "src/pages/MaterialDetailPage.tsx",
+      "text": "; return ("
+    },
+    {
+      "file": "src/pages/ProfilePage.tsx",
+      "text": "(null); const [errorMessage, setErrorMessage] = useState"
+    },
+    {
+      "file": "src/pages/ProfilePage.tsx",
+      "text": "Account Settings"
+    },
+    {
+      "file": "src/pages/ProfilePage.tsx",
+      "text": "Username"
+    },
+    {
+      "file": "src/pages/ProfilePage.tsx",
+      "text": "Email Address"
+    },
+    {
+      "file": "src/pages/ProgressPage.tsx",
+      "text": ") : isError ? ("
+    },
+    {
+      "file": "src/pages/ProjectPage.tsx",
+      "text": "Home"
+    },
+    {
+      "file": "src/pages/ProjectPage.tsx",
+      "text": "Computer Science"
+    },
+    {
+      "file": "src/pages/ProjectPage.tsx",
+      "text": "Belajar SQL"
+    },
+    {
+      "file": "src/pages/ProjectPage.tsx",
+      "text": "Belajar SQL"
+    },
+    {
+      "file": "src/pages/ProjectPage.tsx",
+      "text": "Dive deep into the fundamentals of SQL and database management."
+    },
+    {
+      "file": "src/pages/ProjectPage.tsx",
+      "text": "Edit Project"
+    },
+    {
+      "file": "src/pages/ProjectPage.tsx",
+      "text": "AI Summary"
+    },
+    {
+      "file": "src/pages/ProjectPage.tsx",
+      "text": "Test Your Knowledge"
+    },
+    {
+      "file": "src/pages/ProjectPage.tsx",
+      "text": "Number of Questions"
+    },
+    {
+      "file": "src/pages/ProjectPage.tsx",
+      "text": "5 Questions"
+    },
+    {
+      "file": "src/pages/ProjectPage.tsx",
+      "text": "10 Questions"
+    },
+    {
+      "file": "src/pages/ProjectPage.tsx",
+      "text": "15 Questions"
+    },
+    {
+      "file": "src/pages/ProjectPage.tsx",
+      "text": "20 Questions"
+    },
+    {
+      "file": "src/pages/ProjectPage.tsx",
+      "text": "Generate Quiz from Material"
+    },
+    {
+      "file": "src/pages/ProjectPage.tsx",
+      "text": "My Notes"
+    },
+    {
+      "file": "src/pages/ProjectPage.tsx",
+      "text": "Save Notes"
+    },
+    {
+      "file": "src/pages/ProjectPage.tsx",
+      "text": "breadcrumb"
+    },
+    {
+      "file": "src/pages/ProjectPage.tsx",
+      "text": "Copy summary"
+    },
+    {
+      "file": "src/pages/ProjectPage.tsx",
+      "text": "Number of Questions"
+    },
+    {
+      "file": "src/pages/ProjectPage.tsx",
+      "text": "Start typing your notes here..."
+    },
+    {
+      "file": "src/pages/QuizPage.tsx",
+      "text": "(null); const [quizResult, setQuizResult] = useState"
+    },
+    {
+      "file": "src/pages/QuizPage.tsx",
+      "text": ") : !showResults ? ( // === TAMPILAN SOAL (Sama seperti sebelumnya) ==="
+    },
+    {
+      "file": "src/pages/QuizPage.tsx",
+      "text": ") : ( // === TAMPILAN HASIL (DATA DARI BACKEND) ==="
+    },
+    {
+      "file": "src/pages/QuizResultPage.tsx",
+      "text": "70; const resultMascot = isHighScore ? '/quizhigh.svg' : '/quizlow.svg'; return ("
+    },
+    {
+      "file": "src/pages/RegisterPage.tsx",
+      "text": "(initialErrors); const [generalError, setGeneralError] = useState"
+    },
+    {
+      "file": "src/pages/ResetPasswordPage.tsx",
+      "text": "Set New Password"
+    },
+    {
+      "file": "src/pages/ResetPasswordPage.tsx",
+      "text": "Please enter your new password below."
+    },
+    {
+      "file": "src/pages/ResetPasswordPage.tsx",
+      "text": "Reset Token"
+    },
+    {
+      "file": "src/pages/ResetPasswordPage.tsx",
+      "text": "New Password"
+    },
+    {
+      "file": "src/pages/ResetPasswordPage.tsx",
+      "text": "Confirm Password"
+    },
+    {
+      "file": "src/pages/TasksPage.tsx",
+      "text": "('list'); const [statusTab, setStatusTab] = useState"
+    },
+    {
+      "file": "src/pages/TasksPage.tsx",
+      "text": "('all'); const [dateFilterType, setDateFilterType] = useState"
+    },
+    {
+      "file": "src/pages/TasksPage.tsx",
+      "text": "('all'); const [priorityFilter, setPriorityFilter] = useState"
+    },
+    {
+      "file": "src/pages/TasksPage.tsx",
+      "text": "('all'); const [openDialog, setOpenDialog] = useState(false); const [editingTask, setEditingTask] = useState"
+    },
+    {
+      "file": "src/pages/TasksPage.tsx",
+      "text": "(null); const [deleteTaskId, setDeleteTaskId] = useState"
+    },
+    {
+      "file": "src/pages/TasksPage.tsx",
+      "text": ") : isError ? ("
+    },
+    {
+      "file": "src/pages/TasksPage.tsx",
+      "text": ") : showEmptyState ? ("
+    },
+    {
+      "file": "src/pages/TasksPage.tsx",
+      "text": ") : isError ? ("
+    },
+    {
+      "file": "src/pages/TasksPage.tsx",
+      "text": "view mode tabs"
+    },
+    {
+      "file": "src/components/auth/AuthMiddleware.tsx",
+      "text": "(token); const currentTime = Date.now() / 1000; if (decoded.exp"
+    },
+    {
+      "file": "src/components/dashboard/DailyQuizDialog.tsx",
+      "text": "(null); const [answerStatus, setAnswerStatus] = useState"
+    },
+    {
+      "file": "src/components/dashboard/DailyQuizDialog.tsx",
+      "text": "Gagal memuat Daily Quiz."
+    },
+    {
+      "file": "src/components/dashboard/DailyQuizDialog.tsx",
+      "text": "Streak Saved!"
+    },
+    {
+      "file": "src/components/dashboard/DailyQuizDialog.tsx",
+      "text": "You've completed today's challenge. Come back tomorrow to keep the fire burning!"
+    },
+    {
+      "file": "src/components/dashboard/DailyQuizDialog.tsx",
+      "text": "Awesome!"
+    },
+    {
+      "file": "src/components/dashboard/DailyQuizDialog.tsx",
+      "text": "Daily Challenge"
+    },
+    {
+      "file": "src/components/dashboard/DailyQuizDialog.tsx",
+      "text": "Salah. Coba lagi!"
+    },
+    {
+      "file": "src/components/dashboard/DashboardOnboardingModal.tsx",
+      "text": "Coby Learn Logo preview"
+    },
+    {
+      "file": "src/components/dashboard/DayStreakWidget.tsx",
+      "text": "= level.id; const isCurrent = currentLevel === level.id; return ("
+    },
+    {
+      "file": "src/components/dashboard/SpotlightCallout.tsx",
+      "text": "Start here: Add your first task"
+    },
+    {
+      "file": "src/components/dashboard/ToDoWidget.tsx",
+      "text": "0 ? (completed / total) * 100 : 0; return ("
+    },
+    {
+      "file": "src/components/landing-page/HowItWorksSection.tsx",
+      "text": ") : ( /* Mobile fallback: Simple vertical stack */"
+    },
+    {
+      "file": "src/components/landing-page/LandingFooter.tsx",
+      "text": "CobyLearn"
+    },
+    {
+      "file": "src/components/landing-page/LandingFooter.tsx",
+      "text": "Ai"
+    },
+    {
+      "file": "src/components/landing-page/LandingNavbar.tsx",
+      "text": "CobyLearn"
+    },
+    {
+      "file": "src/components/landing-page/LandingNavbar.tsx",
+      "text": "Ai"
+    },
+    {
+      "file": "src/components/landing-page/LandingNavbar.tsx",
+      "text": "CobyLearnAi"
+    },
+    {
+      "file": "src/components/layout/Navbar.tsx",
+      "text": "location.pathname === path; return ("
+    },
+    {
+      "file": "src/components/layout/Navbar.tsx",
+      "text": "User"
+    },
+    {
+      "file": "src/components/layout/Navbar.tsx",
+      "text": "User"
+    },
+    {
+      "file": "src/components/library/FileUploadDialog.tsx",
+      "text": "void; //"
+    },
+    {
+      "file": "src/components/library/FileUploadDialog.tsx",
+      "text": "close"
+    },
+    {
+      "file": "src/components/library/FileUploadDialog.tsx",
+      "text": "upload tabs"
+    },
+    {
+      "file": "src/components/library/FolderDialog.tsx",
+      "text": "(DEFAULT_COLORS[0]); const [shakeColor, setShakeColor] = useState"
+    },
+    {
+      "file": "src/components/library/FolderDialog.tsx",
+      "text": "= DEFAULT_UNLOCKED_COLOR_COUNT && !isExtendedPaletteUnlocked; return ("
+    },
+    {
+      "file": "src/components/library/FolderDialog.tsx",
+      "text": "= DEFAULT_UNLOCKED_COLOR_COUNT && isExtendedPaletteUnlocked && ("
+    },
+    {
+      "file": "src/components/library/MaterialItem.tsx",
+      "text": "; case 'youtube': return"
+    },
+    {
+      "file": "src/components/library/MaterialItem.tsx",
+      "text": "; case 'quiz': return"
+    },
+    {
+      "file": "src/components/library/MaterialItem.tsx",
+      "text": "; default: return"
+    },
+    {
+      "file": "src/components/progress/StudyHeatmap.tsx",
+      "text": "today; const isBeforeStart = cellDate"
+    },
+    {
+      "file": "src/components/progress/StudyHeatmap.tsx",
+      "text": "4) level = 4; if (level"
+    },
+    {
+      "file": "src/components/progress/XPLevelModal.tsx",
+      "text": "= milestone.xp; const isCurrent = currentLevel.level === milestone.level; return ("
+    },
+    {
+      "file": "src/components/streak/StreakShareCard.tsx",
+      "text": "CobyLearnAI"
+    },
+    {
+      "file": "src/components/streak/StreakShareCard.tsx",
+      "text": "Congrats!"
+    },
+    {
+      "file": "src/components/streak/StreakShareCard.tsx",
+      "text": "Streak Day"
+    },
+    {
+      "file": "src/components/streak/StreakShareCard.tsx",
+      "text": "Keep it up!"
+    },
+    {
+      "file": "src/components/streak/StreakShareCard.tsx",
+      "text": "coby-learn.vercel.app"
+    },
+    {
+      "file": "src/components/streak/StreakShareCard.tsx",
+      "text": "CobyLearnAI logo"
+    },
+    {
+      "file": "src/components/streak/StreakShareCard.tsx",
+      "text": "Coby mascot"
+    },
+    {
+      "file": "src/components/streak/StreakShareDialog.tsx",
+      "text": "(null); const [isSharing, setIsSharing] = useState(false); const [shareError, setShareError] = useState"
+    },
+    {
+      "file": "src/components/streak/StreakShareDialog.tsx",
+      "text": "Share Your Streak"
+    },
+    {
+      "file": "src/components/streak/StreakShareDialog.tsx",
+      "text": "Post your latest milestone and keep the streak alive."
+    },
+    {
+      "file": "src/components/streak/StreakShareDialog.tsx",
+      "text": "Close"
+    },
+    {
+      "file": "src/components/streak/StreakShareDialog.tsx",
+      "text": "Download"
+    },
+    {
+      "file": "src/components/tasks/CalendarView.tsx",
+      "text": "Today"
+    },
+    {
+      "file": "src/components/tasks/CalendarView.tsx",
+      "text": "maxTasksToShow && ("
+    },
+    {
+      "file": "src/components/tasks/CalendarView.tsx",
+      "text": "isSameDay(parseISO(t.dueDate), selectedDate)); return ( // === CSS GRID LAYOUT RESPONSIVE ==="
+    },
+    {
+      "file": "src/components/tasks/CalendarView.tsx",
+      "text": "No tasks scheduled."
+    }
+  ]
+}

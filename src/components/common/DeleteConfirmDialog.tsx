@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import CloseIcon from '@mui/icons-material/Close';
+import { useTranslation } from 'react-i18next';
 
 interface DeleteConfirmDialogProps {
   open: boolean;
@@ -30,9 +31,13 @@ const DeleteConfirmDialog: React.FC<DeleteConfirmDialogProps> = ({
   open,
   onClose,
   onConfirm,
-  title = "Delete Task?",
-  description = "Are you sure you want to delete this task? This action cannot be undone."
+  title,
+  description
 }) => {
+  const { t } = useTranslation();
+  const resolvedTitle = title ?? t('common:deleteDialog.defaultTitle');
+  const resolvedDescription = description ?? t('common:deleteDialog.defaultDescription');
+
   return (
     <Dialog
       open={open}
@@ -76,12 +81,12 @@ const DeleteConfirmDialog: React.FC<DeleteConfirmDialogProps> = ({
         </Box>
 
         <DialogTitle sx={{ p: 0, mb: 1, fontWeight: 'bold', fontSize: '1.25rem' }}>
-          {title}
+          {resolvedTitle}
         </DialogTitle>
 
         <DialogContent sx={{ p: 0, mb: 3 }}>
           <Typography variant="body2" color="text.secondary">
-            {description}
+            {resolvedDescription}
           </Typography>
         </DialogContent>
 
@@ -99,7 +104,7 @@ const DeleteConfirmDialog: React.FC<DeleteConfirmDialogProps> = ({
               '&:hover': { borderColor: 'text.primary', bgcolor: 'transparent' }
             }}
           >
-            Cancel
+            {t('common:actions.cancel')}
           </Button>
           <Button
             onClick={onConfirm}
@@ -115,7 +120,7 @@ const DeleteConfirmDialog: React.FC<DeleteConfirmDialogProps> = ({
               '&:hover': { bgcolor: '#DC2626' }
             }}
           >
-            Delete
+            {t('common:actions.delete')}
           </Button>
         </DialogActions>
       </Box>

@@ -1,0 +1,31 @@
+{
+  "share": {
+    "defaultUsernameSlug": "learner",
+    "nativeShare": {
+      "title": "My CobyLearnAI Streak",
+      "text": "I just reached a {{streak}}-day streak on CobyLearnAI!"
+    },
+    "errors": {
+      "cardNotReady": "Share card is not ready yet.",
+      "imageGenerateFailed": "Unable to generate share image.",
+      "shareFailed": "Failed to share streak card.",
+      "downloadFailed": "Failed to download streak card."
+    },
+    "dialog": {
+      "title": "Share Your Streak",
+      "subtitle": "Post your latest milestone and keep the streak alive.",
+      "actions": {
+        "shareToSocials": "Share to Socials"
+      }
+    },
+    "card": {
+      "logoAlt": "CobyLearnAI logo",
+      "congrats": "Congrats!",
+      "streakDay": "Streak Day",
+      "defaultUsername": "Learner",
+      "fireLevelAlt": "Streak fire level {{level}}",
+      "keepItUp": "Keep it up!",
+      "mascotAlt": "Coby mascot"
+    }
+  }
+}

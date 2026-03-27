@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 interface StreakShareCardProps {
   username: string;
@@ -32,6 +33,7 @@ const getFireLevel = (streak: number): number => {
 };
 
 function StreakShareCard({ username, streak, dateLabel }: StreakShareCardProps): React.JSX.Element {
+  const { t } = useTranslation();
   const fireLevel = getFireLevel(streak);
 
   return (
@@ -63,7 +65,7 @@ function StreakShareCard({ username, streak, dateLabel }: StreakShareCardProps):
           <Box
             component="img"
             src="/logo_1.svg"
-            alt="CobyLearnAI logo"
+            alt={t('streak:share.card.logoAlt', { defaultValue: 'CobyLearnAI logo' })}
             sx={{ width: 62, height: 62, objectFit: 'contain' }}
           />
           <Typography sx={{ fontSize: 52, fontWeight: 700, color: '#3B82F6', letterSpacing: 0.2 }}>
@@ -74,14 +76,14 @@ function StreakShareCard({ username, streak, dateLabel }: StreakShareCardProps):
 
       <Box sx={{ px: 4, textAlign: 'center', position: 'relative', zIndex: 1 }}>
         <Typography sx={{ fontSize: 56, color: '#3B82F6', mb: 1.5, fontWeight: 400 }}>
-          Congrats!
+          {t('streak:share.card.congrats', { defaultValue: 'Congrats!' })}
         </Typography>
         <Typography sx={{ fontSize: 92, color: '#1E3A5F', fontWeight: 800, lineHeight: 1.1 }}>
-          Streak Day
+          {t('streak:share.card.streakDay', { defaultValue: 'Streak Day' })}
           <Box component="span" sx={{ color: '#F97316' }}> - {streak}</Box>
         </Typography>
         <Typography sx={{ mt: 3, fontSize: 58, color: '#3B82F6', fontWeight: 600 }}>
-          {username || 'Learner'}
+          {username || t('streak:share.card.defaultUsername', { defaultValue: 'Learner' })}
         </Typography>
         {dateLabel && (
           <Typography sx={{ mt: 1, fontSize: 32, color: '#64748B', fontWeight: 500 }}>
@@ -103,7 +105,10 @@ function StreakShareCard({ username, streak, dateLabel }: StreakShareCardProps):
         <Box
           component="img"
           src={`/fire${fireLevel}.png`}
-          alt={`Streak fire level ${fireLevel}`}
+          alt={t('streak:share.card.fireLevelAlt', {
+            level: fireLevel,
+            defaultValue: 'Streak fire level {{level}}',
+          })}
           sx={{
             width: 560,
             height: 560,
@@ -126,7 +131,7 @@ function StreakShareCard({ username, streak, dateLabel }: StreakShareCardProps):
       >
         <Box>
           <Typography sx={{ fontSize: 74, fontWeight: 800, color: '#475569', lineHeight: 1 }}>
-            Keep it up!
+            {t('streak:share.card.keepItUp', { defaultValue: 'Keep it up!' })}
           </Typography>
           <Typography sx={{ mt: 1.25, fontSize: 44, color: '#475569' }}>
             coby-learn.vercel.app
@@ -136,7 +141,7 @@ function StreakShareCard({ username, streak, dateLabel }: StreakShareCardProps):
         <Box
           component="img"
           src="/base.svg"
-          alt="Coby mascot"
+          alt={t('streak:share.card.mascotAlt', { defaultValue: 'Coby mascot' })}
           sx={{ width: 340, height: 340, objectFit: 'contain' }}
         />
       </Box>

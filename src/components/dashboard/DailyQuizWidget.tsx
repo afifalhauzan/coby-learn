@@ -4,9 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { CheckCircleOutline, Lightbulb } from '@mui/icons-material';
 import { getDailyQuizStatus } from '../../services/apiLibraryService';
+import { useTranslation } from 'react-i18next';
 
 function DailyQuizWidget(): React.JSX.Element {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const { data: status, isLoading } = useQuery({
     queryKey: ['dailyQuizStatus'],
@@ -45,7 +47,7 @@ function DailyQuizWidget(): React.JSX.Element {
           variant="h6"
           sx={{ fontWeight: 500, color: 'text.primary' }}
         >
-          Daily Quiz
+          {t('dashboard:dailyQuizWidget.title')}
         </Typography>
       </Box>
 
@@ -53,10 +55,10 @@ function DailyQuizWidget(): React.JSX.Element {
         <Box sx={{ textAlign: 'center', py: 2 }}>
           <CheckCircleOutline sx={{ fontSize: 48, color: 'success.main', mb: 1 }} />
           <Typography variant="body1" fontWeight="bold" sx={{ color: 'success.main' }}>
-            All Done for Today!
+            {t('dashboard:dailyQuizWidget.doneTitle')}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary', mt: 1 }}>
-            You've kept your streak alive. Come back tomorrow for a new challenge.
+            {t('dashboard:dailyQuizWidget.doneDescription')}
           </Typography>
         </Box>
       ) : (
@@ -65,7 +67,7 @@ function DailyQuizWidget(): React.JSX.Element {
             variant="body2"
             sx={{ color: 'text.secondary', mb: 3, lineHeight: 1.5, fontWeight: 500 }}
           >
-            Test your knowledge and keep your streak going! Don't break the chain.
+            {t('dashboard:dailyQuizWidget.pendingDescription')}
           </Typography>
 
           <Button
@@ -83,7 +85,7 @@ function DailyQuizWidget(): React.JSX.Element {
               },
             }}
           >
-            Start Daily Quiz
+            {t('dashboard:dailyQuizWidget.startButton')}
           </Button>
         </>
       )}

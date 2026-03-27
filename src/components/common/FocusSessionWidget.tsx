@@ -32,20 +32,27 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import YouTube from 'react-youtube';
+import { useTranslation } from 'react-i18next';
 
 const RADIO_STATIONS = [
-  { id: "jfKfPfyJRdk", name: "Lofi Girl Radio", desc: "Beats to relax/study to" },
-  { id: "4xDzrJKXOOY", name: "Synthwave Radio", desc: "Beats to chill/game to" },
-  { id: "DXHf0XJtqJw", name: "Quiet Rain", desc: "Nature sounds for focus" },
-  { id: "lTRiuFIWV54", name: "Classical Piano", desc: "Mozart for studying" },
-  { id: "5qap5aO4i9A", name: "Lofi Hip Hop", desc: "Chill beats mix" },
-  { id: "DWcJFNfaw9c", name: "Ambient Space", desc: "Deep focus atmosphere" },
+  { id: 'jfKfPfyJRdk', key: 'lofiGirl' },
+  { id: '4xDzrJKXOOY', key: 'synthwave' },
+  { id: 'DXHf0XJtqJw', key: 'quietRain' },
+  { id: 'lTRiuFIWV54', key: 'classicalPiano' },
+  { id: '5qap5aO4i9A', key: 'lofiHipHop' },
+  { id: 'DWcJFNfaw9c', key: 'ambientSpace' },
 ];
 
 const ALARM_SOUND_URL = "https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3";
 const PRESET_DURATIONS = [5, 10, 25, 30, 45, 60];
 
 function FocusSessionWidget(): React.JSX.Element {
+  const { t } = useTranslation();
+
+  const getStationInfo = (stationKey: string) => ({
+    name: t(`material:focusSessionWidget.stations.${stationKey}.name`),
+    desc: t(`material:focusSessionWidget.stations.${stationKey}.description`),
+  });
 
   // States Dialog
   const [openSettings, setOpenSettings] = useState(false);
@@ -100,7 +107,9 @@ function FocusSessionWidget(): React.JSX.Element {
     alarmAudio.current.play().catch(e => console.error("Audio play failed:", e));
     setOpenTimeUpDialog(true);
     if (Notification.permission === "granted") {
-      new Notification("⏰ Time's Up!", { body: "Focus session completed. Take a break!" });
+      new Notification(t('material:focusSessionWidget.notifications.timeUpTitle'), {
+        body: t('material:focusSessionWidget.notifications.timeUpBody')
+      });
     }
   };
 
@@ -129,7 +138,7 @@ function FocusSessionWidget(): React.JSX.Element {
   // --- LOGIKA MUSIC PLAYER ---
   const [currentStationIndex, setCurrentStationIndex] = useState(0);
   const [currentVideoId, setCurrentVideoId] = useState(RADIO_STATIONS[0].id);
-  const [currentInfo, setCurrentInfo] = useState({ name: RADIO_STATIONS[0].name, desc: RADIO_STATIONS[0].desc });
+  const [currentInfo, setCurrentInfo] = useState(getStationInfo(RADIO_STATIONS[0].key));
 
   const [inputVideoUrl, setInputVideoUrl] = useState('');
   const [isPlaying, setIsPlaying] = useState(false);
@@ -158,7 +167,7 @@ function FocusSessionWidget(): React.JSX.Element {
     const nextStation = RADIO_STATIONS[nextIndex];
     setCurrentStationIndex(nextIndex);
     setCurrentVideoId(nextStation.id);
-    setCurrentInfo({ name: nextStation.name, desc: nextStation.desc });
+    setCurrentInfo(getStationInfo(nextStation.key));
     setIsPlaying(true);
   };
 
@@ -172,7 +181,10 @@ function FocusSessionWidget(): React.JSX.Element {
 
     if (videoId) {
       setCurrentVideoId(videoId);
-      setCurrentInfo({ name: "Custom Video", desc: "Youtube Selection" });
+      setCurrentInfo({
+        name: t('material:focusSessionWidget.music.customVideoName'),
+        desc: t('material:focusSessionWidget.music.customVideoDescription')
+      });
       setIsPlaying(true);
       setOpenMusicSearch(false);
       setInputVideoUrl('');
@@ -226,7 +238,7 @@ function FocusSessionWidget(): React.JSX.Element {
             <Box
               component="img"
               src="/base.svg"
-              alt="Coby mascot"
+              alt={t('material:focusSessionWidget.labels.cobyMascotAlt')}
               sx={{
                 width: '80%',
                 objectFit: 'contain',
@@ -257,7 +269,7 @@ function FocusSessionWidget(): React.JSX.Element {
           >
             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1, mb: 1 }}>
               <Typography variant="subtitle2" sx={{ color: 'primary.main', letterSpacing: 1 }}>
-                Focus Timer
+                {t('material:focusSessionWidget.labels.focusTimer')}
               </Typography>
               {isTimerRunning && (
                 <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: 'error.main', animation: 'pulse 1.5s infinite' }} />
@@ -287,7 +299,9 @@ function FocusSessionWidget(): React.JSX.Element {
               '&:hover': { bgcolor: 'secondary.dark' }
             }}
           >
-            {isTimerRunning ? 'Pause' : 'Start Focus'}
+            {isTimerRunning
+              ? t('material:focusSessionWidget.actions.pause')
+              : t('material:focusSessionWidget.actions.startFocus')}
           </Button>
 
           <IconButton
@@ -377,7 +391,7 @@ function FocusSessionWidget(): React.JSX.Element {
           startIcon={<MusicNoteIcon fontSize="small" />}
           sx={{ mt: 1.5, fontSize: '0.7rem', color: 'primary.main', textTransform: 'none', py: 0.5, '&:hover': { color: 'text.secondary', bgcolor: 'transparent' } }}
         >
-          Change Station
+          {t('material:focusSessionWidget.actions.changeStation')}
         </Button>
       </Box>
 
@@ -403,9 +417,11 @@ function FocusSessionWidget(): React.JSX.Element {
           <Box sx={{ animation: 'shake 0.5s infinite' }}>
             <AccessAlarmIcon sx={{ fontSize: 80, color: 'secondary.main' }} />
           </Box>
-          <Typography variant="h4" fontWeight="bold">Time's Up!</Typography>
+          <Typography variant="h4" fontWeight="bold">
+            {t('material:focusSessionWidget.timeUpDialog.title')}
+          </Typography>
           <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-            Great job focusing! Take a short break now.
+            {t('material:focusSessionWidget.timeUpDialog.description')}
           </Typography>
         </DialogContent>
         <DialogActions sx={{ justifyContent: 'center', pb: 3 }}>
@@ -420,7 +436,7 @@ function FocusSessionWidget(): React.JSX.Element {
               '&:hover': { bgcolor: 'secondary.dark' }
             }}
           >
-            Stop Alarm
+            {t('material:focusSessionWidget.actions.stopAlarm')}
           </Button>
         </DialogActions>
       </Dialog>
@@ -429,18 +445,22 @@ function FocusSessionWidget(): React.JSX.Element {
       <Dialog open={openSettings} onClose={() => setOpenSettings(false)} maxWidth="xs" fullWidth PaperProps={{ sx: { bgcolor: 'background.paper', color: 'text.primary', border: '1px solid', borderColor: 'divider' } }}>
         <DialogTitle sx={{ textAlign: 'center', pt: 3, pb: 1 }}>
           <Typography variant="h5" sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1 }}>
-            <TimerIcon sx={{ color: 'secondary.main' }} /> Set Duration
+            <TimerIcon sx={{ color: 'secondary.main' }} /> {t('material:focusSessionWidget.settingsDialog.title')}
           </Typography>
         </DialogTitle>
         <DialogContent sx={{ textAlign: 'center', pb: 4 }}>
           <Box sx={{ my: 4, position: 'relative', display: 'inline-block' }}>
             <TextField variant="standard" type="number" value={focusDuration} onChange={handleInputChange} inputProps={{ min: 1, max: 180, style: { textAlign: 'center', fontSize: '3.5rem', fontWeight: '600', padding: 0 } }} sx={{ width: '120px', '& .MuiInput-underline:before': { borderBottom: 'none' }, '& .MuiInput-underline:after': { borderBottom: 'none' }, '& .MuiInput-underline:hover:not(.Mui-disabled):before': { borderBottom: 'none' } }} />
-            <Typography variant="subtitle1" sx={{ color: 'text.secondary', position: 'absolute', bottom: 10, right: -40, fontWeight: 'bold' }}>min</Typography>
+            <Typography variant="subtitle1" sx={{ color: 'text.secondary', position: 'absolute', bottom: 10, right: -40, fontWeight: 'bold' }}>
+              {t('material:focusSessionWidget.labels.minutesShort')}
+            </Typography>
           </Box>
           <Box sx={{ px: 2, mb: 4 }}>
             <Slider value={typeof focusDuration === 'number' ? focusDuration : 0} onChange={handleSliderChange} min={5} max={120} step={1} sx={{ color: 'secondary.main', height: 6, '& .MuiSlider-thumb': { width: 20, height: 20, bgcolor: 'background.paper', border: '4px solid', borderColor: 'secondary.main' }, '& .MuiSlider-rail': { bgcolor: 'divider', opacity: 1 } }} />
           </Box>
-          <Typography variant="caption" sx={{ color: 'text.primary', mb: 1.5, display: 'block', textTransform: 'uppercase', letterSpacing: 1, fontWeight: 'bold' }}>Quick Presets</Typography>
+          <Typography variant="caption" sx={{ color: 'text.primary', mb: 1.5, display: 'block', textTransform: 'uppercase', letterSpacing: 1, fontWeight: 'bold' }}>
+            {t('material:focusSessionWidget.labels.quickPresets')}
+          </Typography>
           <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1, flexWrap: 'wrap' }}>
             {PRESET_DURATIONS.map((preset) => (
               <Chip key={preset} label={`${preset}m`} onClick={() => setFocusDuration(preset)} sx={{ bgcolor: focusDuration === preset ? 'secondary.main' : 'action.selected', color: focusDuration === preset ? 'white' : 'text.secondary', fontWeight: 'bold', border: 'none', '&:hover': { bgcolor: focusDuration === preset ? 'secondary.dark' : 'action.hover' } }} />
@@ -448,19 +468,21 @@ function FocusSessionWidget(): React.JSX.Element {
           </Box>
         </DialogContent>
         <DialogActions sx={{ justifyContent: 'center', pb: 3, px: 3 }}>
-          <Button onClick={applySettings} fullWidth variant="contained" size="large" sx={{ bgcolor: 'secondary.main', color: 'white', fontWeight: 'bold', borderRadius: '10px', px: 4, py: 1, textTransform: 'none', '&:hover': { bgcolor: 'secondary.dark' } }}>Start Focus</Button>
+          <Button onClick={applySettings} fullWidth variant="contained" size="large" sx={{ bgcolor: 'secondary.main', color: 'white', fontWeight: 'bold', borderRadius: '10px', px: 4, py: 1, textTransform: 'none', '&:hover': { bgcolor: 'secondary.dark' } }}>
+            {t('material:focusSessionWidget.actions.startFocus')}
+          </Button>
         </DialogActions>
       </Dialog>
 
       {/* === 3. MODAL MUSIC SEARCH === */}
       <Dialog open={openMusicSearch} onClose={() => setOpenMusicSearch(false)} maxWidth="sm" fullWidth>
-        <DialogTitle fontWeight="bold">Change Background Music</DialogTitle>
+        <DialogTitle fontWeight="bold">{t('material:focusSessionWidget.musicDialog.title')}</DialogTitle>
         <DialogContent>
-          <TextField autoFocus margin="dense" label="YouTube URL / ID" placeholder="e.g. jfKfPfyJRdk" fullWidth variant="outlined" value={inputVideoUrl} onChange={(e) => setInputVideoUrl(e.target.value)} InputProps={{ startAdornment: <InputAdornment position="start"><SearchIcon /></InputAdornment> }} />
+          <TextField autoFocus margin="dense" label={t('material:focusSessionWidget.musicDialog.youtubeLabel')} placeholder={t('material:focusSessionWidget.musicDialog.youtubePlaceholder')} fullWidth variant="outlined" value={inputVideoUrl} onChange={(e) => setInputVideoUrl(e.target.value)} InputProps={{ startAdornment: <InputAdornment position="start"><SearchIcon /></InputAdornment> }} />
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpenMusicSearch(false)}>Cancel</Button>
-          <Button onClick={handleChangeMusic} variant="contained" sx={{ color: 'white' }}>Play</Button>
+          <Button onClick={() => setOpenMusicSearch(false)}>{t('material:focusSessionWidget.actions.cancel')}</Button>
+          <Button onClick={handleChangeMusic} variant="contained" sx={{ color: 'white' }}>{t('material:focusSessionWidget.actions.play')}</Button>
         </DialogActions>
       </Dialog>
 

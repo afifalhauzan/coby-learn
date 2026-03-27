@@ -1,0 +1,50 @@
+{
+  "actions": {
+    "back": "Back",
+    "cancel": "Cancel",
+    "close": "Close",
+    "dashboard": "Dashboard",
+    "download": "Download",
+    "delete": "Delete",
+    "goToDashboard": "Go to Dashboard",
+    "goBack": "Go Back",
+    "logIn": "Log In",
+    "login": "Login",
+    "review": "Review",
+    "save": "Save",
+    "saveChanges": "Save Changes",
+    "sending": "Sending...",
+    "signUp": "Sign Up",
+    "signUpFree": "Sign Up Free",
+    "start": "Start",
+    "startLearning": "Start Learning",
+    "viewFeatures": "View Features"
+  },
+  "states": {
+    "done": "Done",
+    "error": "An error occurred. Please try again.",
+    "generating": "Generating content, please wait...",
+    "preparing": "Preparing...",
+    "saving": "Saving your progress..."
+  },
+  "deleteDialog": {
+    "defaultDescription": "Are you sure you want to delete this item? This action cannot be undone.",
+    "defaultTitle": "Delete Confirmation"
+  },
+  "navigation": {
+    "brand": "CobyLearnAi",
+    "breadcrumb": "breadcrumb",
+    "defaultAvatarLetter": "U",
+    "home": "Home",
+    "logoAlt": "CobyLearnAi Logo",
+    "logOut": "Log Out",
+    "myProfile": "My Profile",
+    "dashboard": "Dashboard",
+    "myLibrary": "Library",
+    "myTasks": "My Tasks",
+    "progress": "Progress"
+  },
+  "time": {
+    "today": "Hari ini"
+  }
+}

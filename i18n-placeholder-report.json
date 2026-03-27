@@ -1,0 +1,90 @@
+[
+  {
+    "namespace": "material",
+    "key": "quizHistory.questionsAndDate_other",
+    "type": "emptyIdValue",
+    "enValue": "quizHistory.questionsAndDate"
+  },
+  {
+    "namespace": "quiz",
+    "key": "labels.optionWithKey",
+    "en": [],
+    "id": [
+      "key"
+    ],
+    "enValue": "quiz:labels.optionWithKey",
+    "idValue": "Opsi {{key}}"
+  },
+  {
+    "namespace": "quiz",
+    "key": "labels.questionIndex",
+    "en": [],
+    "id": [
+      "current",
+      "total"
+    ],
+    "enValue": "quiz:labels.questionIndex",
+    "idValue": "Pertanyaan {{current}} dari {{total}}"
+  },
+  {
+    "namespace": "quiz",
+    "key": "labels.questionNumber",
+    "en": [],
+    "id": [
+      "count"
+    ],
+    "enValue": "quiz:labels.questionNumber",
+    "idValue": "Pertanyaan {{count}}"
+  },
+  {
+    "namespace": "quiz",
+    "key": "labels.questionNumberUpper",
+    "en": [],
+    "id": [
+      "count"
+    ],
+    "enValue": "quiz:labels.questionNumberUpper",
+    "idValue": "PERTANYAAN {{count}}"
+  },
+  {
+    "namespace": "quiz",
+    "key": "labels.reviewingQuestion",
+    "en": [],
+    "id": [
+      "count"
+    ],
+    "enValue": "quiz:labels.reviewingQuestion",
+    "idValue": "Meninjau Pertanyaan {{count}}"
+  },
+  {
+    "namespace": "quiz",
+    "key": "messages.completedOn",
+    "en": [],
+    "id": [
+      "date"
+    ],
+    "enValue": "quiz:messages.completedOn",
+    "idValue": "Diselesaikan pada {{date}}"
+  },
+  {
+    "namespace": "quiz",
+    "key": "messages.scoreSummary",
+    "en": [],
+    "id": [
+      "correct",
+      "total"
+    ],
+    "enValue": "quiz:messages.scoreSummary",
+    "idValue": "Kamu menjawab {{correct}} dari {{total}} pertanyaan dengan benar."
+  },
+  {
+    "namespace": "tasks",
+    "key": "todoWidget.completedSummary",
+    "en": [
+      "count"
+    ],
+    "id": [],
+    "enValue": "You've completed {{count}} tasks today!",
+    "idValue": "Kamu telah menyelesaikan tugas hari ini!"
+  }
+]

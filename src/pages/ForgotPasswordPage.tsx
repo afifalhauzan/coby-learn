@@ -12,10 +12,12 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { LockReset as LockResetIcon } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 import { forgotPassword } from '../services/apiAuthService';
 
 function ForgotPasswordPage(): React.JSX.Element {
     const navigate = useNavigate();
+    const { t } = useTranslation();
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState<{ type: 'success' | 'error', text: string } | null>(null);
 
@@ -24,11 +26,11 @@ function ForgotPasswordPage(): React.JSX.Element {
         onSuccess: (data) => {
             setMessage({
                 type: 'success',
-                text: data?.meta?.message || 'Instructions have been sent to your email.'
+                text: data?.meta?.message || t('auth:forgot.instructionsSent')
             });
         },
         onError: (error: any) => {
-            const errorMessage = error?.response?.data?.meta?.message || 'Failed to send reset email. Please try again.';
+            const errorMessage = error?.response?.data?.meta?.message || t('auth:errors.resetEmailFailed');
             setMessage({
                 type: 'error',
                 text: errorMessage
@@ -40,7 +42,7 @@ function ForgotPasswordPage(): React.JSX.Element {
         event.preventDefault();
         setMessage(null);
         if (!email) {
-            setMessage({ type: 'error', text: 'Please enter your email address.' });
+            setMessage({ type: 'error', text: t('auth:errors.emailRequired') });
             return;
         }
         mutation.mutate(email);
@@ -73,10 +75,10 @@ function ForgotPasswordPage(): React.JSX.Element {
                     <Box sx={{ textAlign: 'center' }}>
                         <LockResetIcon sx={{ color: 'primary.main', fontSize: 48, mb: 1 }} />
                         <Typography variant="h4" fontWeight="600" sx={{ color: 'text.primary', pb: 1 }}>
-                            Reset Password
+                            {t('auth:forgot.title')}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                            Enter your email to receive reset instructions.
+                            {t('auth:forgot.subtitle')}
                         </Typography>
                     </Box>
 
@@ -92,7 +94,7 @@ function ForgotPasswordPage(): React.JSX.Element {
                     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ width: '100%' }}>
                         <Stack spacing={2.5}>
                             <TextField
-                                label="Email Address"
+                                label={t('auth:forgot.emailLabel')}
                                 type="email"
                                 fullWidth
                                 value={email}
@@ -118,7 +120,7 @@ function ForgotPasswordPage(): React.JSX.Element {
                                     boxShadow: 3
                                 }}
                             >
-                                {mutation.isPending ? 'Sending...' : 'Send Reset Link'}
+                                {mutation.isPending ? t('common:actions.sending') : t('auth:forgot.submit')}
                             </Button>
                         </Stack>
                     </Box>
@@ -127,7 +129,7 @@ function ForgotPasswordPage(): React.JSX.Element {
                         onClick={() => navigate('/sign-in')}
                         sx={{ textTransform: 'none', fontWeight: 'bold' }}
                     >
-                        Back to Login
+                        {t('auth:forgot.backToLogin')}
                     </Button>
 
                 </Stack>

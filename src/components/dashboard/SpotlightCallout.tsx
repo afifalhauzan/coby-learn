@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Box, Paper, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 interface SpotlightCalloutProps {
   open: boolean;
@@ -21,13 +22,17 @@ function SpotlightCallout({
   open,
   targetRef,
   onOverlayClick,
-  title = 'Start here: Add your first task',
-  description = 'Tap the Add Task button to create your next study step. Click the dark area to dismiss this message.',
-  dismissAriaLabel = 'Dismiss spotlight',
+  title,
+  description,
+  dismissAriaLabel,
 }: SpotlightCalloutProps): React.JSX.Element | null {
+  const { t } = useTranslation();
   const [rect, setRect] = useState<SpotlightRect | null>(null);
   const [showOverlay, setShowOverlay] = useState(false);
   const [isFadedIn, setIsFadedIn] = useState(false);
+  const resolvedTitle = title ?? t('dashboard:spotlight.title', { defaultValue: 'Start here: Add your first task' });
+  const resolvedDescription = description ?? t('dashboard:spotlight.description', { defaultValue: 'Tap the Add Task button to create your next study step. Click the dark area to dismiss this message.' });
+  const resolvedDismissAriaLabel = dismissAriaLabel ?? t('dashboard:spotlight.dismissAriaLabel', { defaultValue: 'Dismiss spotlight' });
 
   useEffect(() => {
     if (!open) {
@@ -161,7 +166,7 @@ function SpotlightCallout({
       <Box
         onClick={onOverlayClick}
         role="button"
-        aria-label={dismissAriaLabel}
+        aria-label={resolvedDismissAriaLabel}
         sx={{
           position: 'fixed',
           top: 0,
@@ -176,7 +181,7 @@ function SpotlightCallout({
       <Box
         onClick={onOverlayClick}
         role="button"
-        aria-label={dismissAriaLabel}
+        aria-label={resolvedDismissAriaLabel}
         sx={{
           position: 'fixed',
           top: spotlight.top,
@@ -191,7 +196,7 @@ function SpotlightCallout({
       <Box
         onClick={onOverlayClick}
         role="button"
-        aria-label={dismissAriaLabel}
+        aria-label={resolvedDismissAriaLabel}
         sx={{
           position: 'fixed',
           top: spotlight.top,
@@ -206,7 +211,7 @@ function SpotlightCallout({
       <Box
         onClick={onOverlayClick}
         role="button"
-        aria-label={dismissAriaLabel}
+        aria-label={resolvedDismissAriaLabel}
         sx={{
           position: 'fixed',
           top: spotlight.bottom,
@@ -246,10 +251,10 @@ function SpotlightCallout({
         }}
       >
         <Typography variant="subtitle2" fontWeight={700} sx={{ color: 'text.primary', mb: 0.75 }}>
-          {title}
+          {resolvedTitle}
         </Typography>
         <Typography variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.45 }}>
-          {description}
+          {resolvedDescription}
         </Typography>
       </Paper>
     </Box>

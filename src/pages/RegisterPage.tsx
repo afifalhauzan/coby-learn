@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
-
+import { useTranslation } from 'react-i18next';
 
 import { registerUser } from '../services/apiAuthService';
 import type { RegisterData } from '../services/apiAuthService';
@@ -34,11 +34,11 @@ const initialErrors: FormErrors = {
   password_confirm: '',
 };
 
-const validateEmailFormat = (email: string): string => {
+const validateEmailFormat = (email: string, t: (key: string) => string): string => {
   if (email) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!re.test(String(email).toLowerCase())) {
-      return 'Invalid email format';
+      return t('auth:errors.invalidEmailFormat');
     }
   }
   return '';
@@ -46,6 +46,7 @@ const validateEmailFormat = (email: string): string => {
 
 function RegisterPage(): React.JSX.Element {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [isSuccess, setIsSuccess] = useState(false);
 
@@ -94,20 +95,20 @@ function RegisterPage(): React.JSX.Element {
           lowerCaseMessage.includes('email already registered') ||
           lowerCaseMessage.includes('email sudah terdaftar')
         ) {
-          setErrors((prev) => ({ ...prev, email: 'Email is already registered' }));
+          setErrors((prev) => ({ ...prev, email: t('auth:errors.emailAlreadyRegistered') }));
         }
         else if (
           lowerCaseMessage.includes('password') &&
           lowerCaseMessage.includes('match')
         ) {
-          setErrors((prev) => ({ ...prev, password_confirm: 'Password does not match' }));
+          setErrors((prev) => ({ ...prev, password_confirm: t('auth:errors.passwordMismatch') }));
         }
         else {
           setGeneralError(message);
         }
       }
       else {
-        setGeneralError('Registration failed. Please try again.');
+        setGeneralError(t('auth:errors.registrationFailed'));
       }
     },
   });
@@ -125,13 +126,13 @@ function RegisterPage(): React.JSX.Element {
 
     const feErrors: Partial<FormErrors> = {};
 
-    const emailFormatError = validateEmailFormat(email);
+    const emailFormatError = validateEmailFormat(email, t);
     if (emailFormatError) {
       feErrors.email = emailFormatError;
     }
 
     if (passwordConfirm && password !== passwordConfirm) {
-      feErrors.password_confirm = "Password does't match";
+      feErrors.password_confirm = t('auth:errors.passwordMismatch');
     }
 
     if (Object.keys(feErrors).length > 0) {
@@ -187,11 +188,10 @@ function RegisterPage(): React.JSX.Element {
             <MarkEmailReadIcon sx={{ fontSize: 48, color: 'primary.main' }} />
           </Box>
           <Typography variant="h4" fontWeight="600" sx={{ mb: 2, color: 'text.primary' }}>
-            Registration Successful!
+            {t('auth:register.successTitle')}
           </Typography>
           <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-            We have sent a verification email to <strong>{email}</strong>. <br />
-            Please check your inbox and verify your account to continue.
+            {t('auth:register.successMessage', { email })}
           </Typography>
 
           <Button
@@ -209,7 +209,7 @@ function RegisterPage(): React.JSX.Element {
               boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
             }}
           >
-            Go to Login
+            {t('auth:register.goToLogin')}
           </Button>
         </Paper>
       </Box>
@@ -241,10 +241,10 @@ function RegisterPage(): React.JSX.Element {
         <Stack spacing={3} alignItems="center">
           <Box sx={{ textAlign: 'center' }}>
             <Typography variant="h4" fontWeight="600" sx={{ color: 'text.primary', mb: 1 }}>
-              Create Account
+              {t('auth:register.title')}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Join us and start your journey!
+              {t('auth:register.subtitle')}
             </Typography>
           </Box>
 
@@ -258,7 +258,7 @@ function RegisterPage(): React.JSX.Element {
             <Stack spacing={2.5}>
 
               <TextField
-                label="Full Name"
+                label={t('auth:register.fullnameLabel')}
                 name="username"
                 fullWidth
                 value={username}
@@ -270,7 +270,7 @@ function RegisterPage(): React.JSX.Element {
                 }}
               />
               <TextField
-                label="Email Address"
+                label={t('auth:register.emailLabel')}
                 name="email"
                 type="email"
                 fullWidth
@@ -283,7 +283,7 @@ function RegisterPage(): React.JSX.Element {
                 }}
               />
               <TextField
-                label="Password"
+                label={t('auth:register.passwordLabel')}
                 name="password"
                 type="password"
                 fullWidth
@@ -296,7 +296,7 @@ function RegisterPage(): React.JSX.Element {
                 }}
               />
               <TextField
-                label="Confirm Password"
+                label={t('auth:register.confirmPasswordLabel')}
                 name="password_confirm"
                 type="password"
                 fullWidth
@@ -325,7 +325,7 @@ function RegisterPage(): React.JSX.Element {
                   boxShadow: 3
                 }}
               >
-                {mutation.isPending ? 'Creating Account...' : 'Create Account'}
+                {mutation.isPending ? t('auth:register.creating') : t('auth:register.submit')}
               </Button>
 
 
@@ -334,14 +334,14 @@ function RegisterPage(): React.JSX.Element {
           </Box>
 
           <Typography variant="body2" color="text.secondary">
-            Already have an account?{' '}
+            {t('auth:register.haveAccount')}{' '}
             <Link
               component="button"
               variant="body2"
               onClick={() => navigate('/sign-in')}
               sx={{ fontWeight: 'bold', textDecoration: 'none', color: 'primary.main' }}
             >
-              Sign In
+              {t('auth:register.signInLink')}
             </Link>
           </Typography>
         </Stack>

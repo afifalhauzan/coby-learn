@@ -22,8 +22,10 @@ import type { CreateMaterialPayload } from '../services/apiLibraryService';
 
 import MaterialItem from '../components/library/MaterialItem';
 import FileUploadDialog from '../components/library/FileUploadDialog';
+import { useTranslation } from 'react-i18next';
 
 function FolderDetailsPage(): React.JSX.Element {
+  const { t } = useTranslation();
   const { folderId } = useParams<{ folderId: string }>();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -47,7 +49,7 @@ function FolderDetailsPage(): React.JSX.Element {
     },
     onError: (err: any) => {
       console.error("Upload failed:", err);
-      const msg = err?.response?.data?.message || "Gagal mengupload materi. Silakan coba lagi.";
+      const msg = err?.response?.data?.message || t('folder:errors.failedToUploadMaterial');
       alert(msg);
     }
   });
@@ -82,7 +84,7 @@ function FolderDetailsPage(): React.JSX.Element {
           onClick={() => navigate('/library')}
           sx={{ mb: 2, color: 'text.secondary', textTransform: 'none' }}
         >
-          Back to Library
+          {t('folder:actions.backToLibrary')}
         </Button>
 
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: 2 }}>
@@ -94,7 +96,7 @@ function FolderDetailsPage(): React.JSX.Element {
                 onClick={() => navigate('/library')}
                 sx={{ cursor: 'pointer' }}
               >
-                My Library
+                {t('folder:breadcrumbs.myLibrary')}
               </Link>
               <Typography color="text.primary">
                 {isLoading ? <Skeleton width={150} /> : packageData?.title}
@@ -127,7 +129,7 @@ function FolderDetailsPage(): React.JSX.Element {
               onClick={() => setOpenUploadDialog(true)}
               sx={{ textTransform: 'none', borderRadius: '10px', fontWeight: 600, color: 'white', flexGrow: { xs: 1, md: 0 } }}
             >
-              Upload Material
+              {t('folder:actions.uploadMaterial')}
             </Button>
           </Stack>
         </Box>
@@ -142,7 +144,7 @@ function FolderDetailsPage(): React.JSX.Element {
           </Box>
         ) : isError ? (
           <Alert severity="error">
-            Gagal memuat detail folder: {(error as Error).message}
+            {t('folder:errors.failedToLoadFolderDetails', { message: (error as Error).message })}
           </Alert>
         ) : !packageData?.materials || packageData.materials.length === 0 ? (
           <Paper
@@ -158,9 +160,9 @@ function FolderDetailsPage(): React.JSX.Element {
             }}
           >
             <FolderOpenIcon sx={{ fontSize: 60, opacity: 0.2, mb: 2 }} />
-            <Typography variant="h6" fontWeight="500">Folder Kosong</Typography>
+            <Typography variant="h6" fontWeight="500">{t('folder:emptyState.title')}</Typography>
             <Typography variant="body2">
-              Paket "{packageData?.title}" belum memiliki materi.
+              {t('folder:emptyState.description', { title: packageData?.title })}
             </Typography>
           </Paper>
         ) : (

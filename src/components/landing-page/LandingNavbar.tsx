@@ -21,6 +21,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import logo from '../../assets/logo_1.svg';
 import { COLORS, LANDING_NAV_ITEMS } from './landingPage.constants';
+import { useTranslation } from 'react-i18next';
 
 interface LandingNavbarProps {
   isLoggedIn: boolean;
@@ -37,6 +38,7 @@ function LandingNavbar({
   onNavigateSignup,
   onScrollToSection,
 }: LandingNavbarProps): React.JSX.Element {
+  const { t } = useTranslation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -109,7 +111,7 @@ function LandingNavbar({
                         fontSize: '14px',
                       }}
                     >
-                      {item.label}
+                      {t(`landing:navbar.navItems.${item.id}`)}
                     </Button>
                   ))}
 
@@ -128,7 +130,7 @@ function LandingNavbar({
                         '&:hover': { bgcolor: '#2563EB' },
                       }}
                     >
-                      Go to Dashboard
+                      {t('common:actions.goToDashboard')}
                     </Button>
                   ) : (
                     <>
@@ -147,7 +149,7 @@ function LandingNavbar({
                           },
                         }}
                       >
-                        Login
+                        {t('common:actions.login')}
                       </Button>
                       <Button
                         variant="contained"
@@ -163,7 +165,7 @@ function LandingNavbar({
                           '&:hover': { bgcolor: '#2563EB', boxShadow: 'none' },
                         }}
                       >
-                        Sign Up Free
+                        {t('common:actions.signUpFree')}
                       </Button>
                     </>
                   )}
@@ -196,7 +198,7 @@ function LandingNavbar({
           {LANDING_NAV_ITEMS.map((item) => (
             <ListItem key={item.id} disablePadding>
               <ListItemButton onClick={() => handleSectionClick(item.id)} sx={{ borderRadius: 2, mb: 1 }}>
-                <ListItemText primary={item.label} primaryTypographyProps={{ fontWeight: 'bold', fontSize: '1.2rem' }} />
+                <ListItemText primary={t(`landing:navbar.navItems.${item.id}`)} primaryTypographyProps={{ fontWeight: 'bold', fontSize: '1.2rem' }} />
               </ListItemButton>
             </ListItem>
           ))}
@@ -204,15 +206,15 @@ function LandingNavbar({
           <Box sx={{ mt: 4, display: 'flex', flexDirection: 'column', gap: 2 }}>
             {isLoggedIn ? (
               <Button fullWidth variant="contained" onClick={onNavigateDashboard} sx={{ bgcolor: COLORS.primary, py: 1.5 }}>
-                Dashboard
+                {t('common:actions.dashboard')}
               </Button>
             ) : (
               <>
                 <Button fullWidth variant="outlined" onClick={onNavigateLogin} sx={{ borderColor: COLORS.border, color: 'text.primary', py: 1.5 }}>
-                  Log In
+                  {t('common:actions.logIn')}
                 </Button>
                 <Button fullWidth variant="contained" onClick={onNavigateSignup} sx={{ bgcolor: COLORS.accent, py: 1.5 }}>
-                  Sign Up
+                  {t('common:actions.signUp')}
                 </Button>
               </>
             )}

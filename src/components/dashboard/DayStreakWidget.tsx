@@ -14,6 +14,7 @@ import {
 import CloseIcon from '@mui/icons-material/Close';
 import { useQuery } from '@tanstack/react-query';
 import { getDailyQuizStatus } from '../../services/apiLibraryService';
+import { useTranslation } from 'react-i18next';
 // import FireStreakLottie from '../../assets/FireStreak.lottie';
 
 const getCurrentLevel = (streak: number): number => {
@@ -41,25 +42,26 @@ const getCurrentLevel = (streak: number): number => {
 };
 
 const fireLevels = [
-  { id: 0, range: '0 Day', label: 'Embers', desc: 'Start your streak journey' },
-  { id: 1, range: '1 Day', label: 'Spark', desc: 'It starts glowing' },
-  { id: 2, range: '3 Day', label: 'Flame', desc: 'Momentum is building' },
-  { id: 3, range: '7 Day', label: 'Blaze', desc: 'Strong flow' },
-  { id: 4, range: '15 Day', label: 'Inferno', desc: 'Serious commitment' },
-  { id: 5, range: '30+ Day', label: 'Supernova', desc: 'Amazing streak consistency!' },
+  { id: 0, rangeKey: 'dashboard:dayStreak.levels.embers.range', labelKey: 'dashboard:dayStreak.levels.embers.label', descKey: 'dashboard:dayStreak.levels.embers.description' },
+  { id: 1, rangeKey: 'dashboard:dayStreak.levels.spark.range', labelKey: 'dashboard:dayStreak.levels.spark.label', descKey: 'dashboard:dayStreak.levels.spark.description' },
+  { id: 2, rangeKey: 'dashboard:dayStreak.levels.flame.range', labelKey: 'dashboard:dayStreak.levels.flame.label', descKey: 'dashboard:dayStreak.levels.flame.description' },
+  { id: 3, rangeKey: 'dashboard:dayStreak.levels.blaze.range', labelKey: 'dashboard:dayStreak.levels.blaze.label', descKey: 'dashboard:dayStreak.levels.blaze.description' },
+  { id: 4, rangeKey: 'dashboard:dayStreak.levels.inferno.range', labelKey: 'dashboard:dayStreak.levels.inferno.label', descKey: 'dashboard:dayStreak.levels.inferno.description' },
+  { id: 5, rangeKey: 'dashboard:dayStreak.levels.supernova.range', labelKey: 'dashboard:dayStreak.levels.supernova.label', descKey: 'dashboard:dayStreak.levels.supernova.description' },
 ];
 
 const motivationByLevel = [
-  'One small step starts the fire.',
-  'Great start. Keep the spark alive!',
-  'You are building real momentum.',
-  'Strong streak. Keep it burning!',
-  'Incredible consistency. Stay locked in!',
-  'Legendary streak. You are unstoppable!',
+  'dashboard:dayStreak.motivations.level0',
+  'dashboard:dayStreak.motivations.level1',
+  'dashboard:dayStreak.motivations.level2',
+  'dashboard:dayStreak.motivations.level3',
+  'dashboard:dayStreak.motivations.level4',
+  'dashboard:dayStreak.motivations.level5',
 ];
 
 function DayStreakWidget(): React.JSX.Element {
   const theme = useTheme();
+  const { t } = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { data: status, isLoading } = useQuery({
@@ -92,7 +94,7 @@ function DayStreakWidget(): React.JSX.Element {
   // [TESTING] Start streak from 12 for dummy realism
   const streakCount = status?.streak || 0;
   const currentLevel = getCurrentLevel(streakCount);
-  const motivationalText = motivationByLevel[currentLevel];
+  const motivationalText = t(motivationByLevel[currentLevel]);
 
   return (
     <>
@@ -149,7 +151,7 @@ function DayStreakWidget(): React.JSX.Element {
             <Box
               component="img"
               src={`/fire${currentLevel}.png`}
-              alt={`Current fire level ${currentLevel}`}
+              alt={t('dashboard:dayStreak.currentFireLevelAlt', { level: currentLevel })}
               sx={{
                 width: '100%',
                 height: '100%',
@@ -178,7 +180,7 @@ function DayStreakWidget(): React.JSX.Element {
               letterSpacing: '0.02em',
             }}
           >
-            Day Streak
+            {t('dashboard:dayStreak.label')}
           </Typography>
 
           <Typography
@@ -205,7 +207,7 @@ function DayStreakWidget(): React.JSX.Element {
               minWidth: 'auto',
             }}
           >
-            Check Your Streaks
+            {t('dashboard:dayStreak.checkStreaks')}
           </Button>
         </Box>
       </Paper>
@@ -231,17 +233,17 @@ function DayStreakWidget(): React.JSX.Element {
           <IconButton
             onClick={() => setIsModalOpen(false)}
             sx={{ position: 'absolute', right: 8, top: 8, zIndex: 2 }}
-            aria-label="Close streak levels"
+            aria-label={t('dashboard:dayStreak.closeStreakLevels')}
           >
             <CloseIcon />
           </IconButton>
 
           <Box sx={{ pb: 2, borderBottom: '1px solid', borderColor: 'divider' }}>
             <Typography id="streak-levels-title" variant="h6" fontWeight={700} mb={0.5}>
-              Streak Levels
+              {t('dashboard:dayStreak.streakLevelsTitle')}
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              Fire level is based on your day streak.
+              {t('dashboard:dayStreak.streakLevelsDescription')}
             </Typography>
           </Box>
 
@@ -268,7 +270,7 @@ function DayStreakWidget(): React.JSX.Element {
                     <Box
                       component="img"
                       src={`/fire${level.id}.png`}
-                      alt={`${level.label} level`}
+                      alt={t('dashboard:dayStreak.levelAlt', { level: t(level.labelKey) })}
                       sx={{
                         width: 56,
                         height: 56,
@@ -277,10 +279,10 @@ function DayStreakWidget(): React.JSX.Element {
                     />
                     <Box sx={{ minWidth: 0, flexGrow: 1 }}>
                       <Typography variant="subtitle2" fontWeight={700} color={isReached ? 'text.primary' : 'text.disabled'}>
-                        {level.label} ({level.range})
+                        {t(level.labelKey)} ({t(level.rangeKey)})
                       </Typography>
                       <Typography variant="caption" color={isReached ? 'text.secondary' : 'text.disabled'}>
-                        {level.desc}
+                        {t(level.descKey)}
                       </Typography>
                     </Box>
                     {isCurrent && (
@@ -296,7 +298,7 @@ function DayStreakWidget(): React.JSX.Element {
                           textTransform: 'uppercase',
                         }}
                       >
-                        Current
+                        {t('dashboard:dayStreak.currentBadge')}
                       </Typography>
                     )}
                   </Box>
@@ -308,7 +310,7 @@ function DayStreakWidget(): React.JSX.Element {
           <Box sx={{ position: 'sticky', bottom: 0, bgcolor: 'background.paper' }}>
             <Divider sx={{ mb: 2 }} />
             <Button fullWidth variant="contained" onClick={() => setIsModalOpen(false)} sx={{ fontWeight: 700 }}>
-              Close
+              {t('common:actions.close')}
             </Button>
           </Box>
         </Paper>

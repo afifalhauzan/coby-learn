@@ -31,8 +31,10 @@ import DeleteConfirmDialog from '../components/common/DeleteConfirmDialog'; // I
 import SpotlightCallout from '../components/dashboard/SpotlightCallout';
 import type { Folder } from '../types/folder.types';
 import { useDashboardOnboardingStore } from '../stores/useDashboardOnboardingStore';
+import { useTranslation } from 'react-i18next';
 
 function LibraryPage(): React.JSX.Element {
+  const { t } = useTranslation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const navigate = useNavigate();
@@ -138,7 +140,7 @@ function LibraryPage(): React.JSX.Element {
   if (isLoading) {
     return (
       <Box sx={{ width: '100%' }}>
-        <Typography variant="h4" fontWeight="bold" gutterBottom>My Library</Typography>
+        <Typography variant="h4" fontWeight="bold" gutterBottom>{t('library:pageTitle')}</Typography>
         <Box sx={{ display: 'flex', gap: 2, mb: 4 }}>
           <Skeleton variant="rounded" width={140} height={42} />
         </Box>
@@ -161,7 +163,7 @@ function LibraryPage(): React.JSX.Element {
   // ERROR
   // -----------------------------
   if (isError) {
-    return <Alert severity="error">Failed to load library: {error.message}</Alert>;
+    return <Alert severity="error">{t('library:messages.failedToLoadLibrary', { error: error.message })}</Alert>;
   }
 
   // -----------------------------
@@ -171,11 +173,11 @@ function LibraryPage(): React.JSX.Element {
     <Box sx={{ width: '100%' }}>
       {/* Page Header */}
       <Typography variant="h4" gutterBottom>
-        My Library
+        {t('library:pageTitle')}
       </Typography>
 
       <Typography variant="subtitle1" color="text.secondary" sx={{ mb: 4 }}>
-        Organize your study materials neatly and efficiently.
+        {t('library:pageSubtitle')}
       </Typography>
 
       {/* Action Buttons */}
@@ -209,14 +211,14 @@ function LibraryPage(): React.JSX.Element {
             }
           }}
         >
-          Add Folder
+          {t('library:actions.addFolder')}
         </Button>
       </Box>
 
       <Fab
         ref={mobileAddFolderRef}
         color="primary"
-        aria-label="Add Folder"
+        aria-label={t('library:actions.addFolder')}
         onClick={() => {
           setEditingFolder(null);
           setOpenDialog(true);
@@ -268,10 +270,10 @@ function LibraryPage(): React.JSX.Element {
           >
             <FolderOffIcon sx={{ fontSize: 64, color: 'text.disabled', mb: 2, opacity: 0.5 }} />
             <Typography variant="h6" fontWeight="bold" color="text.primary" gutterBottom>
-              Library is Empty
+              {t('library:emptyState.title')}
             </Typography>
             <Typography color="text.secondary">
-              No folders found. Click "Add Folder" to create one.
+              {t('library:emptyState.description')}
             </Typography>
           </Paper>
         ) : (
@@ -365,7 +367,7 @@ function LibraryPage(): React.JSX.Element {
                     },
                   }}
                 >
-                  {folder.material_count} items
+                  {t('library:folder.itemCount', { count: folder.material_count })}
                 </Typography>
               </Box>
 
@@ -451,17 +453,17 @@ function LibraryPage(): React.JSX.Element {
         open={!!deleteFolderId}
         onClose={() => setDeleteFolderId(null)}
         onConfirm={handleConfirmDelete}
-        title="Delete Folder?"
-        description="Are you sure you want to delete this folder? All files inside will also be removed."
+        title={t('library:deleteDialog.title')}
+        description={t('library:deleteDialog.description')}
       />
 
       <SpotlightCallout
         open={shouldShowLibrarySpotlight}
         targetRef={spotlightTargetRef}
         onOverlayClick={completeLibrarySpotlight}
-        title="Second step: organize your material"
-        description="Create your own folders and add materials so your library stays tidy and easy to review."
-        dismissAriaLabel="Dismiss library spotlight"
+        title={t('library:spotlight.title')}
+        description={t('library:spotlight.description')}
+        dismissAriaLabel={t('library:spotlight.dismissAriaLabel')}
       />
 
     </Box>

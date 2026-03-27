@@ -1,0 +1,118 @@
+{
+  "actions": {
+    "createFlashcards": "Create Flashcards",
+    "generateNewQuiz": "Generate New Quiz"
+  },
+  "addedOn": "Added on {{date}}",
+  "chat": {
+    "aiTyping": "AI is typing...",
+    "cobyChatMascotAlt": "Coby chat mascot",
+    "cobyThinkingMascotAlt": "Coby thinking mascot",
+    "emptyState": "Ask anything about this material!",
+    "errorSendingToAi": "Failed to send message to AI.",
+    "headerTitle": "AI Tutor",
+    "inputPlaceholder": "Ask something...",
+    "online": "Online",
+    "openTutorAriaLabel": "Open AI tutor",
+    "senderAi": "AI",
+    "senderYou": "You",
+    "suggestions": {
+      "explainHardestConcept": "Explain the hardest concept in this material",
+      "summarizeSimplePoints": "Summarize this material in simple points"
+    },
+    "suggestionsDescription": "Try one of these prompts with the AI tutor.",
+    "suggestionsTitle": "Need help with this material?"
+  },
+  "errors": {
+    "failedToGenerateFlashcards": "Failed to generate flashcards.",
+    "failedToGenerateQuiz": "Failed to generate quiz: {{message}}",
+    "failedToLoadMaterial": "Failed to load material."
+  },
+  "generateQuizDialog": {
+    "description": "Select how many questions you want our AI to generate from this material.",
+    "numberOfQuestions": "Number of Questions",
+    "options": {
+      "deepDive10": "10 Questions (Deep Dive)",
+      "quick3": "3 Questions (Quick)",
+      "standard5": "5 Questions (Standard)"
+    },
+    "startGeneration": "Start Generation",
+    "title": "Generate AI Quiz"
+  },
+  "quizHistory": {
+    "emptyState": "No quiz history available. Generate a new quiz to get started!",
+    "pendingLabel": "PENDING",
+    "questionsAndDate_one": "{{count}} Question • {{date}}",
+    "questionsAndDate_other": "{{count}} Questions • {{date}}",
+    "quizNumber": "Quiz #{{number}}",
+    "scoreLabel": "SCORE",
+    "title": "Quiz History"
+  },
+  "summary": {
+    "lastUpdatedJustNow": "Last updated just now",
+    "noSummaryAvailable": "_No summary available yet._",
+    "title": "Material Summary"
+  },
+  "focusSessionWidget": {
+    "actions": {
+      "cancel": "Cancel",
+      "changeStation": "Change Station",
+      "pause": "Pause",
+      "play": "Play",
+      "startFocus": "Start Focus",
+      "stopAlarm": "Stop Alarm"
+    },
+    "labels": {
+      "cobyMascotAlt": "Coby mascot",
+      "focusTimer": "Focus Timer",
+      "minutesShort": "min",
+      "quickPresets": "Quick Presets"
+    },
+    "music": {
+      "customVideoDescription": "YouTube Selection",
+      "customVideoName": "Custom Video"
+    },
+    "musicDialog": {
+      "title": "Change Background Music",
+      "youtubeLabel": "YouTube URL / ID",
+      "youtubePlaceholder": "e.g. jfKfPfyJRdk"
+    },
+    "notifications": {
+      "timeUpBody": "Focus session completed. Take a break!",
+      "timeUpTitle": "Time's Up!"
+    },
+    "settingsDialog": {
+      "title": "Set Duration"
+    },
+    "stations": {
+      "ambientSpace": {
+        "description": "Deep focus atmosphere",
+        "name": "Ambient Space"
+      },
+      "classicalPiano": {
+        "description": "Mozart for studying",
+        "name": "Classical Piano"
+      },
+      "lofiGirl": {
+        "description": "Beats to relax/study to",
+        "name": "Lofi Girl Radio"
+      },
+      "lofiHipHop": {
+        "description": "Chill beats mix",
+        "name": "Lofi Hip Hop"
+      },
+      "quietRain": {
+        "description": "Nature sounds for focus",
+        "name": "Quiet Rain"
+      },
+      "synthwave": {
+        "description": "Beats to chill/game to",
+        "name": "Synthwave Radio"
+      }
+    },
+    "timeUpDialog": {
+      "description": "Great job focusing! Take a short break now.",
+      "title": "Time's Up!"
+    }
+  }
+}

@@ -16,6 +16,7 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteMaterial, updateMaterial } from '../../services/apiLibraryService';
 import type { StudyMaterial } from '../../services/apiLibraryService';
+import { useTranslation } from 'react-i18next';
 
 interface MaterialItemProps {
   material: StudyMaterial;
@@ -32,15 +33,16 @@ const getIcon = (type: string) => {
 
 const getTypeLabel = (type: string) => {
   switch (type) {
-    case 'pdf': return 'PDF Document';
-    case 'youtube': return 'YouTube Video';
-    case 'quiz': return 'AI Quiz';
-    default: return 'Study Note';
+    case 'pdf': return 'folder:materialItem.types.pdfDocument';
+    case 'youtube': return 'folder:materialItem.types.youtubeVideo';
+    case 'quiz': return 'folder:materialItem.types.aiQuiz';
+    default: return 'folder:materialItem.types.studyNote';
   }
 };
 
 function MaterialItem({ material }: MaterialItemProps): React.JSX.Element {
   const theme = useTheme();
+  const { t } = useTranslation();
   const navigate = useNavigate(); 
   const queryClient = useQueryClient();
   const cardTransition = theme.transitions.create(
@@ -65,7 +67,7 @@ function MaterialItem({ material }: MaterialItemProps): React.JSX.Element {
       queryClient.invalidateQueries({ queryKey: ['materials'] }); 
       queryClient.invalidateQueries({ queryKey: ['package'] });
     },
-    onError: () => alert("Gagal menghapus materi")
+    onError: () => alert(t('folder:materialItem.errors.failedToDeleteMaterial'))
   });
 
   const updateMutation = useMutation({
@@ -75,7 +77,7 @@ function MaterialItem({ material }: MaterialItemProps): React.JSX.Element {
       queryClient.invalidateQueries({ queryKey: ['package'] });
       setIsRenameOpen(false);
     },
-    onError: () => alert("Gagal mengubah nama materi")
+    onError: () => alert(t('folder:materialItem.errors.failedToRenameMaterial'))
   });
 
 
@@ -96,7 +98,7 @@ function MaterialItem({ material }: MaterialItemProps): React.JSX.Element {
   const handleDeleteClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     handleMenuClose();
-    if (window.confirm(`Yakin ingin menghapus "${material.title}"?`)) {
+    if (window.confirm(t('folder:materialItem.confirmDelete', { title: material.title }))) {
       deleteMutation.mutate(material.id);
     }
   };
@@ -167,10 +169,10 @@ function MaterialItem({ material }: MaterialItemProps): React.JSX.Element {
             <Typography variant="subtitle1" fontWeight="600" noWrap>
               {material.title}
             </Typography>
-            {material.type === 'quiz' && <Chip label="Quiz" size="small" color="secondary" sx={{ height: 20, fontSize: '0.65rem' }} />}
+            {material.type === 'quiz' && <Chip label={t('folder:materialItem.quizChipLabel')} size="small" color="secondary" sx={{ height: 20, fontSize: '0.65rem' }} />}
           </Box>
           <Typography variant="body2" color="text.secondary">
-             {getTypeLabel(material.type)} • {material.createdAt}
+             {t(getTypeLabel(material.type))} • {material.createdAt}
           </Typography>
           {material.summary && (
             <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5, display: 'block', fontStyle: 'italic', opacity: 0.8 }} noWrap>
@@ -183,7 +185,7 @@ function MaterialItem({ material }: MaterialItemProps): React.JSX.Element {
           {material.type !== 'quiz' && (
             <IconButton
               onClick={handleCardClick}
-              title="Open Source"
+              title={t('folder:materialItem.actions.openSource')}
               sx={{
                 color: 'primary.main',
                 transition: theme.transitions.create(['transform', 'background-color'], {
@@ -216,19 +218,19 @@ function MaterialItem({ material }: MaterialItemProps): React.JSX.Element {
           onClick={(e) => e.stopPropagation()} 
           PaperProps={{ sx: { minWidth: 150 } }}
         >
-          <MenuItem onClick={handleRenameClick}>Rename</MenuItem>
-          <MenuItem onClick={handleDeleteClick} sx={{ color: 'error.main' }}>Delete</MenuItem>
+          <MenuItem onClick={handleRenameClick}>{t('folder:materialItem.actions.rename')}</MenuItem>
+          <MenuItem onClick={handleDeleteClick} sx={{ color: 'error.main' }}>{t('common:actions.delete')}</MenuItem>
         </Menu>
       </Paper>
 
       <div onClick={(e) => e.stopPropagation()}>
         <Dialog open={isRenameOpen} onClose={() => setIsRenameOpen(false)} fullWidth maxWidth="xs">
-          <DialogTitle>Rename Material</DialogTitle>
+          <DialogTitle>{t('folder:materialItem.renameDialog.title')}</DialogTitle>
           <DialogContent>
             <TextField
               autoFocus
               margin="dense"
-              label="Material Title"
+              label={t('folder:materialItem.renameDialog.materialTitle')}
               fullWidth
               variant="outlined"
               value={newTitle}
@@ -236,9 +238,9 @@ function MaterialItem({ material }: MaterialItemProps): React.JSX.Element {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => setIsRenameOpen(false)} color="inherit">Cancel</Button>
+            <Button onClick={() => setIsRenameOpen(false)} color="inherit">{t('common:actions.cancel')}</Button>
             <Button onClick={submitRename} variant="contained" disabled={updateMutation.isPending}>
-              {updateMutation.isPending ? 'Saving...' : 'Save'}
+              {updateMutation.isPending ? t('common:states.saving') : t('common:actions.save')}
             </Button>
           </DialogActions>
         </Dialog>

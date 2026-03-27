@@ -19,6 +19,7 @@ import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import LockIcon from '@mui/icons-material/Lock';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import type { XPMilestone } from '../../stores/useXPStore';
+import { useTranslation } from 'react-i18next';
 
 interface XPLevelModalProps {
   open: boolean;
@@ -47,6 +48,8 @@ function XPLevelModal({
   seasonMonthLabel,
   daysRemainingInSeason,
 }: XPLevelModalProps): React.JSX.Element {
+  const { t } = useTranslation();
+
   return (
     <Modal
       open={open}
@@ -71,16 +74,16 @@ function XPLevelModal({
         <IconButton
           onClick={onClose}
           sx={{ position: 'absolute', right: 10, top: 10 }}
-          aria-label="Close XP levels"
+          aria-label={t('progress:xpModal.aria.closeXpLevels')}
         >
           <CloseIcon />
         </IconButton>
 
         <Typography id="xp-level-modal-title" variant="h6" fontWeight={700}>
-          XP Levels
+          {t('progress:xpModal.labels.title')}
         </Typography>
         <Typography variant="body2" color="text.secondary" sx={{ mt: 0.25 }}>
-          Total XP: {totalXP}
+          {t('progress:xpModal.labels.totalXp', { xp: totalXP })}
         </Typography>
 
         <Box
@@ -99,10 +102,13 @@ function XPLevelModal({
           <InfoOutlinedIcon sx={{ mt: 0.1, fontSize: 18, color: 'primary.main' }} />
           <Box>
             <Typography variant="caption" sx={{ color: 'text.primary', fontWeight: 600, display: 'block' }}>
-              XP and Levels reset at the start of every month. Keep the momentum to reach Gemstone Master this season!
+              {t('progress:xpModal.messages.monthlyResetInfo')}
             </Typography>
             <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 0.5 }}>
-              {daysRemainingInSeason} days left in {seasonMonthLabel} Season
+              {t('progress:messages.daysLeftInSeason', {
+                days: daysRemainingInSeason,
+                month: seasonMonthLabel,
+              })}
             </Typography>
           </Box>
         </Box>
@@ -147,16 +153,23 @@ function XPLevelModal({
 
                 <Box sx={{ minWidth: 0, flexGrow: 1 }}>
                   <Typography variant="subtitle2" fontWeight={700}>
-                    Level {milestone.level}: {milestone.name}
+                    {t('progress:xpModal.labels.levelName', {
+                      level: milestone.level,
+                      name: milestone.name,
+                    })}
                   </Typography>
                   <Typography variant="caption" color="text.secondary">
-                    Requires {milestone.xp} XP
+                    {t('progress:xpModal.labels.requiresXp', { xp: milestone.xp })}
                   </Typography>
                 </Box>
 
                 <Chip
                   icon={isUnlocked ? undefined : <LockIcon sx={{ fontSize: '0.85rem !important' }} />}
-                  label={isUnlocked ? (isCurrent ? 'Current' : 'Unlocked') : 'Locked'}
+                  label={
+                    isUnlocked
+                      ? (isCurrent ? t('progress:xpModal.states.current') : t('progress:xpModal.states.unlocked'))
+                      : t('progress:xpModal.states.locked')
+                  }
                   size="small"
                   color={isUnlocked ? 'primary' : 'default'}
                   variant={isCurrent ? 'filled' : 'outlined'}
@@ -167,7 +180,7 @@ function XPLevelModal({
         </Stack>
 
         <Button onClick={onClose} fullWidth variant="contained" sx={{ mt: 2, fontWeight: 700 }}>
-          Close
+          {t('progress:actions.close')}
         </Button>
       </Paper>
     </Modal>

@@ -43,10 +43,11 @@ import { getChatHistory, sendChatMessage, type ChatMessage } from '../services/a
 import GenerateQuizDialog from '../components/library/GenerateQuizDialog';
 import FocusSessionWidget from '../components/common/FocusSessionWidget';
 import { useUiStore } from '../stores/useUiStore';
+import { useTranslation } from 'react-i18next';
 
 const CHAT_SUGGESTIONS = [
-  'Summarize this material in simple points',
-  'Explain the hardest concept in this material',
+  'material:chat.suggestions.summarizeSimplePoints',
+  'material:chat.suggestions.explainHardestConcept',
 ];
 
 interface ChatWidgetProps {
@@ -61,6 +62,7 @@ const ChatWidget = ({
   initialPrompt,
   onPromptConsumed,
 }: ChatWidgetProps) => {
+  const { t } = useTranslation();
   const [chatInput, setChatInput] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>([]);
 
@@ -94,7 +96,7 @@ const ChatWidget = ({
       setMessages((prev) => [...prev, botReply]);
     },
     onError: () => {
-      alert("Gagal mengirim pesan ke AI.");
+      alert(t('material:chat.errorSendingToAi'));
     }
   });
 
@@ -158,7 +160,7 @@ const ChatWidget = ({
           <Box
             component="img"
             src={chatMascotSrc}
-            alt={chatMutation.isPending ? 'Coby thinking mascot' : 'Coby chat mascot'}
+            alt={chatMutation.isPending ? t('material:chat.cobyThinkingMascotAlt') : t('material:chat.cobyChatMascotAlt')}
             onError={(event: React.SyntheticEvent<HTMLImageElement>) => {
               if (!chatMutation.isPending) {
                 event.currentTarget.src = '/base_chat.svg';
@@ -167,10 +169,10 @@ const ChatWidget = ({
             sx={{ width: 60, objectFit: 'contain', p: 0, m: 0 }}
           />
         <Box sx={{ display: 'flex', flexDirection: 'column', lineHeight: 1, ml: 1 }}>
-          <Typography variant="subtitle2" fontWeight="bold" sx={{ color: 'text.primary' }}>AI Tutor</Typography>
+          <Typography variant="subtitle2" fontWeight="bold" sx={{ color: 'text.primary' }}>{t('material:chat.headerTitle')}</Typography>
           <Typography variant="caption" sx={{ color: 'success.main', display: 'flex', alignItems: 'center', gap: 1 }}>
             <Box component="span" sx={{ width: 6, height: 6, borderRadius: '50%', bgcolor: 'success.main' }} />
-            Online
+            {t('material:chat.online')}
           </Typography>
         </Box>
       </Box>
@@ -182,7 +184,7 @@ const ChatWidget = ({
       >
         {messages.length === 0 && (
           <Typography variant="caption" sx={{ textAlign: 'center', color: 'text.secondary', mt: 4 }}>
-            Tanyakan apa saja tentang materi ini!
+            {t('material:chat.emptyState')}
           </Typography>
         )}
 
@@ -211,7 +213,7 @@ const ChatWidget = ({
               </ReactMarkdown>
             </Paper>
             <Typography variant="caption" sx={{ color: 'text.secondary', mt: 0.5, display: 'block', textAlign: msg.role === 'user' ? 'right' : 'left' }}>
-              {msg.role === 'user' ? 'You' : 'AI'} • {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              {msg.role === 'user' ? t('material:chat.senderYou') : t('material:chat.senderAi')} • {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
             </Typography>
           </Box>
         ))}
@@ -219,7 +221,7 @@ const ChatWidget = ({
         {chatMutation.isPending && (
           <Box sx={{ alignSelf: 'flex-start', maxWidth: '85%' }}>
             <Paper sx={{ p: 1.5, borderRadius: '16px 16px 16px 0', bgcolor: 'action.selected', color: 'text.secondary' }}>
-              <Typography variant="body2" sx={{ fontStyle: 'italic' }}>AI sedang mengetik...</Typography>
+              <Typography variant="body2" sx={{ fontStyle: 'italic' }}>{t('material:chat.aiTyping')}</Typography>
             </Paper>
           </Box>
         )}
@@ -229,7 +231,7 @@ const ChatWidget = ({
       <Box sx={{ p: 2, borderTop: '1px solid', borderColor: 'divider', bgcolor: 'background.default', display: 'flex', gap: 1 }}>
         <TextField
           variant="outlined"
-          placeholder="Ask something..."
+          placeholder={t('material:chat.inputPlaceholder')}
           size="small"
           fullWidth
           value={chatInput}
@@ -264,6 +266,7 @@ const ChatWidget = ({
 // 2. MAIN PAGE COMPONENT
 // =================================================================
 function MaterialDetailPage(): React.JSX.Element {
+  const { t } = useTranslation();
   const { materialId } = useParams<{ materialId: string }>();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -306,7 +309,7 @@ function MaterialDetailPage(): React.JSX.Element {
         });
       }
     },
-    onError: (err: any) => alert("Gagal membuat kuis: " + (err?.response?.data?.message || "Error"))
+    onError: (err: any) => alert(t('material:errors.failedToGenerateQuiz', { message: err?.response?.data?.message || t('common:states.error') }))
   });
 
   const flashcardMutation = useMutation({
@@ -316,7 +319,7 @@ function MaterialDetailPage(): React.JSX.Element {
         state: { flashcards: data.flashcards, title: material?.title }
       });
     },
-    onError: (_: any) => alert("Gagal membuat flashcard.")
+    onError: (_: any) => alert(t('material:errors.failedToGenerateFlashcards'))
   });
 
   const handleGenerateSubmit = (count: number) => {
@@ -353,7 +356,7 @@ function MaterialDetailPage(): React.JSX.Element {
   };
 
   if (isLoading) return <Box sx={{ p: 4, bgcolor: 'background.default', minHeight: '100vh' }}><Skeleton height={400} /></Box>;
-  if (isError || !material) return <Alert severity="error">Gagal memuat materi.</Alert>;
+  if (isError || !material) return <Alert severity="error">{t('material:errors.failedToLoadMaterial')}</Alert>;
 
   return (
     <Box sx={{ bgcolor: 'background.default', minHeight: '100vh', color: 'text.primary', pb: 10 }}>
@@ -365,7 +368,7 @@ function MaterialDetailPage(): React.JSX.Element {
             onClick={() => navigate(-1)}
             sx={{ mb: 2, textTransform: 'none', color: 'text.secondary', pl: 0 }}
           >
-            Back
+            {t('common:actions.back')}
           </Button>
 
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
@@ -378,7 +381,7 @@ function MaterialDetailPage(): React.JSX.Element {
           <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
             <Chip label={material.type.toUpperCase()} size="small" color="primary" variant="outlined" />
             <Typography variant="body2" color="text.secondary">
-              Added on {material.createdAt}
+              {t('material:addedOn', { date: material.createdAt })}
             </Typography>
           </Box>
         </Box>
@@ -454,7 +457,7 @@ function MaterialDetailPage(): React.JSX.Element {
               </Box>
 
               <Typography variant="h6" fontWeight="bold" sx={{ mb: 3, color: 'text.primary' }}>
-                Material Summary
+                {t('material:summary.title')}
               </Typography>
               <Box sx={{ color: 'text.secondary', lineHeight: 1.8 }}>
                 <ReactMarkdown
@@ -466,16 +469,16 @@ function MaterialDetailPage(): React.JSX.Element {
                     li: ({ node, ...props }) => <li style={{ marginBottom: '8px', marginLeft: '20px' }} {...props} />,
                   }}
                 >
-                  {material.summary || '_No summary available yet._'}
+                  {material.summary || t('material:summary.noSummaryAvailable')}
                 </ReactMarkdown>
               </Box>
               <Divider sx={{ my: 4, borderColor: 'divider' }} />
-              <Typography variant="caption" sx={{ color: 'text.secondary' }}>Last updated just now</Typography>
+              <Typography variant="caption" sx={{ color: 'text.secondary' }}>{t('material:summary.lastUpdatedJustNow')}</Typography>
             </Paper>
 
             {/* Quiz History */}
             <Typography variant="h5" fontWeight="bold" sx={{ mb: 3, color: 'text.primary' }}>
-              Quiz History
+              {t('material:quizHistory.title')}
             </Typography>
             <Stack spacing={2}>
               {isLoadingQuizzes ? (
@@ -492,18 +495,18 @@ function MaterialDetailPage(): React.JSX.Element {
                     }}
                   >
                     <Box>
-                      <Typography variant="h6" fontWeight="bold" sx={{ color: 'text.primary' }}>Quiz #{(quizzes?.length || 0) - index}</Typography>
-                      <Typography variant="body2" sx={{ color: 'text.secondary' }}>{quiz.question_count} Questions • {formatDate(quiz.created_at)}</Typography>
+                      <Typography variant="h6" fontWeight="bold" sx={{ color: 'text.primary' }}>{t('material:quizHistory.quizNumber', { number: (quizzes?.length || 0) - index })}</Typography>
+                      <Typography variant="body2" sx={{ color: 'text.secondary' }}>{t('material:quizHistory.questionsAndDate', { count: quiz.question_count, date: formatDate(quiz.created_at) })}</Typography>
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
                       {quiz.score !== null ? (
                         <Box sx={{ textAlign: 'right' }}>
-                          <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block' }}>SCORE</Typography>
+                          <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block' }}>{t('material:quizHistory.scoreLabel')}</Typography>
                           <Typography variant="h4" fontWeight="bold" sx={{ color: 'success.main', lineHeight: 1 }}>{quiz.score}</Typography>
                         </Box>
                       ) : (
                         <Box sx={{ textAlign: 'right' }}>
-                          <Typography variant="caption" sx={{ color: 'secondary.main', display: 'block' }}>PENDING</Typography>
+                          <Typography variant="caption" sx={{ color: 'secondary.main', display: 'block' }}>{t('material:quizHistory.pendingLabel')}</Typography>
                         </Box>
                       )}
                       <Button
@@ -517,14 +520,14 @@ function MaterialDetailPage(): React.JSX.Element {
                           '&:hover': { bgcolor: quiz.score !== null ? 'action.hover' : 'secondary.dark' }
                         }}
                       >
-                        {quiz.score !== null ? 'Review' : 'Start'}
+                        {quiz.score !== null ? t('common:actions.review') : t('common:actions.start')}
                       </Button>
                     </Box>
                   </Paper>
                 ))
               ) : (
                 <Paper sx={{ p: 4, textAlign: 'center', bgcolor: 'background.paper', border: '1px dashed', borderColor: 'divider' }}>
-                  <Typography color="text.secondary">No quiz history available. Generate a new quiz to get started!</Typography>
+                  <Typography color="text.secondary">{t('material:quizHistory.emptyState')}</Typography>
                 </Paper>
               )}
             </Stack>
@@ -560,7 +563,7 @@ function MaterialDetailPage(): React.JSX.Element {
                     '&:hover': { bgcolor: 'secondary.dark' }
                   }}
                 >
-                  {quizMutation.isPending ? 'Generating...' : 'Generate New Quiz'}
+                  {quizMutation.isPending ? t('common:states.generating') : t('material:actions.generateNewQuiz')}
                 </Button>
                 <Button
                   fullWidth variant="outlined" startIcon={<StyleIcon />}
@@ -570,7 +573,7 @@ function MaterialDetailPage(): React.JSX.Element {
                     '&:hover': { bgcolor: 'action.hover' }
                   }}
                 >
-                  {flashcardMutation.isPending ? 'Creating...' : 'Create Flashcards'}
+                  {flashcardMutation.isPending ? t('common:states.generating') : t('material:actions.createFlashcards')}
                 </Button>
               </Stack>
 
@@ -621,10 +624,10 @@ function MaterialDetailPage(): React.JSX.Element {
             <Box sx={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 1, mb: 1.5 }}>
               <Box>
                 <Typography variant="subtitle2" fontWeight="bold" sx={{ color: 'text.primary' }}>
-                  Need help with this material?
+                  {t('material:chat.suggestionsTitle')}
                 </Typography>
                 <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-                  Try one of these prompts with the AI tutor.
+                  {t('material:chat.suggestionsDescription')}
                 </Typography>
               </Box>
               <IconButton size="small" onClick={handleCloseChatSuggestions} sx={{ mt: -0.5, mr: -0.5 }}>
@@ -652,7 +655,7 @@ function MaterialDetailPage(): React.JSX.Element {
                     },
                   }}
                 >
-                  {suggestion}
+                  {t(suggestion)}
                 </Button>
               ))}
             </Stack>
@@ -661,7 +664,7 @@ function MaterialDetailPage(): React.JSX.Element {
 
         <Fab
           color="secondary"
-          aria-label="Open AI tutor"
+          aria-label={t('material:chat.openTutorAriaLabel')}
           onClick={handleOpenChat}
           sx={{
             position: 'fixed',

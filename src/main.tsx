@@ -10,6 +10,7 @@ import App from './App';
 import { Analytics } from '@vercel/analytics/react';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import './i18n/config';
 
 const queryClient = new QueryClient();
 

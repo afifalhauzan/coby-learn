@@ -1,0 +1,37 @@
+{
+  "breadcrumbs": {
+    "category": "Computer Science",
+    "projectName": "Belajar SQL"
+  },
+  "header": {
+    "title": "Belajar SQL",
+    "subtitle": "Dive deep into the fundamentals of SQL and database management."
+  },
+  "actions": {
+    "editProject": "Edit Project"
+  },
+  "summary": {
+    "title": "AI Summary",
+    "default": "SQL, or Structured Query Language, is a standard language for managing and manipulating relational databases. It allows users to create, retrieve, update, and delete data. Key concepts include tables, which store data in rows and columns, and queries, which are commands used to interact with the data.\n\nCommon SQL commands are SELECT for retrieving data, INSERT for adding new records, UPDATE for modifying existing records, and DELETE for removing records. Understanding joins (INNER, LEFT, RIGHT, FULL) is crucial for combining data from multiple tables based on related columns.\n\nData types define the kind of value that can be stored in a column, such as INTEGER, VARCHAR, and DATE. Constraints like PRIMARY KEY, FOREIGN KEY, and NOT NULL ensure data integrity within the database.",
+    "actions": {
+      "copyTitle": "Copy summary",
+      "copyAria": "Copy summary"
+    }
+  },
+  "quizGenerator": {
+    "title": "Test Your Knowledge",
+    "numberOfQuestionsLabel": "Number of Questions",
+    "questionCountOption": "{{count}} Questions",
+    "actions": {
+      "generateFromMaterial": "Generate Quiz from Material"
+    },
+    "questionCountOption_other": "{{count}} questions"
+  },
+  "notes": {
+    "title": "My Notes",
+    "placeholder": "Start typing your notes here...",
+    "actions": {
+      "save": "Save Notes"
+    }
+  }
+}

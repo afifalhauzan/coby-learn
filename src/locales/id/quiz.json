@@ -1,0 +1,86 @@
+{
+  "actions": {
+    "backToDashboard": "Kembali ke Dashboard",
+    "backToMaterial": "Kembali ke Materi",
+    "cancel": "Batal",
+    "claiming": "Mengklaim...",
+    "finishAndClaim": "Selesai & Ambil XP",
+    "finishReview": "Selesai Review",
+    "nextQuestion": "Pertanyaan Berikutnya",
+    "quitQuiz": "Keluar Kuis",
+    "reviewAnswers": "Tinjau Jawaban",
+    "startQuiz": "Mulai Kuis",
+    "submitQuiz": "Kumpulkan Kuis",
+    "uploadNow": "Unggah Sekarang"
+  },
+  "errors": {
+    "failedToLoadDailyQuiz": "Gagal memuat tantangan harian.",
+    "failedToLoadQuizResult": "Gagal memuat hasil kuis.",
+    "failedToSaveProgress": "Tidak dapat menyimpan progres belajar Anda.",
+    "submitFailed": "Pengiriman gagal. Silakan periksa koneksi Anda."
+  },
+  "labels": {
+    "correct": "Benar",
+    "correctAnswerLabel": "Jawaban Benar:",
+    "dailyChallenge": "Tantangan Harian",
+    "enterTopic": "Masukkan Topik",
+    "highScoreMascotAlt": "Maskot senang merayakan skormu",
+    "incorrect": "Salah",
+    "learnerFallback": "Pelajar",
+    "lowScoreMascotAlt": "Maskot suportif menyemangatimu untuk mencoba lagi",
+    "optionWithKey": "Opsi {{key}}",
+    "questionIndex": "Pertanyaan {{current}} dari {{total}}",
+    "questionNumber": "Pertanyaan {{count}}",
+    "questionNumberUpper": "PERTANYAAN {{count}}",
+    "questionProgress": "PERTANYAAN {{current}}/{{total}}",
+    "reviewingQuestion": "Meninjau Pertanyaan {{count}}",
+    "score": "Skor",
+    "specificTopic": "Topik Spesifik",
+    "streakMode": "Mode Streak",
+    "questionNumber_other": "Pertanyaan {{count}}",
+    "reviewingQuestion_other": "Meninjau pertanyaan {{count}}"
+  },
+  "messages": {
+    "calculatingScore": "Menghitung skormu...",
+    "claimError": "Terjadi kesalahan saat menyimpan progres.",
+    "chooseChallengeMode": "Pilih cara kamu ingin ditantang hari ini.",
+    "claiming": "Mengambil reward...",
+    "completedOn": "Diselesaikan pada {{date}}",
+    "correctAnswer": "Tepat sekali! Jawabanmu benar.",
+    "dailyChallengeCompleted": "Kamu telah menyelesaikan tantangan hari ini. Kembali lagi besok untuk menjaga semangatmu!",
+    "enterTopicPrompt": "Apa topik yang ingin kamu uji hari ini?",
+    "generatingQuiz": "AI sedang menyusun kuis personalmu...",
+    "loadFailed": "Gagal memuat Daily Quiz.",
+    "noMaterialsDescription": "Kamu belum mengunggah materi belajar. Unggah satu untuk mulai mengerjakan kuis!",
+    "noMaterialsFound": "Materi tidak ditemukan",
+    "quizCompleted": "Kuis Selesai!",
+    "quizResult": "Hasil Kuis",
+    "scoreSummary": "Kamu menjawab {{correct}} dari {{total}} pertanyaan dengan benar.",
+    "specificTopicDescription": "Buat kuis berdasarkan subjek spesifik yang kamu pilih.",
+    "streakSaved": "Streak Tersimpan!",
+    "submittingAnswers": "Mengirimkan jawabanmu...",
+    "surpriseMeDescription": "Biarkan AI memilih topik acak dari perpustakaanmu.",
+    "wrongAnswer": "Kurang tepat.",
+    "wrongTryAgain": "Salah. Coba lagi!",
+    "wrongAnswerTryAgain": "Bukan itu jawabannya. Coba pikirkan sekali lagi!"
+  },
+  "completion": {
+    "title": "Streak Tersimpan!",
+    "description": "Kamu telah menyelesaikan tantangan hari ini. Kembali lagi besok untuk menjaga semangat tetap menyala!",
+    "actions": {
+      "awesome": "Keren!"
+    }
+  },
+  "motivations": {
+    "high": "Luar biasa! Kamu telah menguasai materi ini. Pertahankan kerja kerasmu!",
+    "medium": "Bagus! Pemahamanmu sudah kuat, tapi masih ada sedikit ruang untuk berkembang.",
+    "low": "Jangan menyerah! Setiap kesalahan adalah langkah menuju pembelajaran. Mari tinjau dan coba lagi."
+  },
+  "placeholders": {
+    "topicExample": "contoh: Anatomi Manusia atau Fisika Kuantum"
+  },
+  "states": {
+    "empty": "Data kuis tidak tersedia.",
+    "error": "Terjadi kesalahan saat memuat kuis."
+  }
+}

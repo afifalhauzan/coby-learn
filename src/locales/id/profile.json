@@ -1,0 +1,15 @@
+{
+  "title": "Pengaturan Akun",
+  "fields": {
+    "username": {
+      "label": "Nama Pengguna"
+    },
+    "email": {
+      "label": "Alamat Email"
+    }
+  },
+  "messages": {
+    "updateSuccess": "Profil berhasil diperbarui!",
+    "updateFailed": "Gagal memperbarui profil"
+  }
+}

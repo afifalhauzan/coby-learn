@@ -1,0 +1,39 @@
+{
+  "actions": {
+    "backToLibrary": "Kembali ke Pustaka",
+    "uploadMaterial": "Unggah Materi"
+  },
+  "breadcrumbs": {
+    "myLibrary": "Pustaka Saya"
+  },
+  "emptyState": {
+    "description": "Paket \"{{title}}\" belum memiliki materi.",
+    "title": "Folder Kosong"
+  },
+  "errors": {
+    "failedToLoadFolderDetails": "Gagal memuat detail folder: {{message}}",
+    "failedToUploadMaterial": "Gagal mengunggah materi. Silakan coba lagi."
+  },
+  "materialItem": {
+    "actions": {
+      "openSource": "Buka Sumber",
+      "rename": "Ubah Nama"
+    },
+    "types": {
+      "quiz": "Kuis",
+      "pdfDocument": "PDF",
+      "text": "Teks",
+      "youtube": "YouTube"
+    },
+    "confirmDelete": "Yakin ingin menghapus \"{{title}}\"?",
+    "errors": {
+      "failedToDeleteMaterial": "Gagal menghapus materi",
+      "failedToRenameMaterial": "Gagal mengubah nama materi"
+    },
+    "quizChipLabel": "Kuis",
+    "renameDialog": {
+      "materialTitle": "Judul Materi",
+      "title": "Ubah Nama Materi"
+    }
+  }
+}

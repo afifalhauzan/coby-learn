@@ -20,6 +20,7 @@ import CloudUploadOutlinedIcon from '@mui/icons-material/CloudUploadOutlined';
 import InsertLinkIcon from '@mui/icons-material/InsertLink';
 import NotesIcon from '@mui/icons-material/Notes';
 import { useDropzone } from 'react-dropzone';
+import { useTranslation } from 'react-i18next';
 
 // Definisi tipe data yang dikirim ke Parent
 export interface SubmissionData {
@@ -39,6 +40,7 @@ interface FileUploadDialogProps {
 
 function FileUploadDialog({ open, onClose, onSubmit, isLoading }: FileUploadDialogProps): React.JSX.Element {
   const theme = useTheme();
+  const { t } = useTranslation();
   const [tabValue, setTabValue] = useState(0);
   const [file, setFile] = useState<File | null>(null);
   const [youtubeLink, setYoutubeLink] = useState('');
@@ -63,9 +65,18 @@ function FileUploadDialog({ open, onClose, onSubmit, isLoading }: FileUploadDial
   }, [isLoading]);
 
   const loadingMessages = [
-    { title: 'Uploading Material...', desc: 'Please wait while we secure your file.' },
-    { title: 'Analyzing Content...', desc: 'Our AI is reading and understanding the context.' },
-    { title: 'Generating Summary...', desc: 'Almost there! Creating your study notes.' },
+    {
+      title: t('library:fileUpload.loading.uploadingTitle'),
+      desc: t('library:fileUpload.loading.uploadingDescription')
+    },
+    {
+      title: t('library:fileUpload.loading.analyzingTitle'),
+      desc: t('library:fileUpload.loading.analyzingDescription')
+    },
+    {
+      title: t('library:fileUpload.loading.generatingTitle'),
+      desc: t('library:fileUpload.loading.generatingDescription')
+    },
   ];
   const panelTransition = theme.transitions.create(['opacity', 'transform'], {
     duration: theme.transitions.duration.shorter,
@@ -223,7 +234,7 @@ function FileUploadDialog({ open, onClose, onSubmit, isLoading }: FileUploadDial
         <>
           <DialogTitle sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', px: 3, pt: 3, pb: 1 }}>
             <Typography variant="h6" component="div" fontWeight="600">
-              Upload Material
+              {t('library:fileUpload.title')}
             </Typography>
             <IconButton
               aria-label="close"
@@ -243,18 +254,18 @@ function FileUploadDialog({ open, onClose, onSubmit, isLoading }: FileUploadDial
 
           <DialogContent sx={{ px: 3, pb: 2 }}>
             <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-              Select the type of material you want to upload. Our AI will analyze and generate a summary for you.
+              {t('library:fileUpload.subtitle')}
             </Typography>
 
             {/* Input Judul Manual */}
             <Box sx={{ mb: 3 }}>
               <Typography variant="caption" fontWeight="bold" sx={{ mb: 0.5, display: 'block', color: 'text.primary' }}>
-                Custom Title (Optional)
+                {t('library:fileUpload.customTitleLabel')}
               </Typography>
               <TextField
                 fullWidth
                 size="small"
-                placeholder="e.g. Chapter 1 Summary"
+                placeholder={t('library:fileUpload.customTitlePlaceholder')}
                 value={customTitle}
                 onChange={(e) => setCustomTitle(e.target.value)}
                 sx={{ '& .MuiOutlinedInput-root': { borderRadius: 2 } }}
@@ -295,9 +306,9 @@ function FileUploadDialog({ open, onClose, onSubmit, isLoading }: FileUploadDial
                   '& .MuiTabs-indicator': { display: 'none' }
                 }}
               >
-                <Tab label="PDF File" icon={<CloudUploadOutlinedIcon fontSize="small" />} iconPosition="start" />
-                <Tab label="YouTube" icon={<InsertLinkIcon fontSize="small" />} iconPosition="start" />
-                <Tab label="Text Note" icon={<NotesIcon fontSize="small" />} iconPosition="start" />
+                <Tab label={t('library:fileUpload.tabs.pdfFile')} icon={<CloudUploadOutlinedIcon fontSize="small" />} iconPosition="start" />
+                <Tab label={t('library:fileUpload.tabs.youtube')} icon={<InsertLinkIcon fontSize="small" />} iconPosition="start" />
+                <Tab label={t('library:fileUpload.tabs.textNote')} icon={<NotesIcon fontSize="small" />} iconPosition="start" />
               </Tabs>
             </Box>
 
@@ -350,8 +361,8 @@ function FileUploadDialog({ open, onClose, onSubmit, isLoading }: FileUploadDial
                         }}>
                           <CloudUploadOutlinedIcon sx={{ fontSize: 32, color: 'primary.main' }} />
                         </Box>
-                        <Typography variant="body1" fontWeight="600" gutterBottom>Click or drag PDF here</Typography>
-                        <Typography variant="caption" color="text.secondary">Supported formats: .pdf (Max 10MB)</Typography>
+                        <Typography variant="body1" fontWeight="600" gutterBottom>{t('library:fileUpload.dropzone.clickOrDragPdf')}</Typography>
+                        <Typography variant="caption" color="text.secondary">{t('library:fileUpload.dropzone.supportedFormats')}</Typography>
                       </Box>
                     ) : (
                       <Paper
@@ -407,7 +418,7 @@ function FileUploadDialog({ open, onClose, onSubmit, isLoading }: FileUploadDial
                   {tabValue === 1 && (
                     <TextField
                       fullWidth
-                      label="YouTube URL"
+                      label={t('library:fileUpload.youtubeUrlLabel')}
                       placeholder="https://www.youtube.com/watch?v=..."
                       value={youtubeLink}
                       onChange={(e) => setYoutubeLink(e.target.value)}
@@ -423,8 +434,8 @@ function FileUploadDialog({ open, onClose, onSubmit, isLoading }: FileUploadDial
                       fullWidth
                       multiline
                       rows={6}
-                      label="Paste Text Content"
-                      placeholder="Copy and paste your study notes here..."
+                      label={t('library:fileUpload.pasteTextLabel')}
+                      placeholder={t('library:fileUpload.pasteTextPlaceholder')}
                       value={pastedText}
                       onChange={(e) => setPastedText(e.target.value)}
                       sx={{ '& .MuiOutlinedInput-root': { borderRadius: 3 } }}
@@ -451,7 +462,7 @@ function FileUploadDialog({ open, onClose, onSubmit, isLoading }: FileUploadDial
                 },
               }}
             >
-              Cancel
+              {t('common:actions.cancel')}
             </Button>
             <Button
               variant="contained"
@@ -479,7 +490,7 @@ function FileUploadDialog({ open, onClose, onSubmit, isLoading }: FileUploadDial
                 },
               }}
             >
-              Generate Summary
+              {t('library:fileUpload.generateSummary')}
             </Button>
           </DialogActions>
         </>

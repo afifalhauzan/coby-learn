@@ -5,11 +5,14 @@ import KeyboardDoubleArrowDownRoundedIcon from '@mui/icons-material/KeyboardDoub
 import RadioButtonUncheckedRoundedIcon from '@mui/icons-material/RadioButtonUncheckedRounded';
 import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { COLORS } from './landingPage.constants';
+import { useTranslation } from 'react-i18next';
 
 const SOFT_BLUE_SHADOW = '0 24px 60px rgba(26, 43, 94, 0.1)';
 const SOFT_BLUE_SHADOW_STRONG = '0 26px 64px rgba(26, 43, 94, 0.16)';
 
 function SummaryVisual(): React.JSX.Element {
+    const { t } = useTranslation();
+
     return (
         <Paper
             elevation={0}
@@ -38,7 +41,7 @@ function SummaryVisual(): React.JSX.Element {
                 }}
             >
                 <Typography sx={{ fontWeight: 700, fontSize: '0.95rem', color: '#243B63', mb: 1.3, fontFamily: 'Poppins, sans-serif' }}>
-                    Original Document (45 pages)
+                    {t('landing:howItWorks.summaryVisual.originalDocument')}
                 </Typography>
 
                 {[84, 58, 52].map((w, idx) => (
@@ -74,7 +77,7 @@ function SummaryVisual(): React.JSX.Element {
                 }}
             >
                 <Typography sx={{ fontWeight: 700, fontSize: '0.95rem', color: '#3B82F6', mb: 1.3, fontFamily: 'Poppins, sans-serif' }}>
-                    AI Summary (5 Key Points)
+                    {t('landing:howItWorks.summaryVisual.aiSummary')}
                 </Typography>
 
                 {[96, 70, 56].map((w, idx) => (
@@ -103,6 +106,8 @@ function QuizVisual({
     flashX: any;
     flashY: any;
 }): React.JSX.Element {
+    const { t } = useTranslation();
+
     return (
         <Box sx={{ position: 'relative' }}>
             <Paper
@@ -116,16 +121,16 @@ function QuizVisual({
                 }}
             >
                 <Typography sx={{ fontFamily: 'Poppins, sans-serif', fontSize: '0.75rem', color: '#94A3B8', mb: 1, letterSpacing: '0.08em', fontWeight: 700 }}>
-                    QUESTION 1/10
+                    {t('landing:howItWorks.quizVisual.questionProgress')}
                 </Typography>
                 <Typography sx={{ fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: '1.75rem', color: '#1E3A66', mb: 2, lineHeight: 1.28 }}>
-                    What is the primary function of the mitochondria in a cell?
+                    {t('landing:howItWorks.quizVisual.questionTitle')}
                 </Typography>
 
                 {[
-                    { label: 'To control cell division', active: true },
-                    { label: 'To produce ATP (energy)', active: false },
-                    { label: 'To synthesize proteins', active: false },
+                    { label: t('landing:howItWorks.quizVisual.options.option1'), active: true },
+                    { label: t('landing:howItWorks.quizVisual.options.option2'), active: false },
+                    { label: t('landing:howItWorks.quizVisual.options.option3'), active: false },
                 ].map((item) => (
                     <Box
                         component={motion.div}
@@ -163,7 +168,7 @@ function QuizVisual({
                             <Stack direction="row" spacing={0.5} alignItems="center">
                                 <CheckCircleRoundedIcon sx={{ color: '#22C55E', fontSize: 16 }} />
                                 <Typography sx={{ color: '#16A34A', fontWeight: 700, fontSize: '0.75rem' }}>
-                                    Correct
+                                    {t('landing:howItWorks.quizVisual.correctLabel')}
                                 </Typography>
                             </Stack>
                         ) : (
@@ -193,13 +198,13 @@ function QuizVisual({
                     }}
                 >
                     <Typography sx={{ fontSize: '0.68rem', opacity: 0.75, mb: 1, fontFamily: 'Poppins, sans-serif' }}>
-                        Flashcard
+                        {t('landing:howItWorks.quizVisual.flashcardLabel')}
                     </Typography>
                     <Typography sx={{ fontFamily: 'Poppins, sans-serif', fontWeight: 500, lineHeight: 1.5 }}>
-                        "What is the term for the movement of water across a semi-permeable membrane?"
+                        {t('landing:howItWorks.quizVisual.flashcardQuestion')}
                     </Typography>
                     <Typography sx={{ mt: 1.2, color: '#60A5FA', fontWeight: 700, fontSize: '0.8rem', fontFamily: 'Poppins, sans-serif' }}>
-                        Show Answer
+                        {t('landing:howItWorks.quizVisual.showAnswer')}
                     </Typography>
                 </Paper>
             </motion.div>
@@ -208,6 +213,7 @@ function QuizVisual({
 }
 
 function HowItWorksSection(): React.JSX.Element {
+    const { t } = useTranslation();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
     const trackRef = useRef<HTMLDivElement | null>(null);
@@ -273,7 +279,7 @@ function HowItWorksSection(): React.JSX.Element {
                     textAlign="center"
                     sx={{ mb: 7, color: '#1E3A66', fontFamily: 'Poppins, sans-serif' }}
                 >
-                    How It Works
+                    {t('landing:howItWorks.title')}
                 </Typography>
 
                 <Stack spacing={8}>
@@ -282,13 +288,13 @@ function HowItWorksSection(): React.JSX.Element {
                         <SummaryVisual />
                         <Box sx={{ mt: 3 }}>
                             <Typography sx={{ color: '#3B82F6', fontFamily: 'Poppins, sans-serif', mb: 1, fontWeight: 500 }}>
-                                Save Hours Weekly
+                                {t('landing:howItWorks.sections.summary.eyebrow')}
                             </Typography>
                             <Typography sx={{ color: '#1E3A66', fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: '1.5rem', lineHeight: 1.3, mb: 1.5 }}>
-                                Instantly Turn Study Notes Into Clear Summaries
+                                {t('landing:howItWorks.sections.summary.mobileTitle')}
                             </Typography>
                             <Typography sx={{ color: COLORS.textMuted, fontFamily: 'Poppins, sans-serif' }}>
-                                Don't get buried in hundreds of pages. AI extracts core concepts and key takeaways so you can grasp the big picture in minutes.
+                                {t('landing:howItWorks.sections.summary.mobileDescription')}
                             </Typography>
                         </Box>
                     </Box>
@@ -301,13 +307,13 @@ function HowItWorksSection(): React.JSX.Element {
                         </Box>
                         <Box sx={{ mt: 3 }}>
                             <Typography sx={{ color: '#3B82F6', fontFamily: 'Poppins, sans-serif', mb: 1, fontWeight: 500 }}>
-                                Active Recall
+                                {t('landing:howItWorks.sections.quiz.eyebrow')}
                             </Typography>
                             <Typography sx={{ color: '#1E3A66', fontFamily: 'Poppins, sans-serif', fontWeight: 700, fontSize: '1.5rem', lineHeight: 1.3, mb: 1.5 }}>
-                                Practice Smarter With AI Generated Quizzes
+                                {t('landing:howItWorks.sections.quiz.mobileTitle')}
                             </Typography>
                             <Typography sx={{ color: COLORS.textMuted, fontFamily: 'Poppins, sans-serif' }}>
-                                Static reading is passive. The system generates dynamic quizzes and flashcards based on your own material to build long-term retention.
+                                {t('landing:howItWorks.sections.quiz.mobileDescription')}
                             </Typography>
                         </Box>
                     </Box>
@@ -352,7 +358,7 @@ function HowItWorksSection(): React.JSX.Element {
                                     textAlign="center"
                                     sx={{ mb: 4, color: '#1E3A66', fontFamily: 'Poppins' }}
                                 >
-                                    How It Works
+                                    {t('landing:howItWorks.title')}
                                 </Typography>
                             )}
 
@@ -392,23 +398,23 @@ function HowItWorksSection(): React.JSX.Element {
                                     <motion.div style={{ y: textTrackY }}>
                                         {/* Section 1 */}
                                         <Box sx={{ py: '35vh' }}>
-                                            <Typography sx={{ color: '#3B82F6', fontWeight: 500, mb: 1 }}>Save Hours Weekly</Typography>
+                                            <Typography sx={{ color: '#3B82F6', fontWeight: 500, mb: 1 }}>{t('landing:howItWorks.sections.summary.eyebrow')}</Typography>
                                             <Typography variant="h3" sx={{ fontWeight: 600, color: '#1E3A66', mb: 2 }}>
-                                                Instantly Turn Study Notes Into Summaries
+                                                {t('landing:howItWorks.sections.summary.desktopTitle')}
                                             </Typography>
                                             <Typography sx={{ color: COLORS.textMuted }}>
-                                                Don't get buried in hundreds of pages. Our AI extracts core concepts, definitions, and key takeaways so you can grasp the big picture in minutes.
+                                                {t('landing:howItWorks.sections.summary.desktopDescription')}
                                             </Typography>
                                         </Box>
 
                                         {/* Section 2 */}
                                         <Box sx={{ py: '35vh' }}>
-                                            <Typography sx={{ color: '#3B82F6', fontWeight: 500, mb: 1 }}>Active Recall</Typography>
+                                            <Typography sx={{ color: '#3B82F6', fontWeight: 500, mb: 1 }}>{t('landing:howItWorks.sections.quiz.eyebrow')}</Typography>
                                             <Typography variant="h3" sx={{ fontWeight: 600, color: '#1E3A66', mb: 2 }}>
-                                                Practice Smarter With AI Quizzes
+                                                {t('landing:howItWorks.sections.quiz.desktopTitle')}
                                             </Typography>
                                             <Typography sx={{ color: COLORS.textMuted }}>
-                                                Static reading is passive. Our system generates dynamic quizzes and flashcards based specifically on your materials to ensure active recall and long-term retention.
+                                                {t('landing:howItWorks.sections.quiz.desktopDescription')}
                                             </Typography>
                                         </Box>
                                     </motion.div>
@@ -417,13 +423,13 @@ function HowItWorksSection(): React.JSX.Element {
                                 /* Mobile fallback: Simple vertical stack */
                                 <Stack spacing={4} sx={{ mt: 4 }}>
                                     <Box>
-                                        <Typography variant="h5" fontWeight={700}>Save Hours Weekly</Typography>
-                                        <Typography sx={{ color: COLORS.textMuted }}>AI extracts core concepts instantly.</Typography>
+                                        <Typography variant="h5" fontWeight={700}>{t('landing:howItWorks.sections.summary.eyebrow')}</Typography>
+                                        <Typography sx={{ color: COLORS.textMuted }}>{t('landing:howItWorks.sections.summary.fallbackDescription')}</Typography>
                                     </Box>
                                     <Box>
                                         <QuizVisual flashOpacity={1} flashX={0} flashY={0} />
-                                        <Typography variant="h5" fontWeight={700} sx={{ mt: 2 }}>Active Recall</Typography>
-                                        <Typography sx={{ color: COLORS.textMuted }}>Practice with generated quizzes.</Typography>
+                                        <Typography variant="h5" fontWeight={700} sx={{ mt: 2 }}>{t('landing:howItWorks.sections.quiz.eyebrow')}</Typography>
+                                        <Typography sx={{ color: COLORS.textMuted }}>{t('landing:howItWorks.sections.quiz.fallbackDescription')}</Typography>
                                     </Box>
                                 </Stack>
                             )}

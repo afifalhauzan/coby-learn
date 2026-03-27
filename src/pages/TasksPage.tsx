@@ -36,6 +36,7 @@ import AddTaskDialog from '../components/tasks/AddTaskDialog';
 import CalendarView from '../components/tasks/CalendarView';
 import DeleteConfirmDialog from '../components/common/DeleteConfirmDialog'; // Component Baru
 import { openGoogleCalendar } from '../utils/calendarUtils';
+import { useTranslation } from 'react-i18next';
 
 const getFormattedDate = (type: 'today' | 'tomorrow'): string => {
   const d = new Date();
@@ -59,6 +60,7 @@ const getStatus = (task: Task) => {
 };
 
 function TasksPage(): React.JSX.Element {
+  const { t } = useTranslation();
   const [viewMode, setViewMode] = useState<'list' | 'calendar'>('list');
 
   const [statusTab, setStatusTab] = useState<'all' | 'incomplete' | 'completed' | 'overdue'>('all');
@@ -155,9 +157,9 @@ function TasksPage(): React.JSX.Element {
 
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3, flexWrap: 'wrap', gap: 2 }}>
         <Box>
-          <Typography variant="h4" gutterBottom>My Tasks</Typography>
+          <Typography variant="h4" gutterBottom>{t('tasks:pageTitle')}</Typography>
           <Typography variant="subtitle1" color="text.secondary" sx={{ mb: 4 }}>
-            Organize your study materials neatly and efficiently.
+            {t('tasks:pageSubtitle')}
           </Typography>
           <Tabs
             value={viewMode}
@@ -167,8 +169,8 @@ function TasksPage(): React.JSX.Element {
             scrollButtons="auto"
             sx={{ '& .MuiTab-root': { textTransform: 'none', fontWeight: 600, minHeight: 0, py: 1 } }}
           >
-            <Tab icon={<ListAltIcon fontSize="small" />} iconPosition="start" label="List View" value="list" />
-            <Tab icon={<DateRangeIcon fontSize="small" />} iconPosition="start" label="Calendar View" value="calendar" />
+            <Tab icon={<ListAltIcon fontSize="small" />} iconPosition="start" label={t('tasks:viewModes.listView')} value="list" />
+            <Tab icon={<DateRangeIcon fontSize="small" />} iconPosition="start" label={t('tasks:viewModes.calendarView')} value="calendar" />
           </Tabs>
         </Box>
 
@@ -179,13 +181,13 @@ function TasksPage(): React.JSX.Element {
           sx={{ display: { xs: 'none', sm: 'inline-flex' }, textTransform: 'none', color: 'white', height: 40, px: 3 }}
           onClick={handleOpenCreate}
         >
-          Add Task
+          {t('tasks:actions.addTask')}
         </Button>
       </Box>
 
       <Fab
         color="primary"
-        aria-label="Add Task"
+        aria-label={t('tasks:actions.addTask')}
         onClick={handleOpenCreate}
         sx={{
           display: { xs: 'flex', sm: 'none' },
@@ -212,27 +214,27 @@ function TasksPage(): React.JSX.Element {
           <>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 4, flexWrap: 'wrap' }}>
               <ToggleButtonGroup value={statusTab} exclusive onChange={(_, val) => val && setStatusTab(val)} color="primary" size="small">
-                <ToggleButton value="all" sx={{ textTransform: 'none', px: 2 }}>All</ToggleButton>
-                <ToggleButton value="incomplete" sx={{ textTransform: 'none', px: 2 }}>Incomplete</ToggleButton>
-                <ToggleButton value="completed" sx={{ textTransform: 'none', px: 2 }}>Completed</ToggleButton>
-                <ToggleButton value="overdue" sx={{ textTransform: 'none', px: 2 }}>Overdue</ToggleButton>
+                <ToggleButton value="all" sx={{ textTransform: 'none', px: 2 }}>{t('tasks:filters.status.all')}</ToggleButton>
+                <ToggleButton value="incomplete" sx={{ textTransform: 'none', px: 2 }}>{t('tasks:filters.status.incomplete')}</ToggleButton>
+                <ToggleButton value="completed" sx={{ textTransform: 'none', px: 2 }}>{t('tasks:filters.status.completed')}</ToggleButton>
+                <ToggleButton value="overdue" sx={{ textTransform: 'none', px: 2 }}>{t('tasks:filters.status.overdue')}</ToggleButton>
               </ToggleButtonGroup>
               <Box sx={{ flexGrow: 1 }} />
               <FormControl size="small" sx={{ minWidth: 140 }}>
-                <InputLabel>Filter Date</InputLabel>
-                <Select value={dateFilterType} label="Filter Date" onChange={(e) => setDateFilterType(e.target.value as any)} sx={{ px: 1 }}>
-                  <MenuItem value="all">All Dates</MenuItem>
-                  <MenuItem value="today">Today</MenuItem>
-                  <MenuItem value="tomorrow">Tomorrow</MenuItem>
+                <InputLabel>{t('tasks:filters.date.label')}</InputLabel>
+                <Select value={dateFilterType} label={t('tasks:filters.date.label')} onChange={(e) => setDateFilterType(e.target.value as any)} sx={{ px: 1 }}>
+                  <MenuItem value="all">{t('tasks:filters.date.allDates')}</MenuItem>
+                  <MenuItem value="today">{t('tasks:filters.date.today')}</MenuItem>
+                  <MenuItem value="tomorrow">{t('tasks:filters.date.tomorrow')}</MenuItem>
                 </Select>
               </FormControl>
               <FormControl size="small" sx={{ minWidth: 140 }}>
-                <InputLabel>Filter Priority</InputLabel>
-                <Select value={priorityFilter} label="Filter Priority" onChange={(e) => setPriorityFilter(e.target.value as any)} sx={{ px: 1 }}>
-                  <MenuItem value="all">All Priorities</MenuItem>
-                  <MenuItem value="low">Low</MenuItem>
-                  <MenuItem value="medium">Medium</MenuItem>
-                  <MenuItem value="high">High</MenuItem>
+                <InputLabel>{t('tasks:filters.priority.label')}</InputLabel>
+                <Select value={priorityFilter} label={t('tasks:filters.priority.label')} onChange={(e) => setPriorityFilter(e.target.value as any)} sx={{ px: 1 }}>
+                  <MenuItem value="all">{t('tasks:filters.priority.allPriorities')}</MenuItem>
+                  <MenuItem value="low">{t('tasks:filters.priority.low')}</MenuItem>
+                  <MenuItem value="medium">{t('tasks:filters.priority.medium')}</MenuItem>
+                  <MenuItem value="high">{t('tasks:filters.priority.high')}</MenuItem>
                 </Select>
               </FormControl>
             </Box>
@@ -240,10 +242,10 @@ function TasksPage(): React.JSX.Element {
             {isLoading ? (
               <Skeleton height={200} sx={{ borderRadius: 2 }} />
             ) : isError ? (
-              <Alert severity="error">Error loading tasks</Alert>
+              <Alert severity="error">{t('tasks:messages.errorLoadingTasks')}</Alert>
             ) : showEmptyState ? (
               <Paper sx={{ p: 6, textAlign: 'center', border: '2px dashed', borderColor: 'divider', bgcolor: 'transparent' }}>
-                <Typography color="text.secondary">No tasks available.</Typography>
+                <Typography color="text.secondary">{t('tasks:messages.noTasksAvailable')}</Typography>
 
               </Paper>
             ) : (
@@ -252,7 +254,7 @@ function TasksPage(): React.JSX.Element {
                   <Box sx={{ mb: 3 }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
                       <WarningAmberIcon color="error" />
-                      <Typography variant="h6" fontWeight="bold" color="error">Overdue</Typography>
+                      <Typography variant="h6" fontWeight="bold" color="error">{t('tasks:sections.overdue')}</Typography>
                     </Box>
                     {groupedTasks.overdue.map(task => (
                       <TaskItem
@@ -269,7 +271,7 @@ function TasksPage(): React.JSX.Element {
                   <Box sx={{ mb: 3 }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
                       <CalendarTodayIcon color="action" />
-                      <Typography variant="h6" fontWeight="bold">Today</Typography>
+                      <Typography variant="h6" fontWeight="bold">{t('tasks:sections.today')}</Typography>
                     </Box>
                     {groupedTasks.today.map(task => (
                       <TaskItem
@@ -286,7 +288,7 @@ function TasksPage(): React.JSX.Element {
                   <Box sx={{ mb: 3 }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
                       <EventIcon color="action" />
-                      <Typography variant="h6" fontWeight="bold">Upcoming</Typography>
+                      <Typography variant="h6" fontWeight="bold">{t('tasks:sections.upcoming')}</Typography>
                     </Box>
                     {groupedTasks.upcoming.map(task => (
                       <TaskItem
@@ -303,7 +305,7 @@ function TasksPage(): React.JSX.Element {
                   <Box sx={{ mb: 3 }}>
                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
                       <CheckCircleOutlineIcon color="success" />
-                      <Typography variant="h6" fontWeight="bold" color="success.main">Completed</Typography>
+                      <Typography variant="h6" fontWeight="bold" color="success.main">{t('tasks:sections.completed')}</Typography>
                     </Box>
                     {groupedTasks.completed.map(task => (
                       <TaskItem
@@ -324,7 +326,7 @@ function TasksPage(): React.JSX.Element {
             {isLoading ? (
               <Skeleton height={600} sx={{ borderRadius: 4 }} />
             ) : isError ? (
-              <Alert severity="error">Error loading tasks</Alert>
+              <Alert severity="error">{t('tasks:messages.errorLoadingTasks')}</Alert>
             ) : (
               <CalendarView
                 tasks={tasks || []}
@@ -348,8 +350,8 @@ function TasksPage(): React.JSX.Element {
         open={!!deleteTaskId}
         onClose={() => setDeleteTaskId(null)}
         onConfirm={handleConfirmDelete}
-        title="Delete Task?"
-        description="Are you sure you want to remove this task? This cannot be undone."
+        title={t('tasks:deleteDialog.title')}
+        description={t('tasks:deleteDialog.description')}
       />
 
     </Box>

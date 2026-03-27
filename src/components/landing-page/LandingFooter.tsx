@@ -2,8 +2,11 @@ import React from 'react';
 import { Box, Container, Stack, Typography } from '@mui/material';
 import { COLORS } from './landingPage.constants';
 import logo from '../../assets/logo_1.svg';
+import { useTranslation } from 'react-i18next';
 
 function LandingFooter(): React.JSX.Element {
+  const { t } = useTranslation();
+
   return (
     <Box sx={{ py: 4, borderTop: `1px solid ${COLORS.border}`, bgcolor: 'background.paper' }}>
       <Container maxWidth="lg">
@@ -11,7 +14,7 @@ function LandingFooter(): React.JSX.Element {
           <Box
               sx={{ display: 'flex', alignItems: 'center', gap: 2, pb: 2, cursor: 'pointer' }}
             >
-              <img src={logo} alt="CobyLearnAi" style={{ height: '40px' }} />
+              <img src={logo} alt={t('landing:footer.logoAlt')} style={{ height: '40px' }} />
               <Box>
                 <Typography
                     variant="h6"
@@ -24,22 +27,22 @@ function LandingFooter(): React.JSX.Element {
                     variant="subtitle2"
                     sx={{ color: COLORS.textMuted }}
                 >
-                    Empower your learning journey with AI
+                    {t('landing:footer.tagline')}
                 </Typography>
               </Box>
             </Box>
 
           <Stack direction="row" spacing={4}>
-            {['About', 'Privacy', 'Terms', 'Contact'].map((link) => (
-              <Typography key={link} sx={{ color: COLORS.textMuted, cursor: 'pointer', '&:hover': { color: COLORS.textMain } }}>
-                {link}
+            {['about', 'privacy', 'terms', 'contact'].map((linkKey) => (
+              <Typography key={linkKey} sx={{ color: COLORS.textMuted, cursor: 'pointer', '&:hover': { color: COLORS.textMain } }}>
+                {t(`landing:footer.links.${linkKey}`)}
               </Typography>
             ))}
           </Stack>
         </Stack>
 
         <Typography variant="caption" sx={{ display: 'block', textAlign: 'center', mt: 8, color: '#334155' }}>
-          © {new Date().getFullYear()} CobyLearnAi. All rights reserved.
+          {t('landing:footer.copyright', { year: new Date().getFullYear() })}
         </Typography>
       </Container>
     </Box>

@@ -1,0 +1,79 @@
+{
+  "actions": {
+    "addFolder": "Add Folder"
+  },
+  "deleteDialog": {
+    "description": "Are you sure you want to delete this? All materials inside will be permanently removed.",
+    "title": "Delete Folder"
+  },
+  "emptyState": {
+    "description": "Your library is empty. Create a folder to start organizing your study materials.",
+    "title": "No Folders Found"
+  },
+  "fileUpload": {
+    "customTitleLabel": "Material Title",
+    "customTitlePlaceholder": "e.g. History of Indonesian Independence",
+    "dropzone": {
+      "clickOrDragPdf": "Click or drag a PDF file here",
+      "supportedFormats": "Only PDF files are supported (max 10MB)"
+    },
+    "generateSummary": "Generate AI Summary & Quiz",
+    "loading": {
+      "analyzingDescription": "AI is reading through your content...",
+      "analyzingTitle": "Analyzing Material",
+      "generatingDescription": "Creating your summary, flashcards, and quizzes...",
+      "generatingTitle": "Generating Insights",
+      "uploadingDescription": "Sending your file to our secure servers...",
+      "uploadingTitle": "Uploading File"
+    },
+    "pasteTextLabel": "Paste Content",
+    "pasteTextPlaceholder": "Paste your study notes or article text here...",
+    "subtitle": "Transform your materials into interactive learning tools.",
+    "tabs": {
+      "pdfFile": "PDF File",
+      "textNote": "Text/Notes",
+      "youtube": "YouTube Video"
+    },
+    "title": "Add New Material",
+    "youtubeUrlLabel": "YouTube URL"
+  },
+  "folder": {
+    "itemCount_one": "{{count}} item",
+    "itemCount_other": "{{count}} items"
+  },
+  "folderDialog": {
+    "actions": {
+      "cancel": "Cancel",
+      "create": "Create",
+      "saveChanges": "Save Changes"
+    },
+    "aria": {
+      "close": "Close"
+    },
+    "labels": {
+      "folderIcon": "Folder Icon",
+      "folderName": "Folder Name",
+      "masteryProgress": "Mastery Progress"
+    },
+    "messages": {
+      "lockedColorTooltip": "Mastery required: Have {{target}} folders with at least {{minMaterials}} materials each to unlock more colors."
+    },
+    "placeholders": {
+      "folderName": "e.g., Biology Midterm Prep"
+    },
+    "titles": {
+      "createNewFolder": "Create New Folder",
+      "editFolder": "Edit Folder"
+    }
+  },
+  "messages": {
+    "failedToLoadLibrary": "Failed to load library. Please try again later."
+  },
+  "pageSubtitle": "Organize your study materials neatly and efficiently.",
+  "pageTitle": "My Library",
+  "spotlight": {
+    "description": "Click here to create your first folder and start organizing your materials.",
+    "dismissAriaLabel": "Dismiss spotlight",
+    "title": "Create a Folder"
+  }
+}

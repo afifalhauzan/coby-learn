@@ -1,12 +1,14 @@
 import React from 'react';
 import { Typography } from '@mui/material';
 import { format } from 'date-fns';
+import { useTranslation } from 'react-i18next';
 
 interface HeaderProps {
   username?: string;
 }
 
 function Header({ username }: HeaderProps): React.JSX.Element {
+  const { t } = useTranslation();
   const currentDate = format(new Date(), 'EEEE, MMMM d');
 
   return (
@@ -25,7 +27,7 @@ function Header({ username }: HeaderProps): React.JSX.Element {
           }
         }}
       >
-        Hello {username || 'Student'}!
+        {t('dashboard:header.greeting', { name: username || t('dashboard:header.studentFallback') })}
       </Typography>
       <Typography variant="body1" sx={{ color: 'text.secondary', mb: 4, fontWeight: 500 }}>
         {currentDate}

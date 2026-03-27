@@ -16,6 +16,7 @@ import {
 } from '@mui/material';
 import { Add, Task as TaskICon } from '@mui/icons-material';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useTranslation } from 'react-i18next';
 
 // Import Service & Types
 import { getTasks, updateTask, createTask } from '../../services/apiTaskService';
@@ -49,6 +50,7 @@ interface TasksWidgetProps {
 
 function TasksWidget({ addTaskButtonRef }: TasksWidgetProps): React.JSX.Element {
   const theme = useTheme();
+  const { t } = useTranslation();
   const queryClient = useQueryClient();
   const todayDate = getTodayDate();
   const taskRowTransition = theme.transitions.create(
@@ -151,11 +153,11 @@ function TasksWidget({ addTaskButtonRef }: TasksWidgetProps): React.JSX.Element 
       <Box sx={{ height: '100%' }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
           <Typography variant="h6" component="h2" fontWeight="bold" sx={{ color: 'text.primary' }}>
-            Today's Tasks
+            {t('dashboard:tasksWidget.title')}
           </Typography>
         </Box>
         <Paper sx={{ p: 3, height: 'calc(100% - 60px)' }}>
-          <Alert severity="error">Gagal memuat tugas hari ini.</Alert>
+          <Alert severity="error">{t('dashboard:tasksWidget.errorLoadingTodayTasks')}</Alert>
         </Paper>
       </Box>
     );
@@ -168,7 +170,7 @@ function TasksWidget({ addTaskButtonRef }: TasksWidgetProps): React.JSX.Element 
       {/* Header outside Paper */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
         <Typography variant="h6" component="h2" fontWeight="bold" sx={{ color: 'text.primary' }}>
-          Today's Tasks
+          {t('dashboard:tasksWidget.title')}
         </Typography>
         <Button
           ref={addTaskButtonRef}
@@ -179,7 +181,7 @@ function TasksWidget({ addTaskButtonRef }: TasksWidgetProps): React.JSX.Element 
           startIcon={<Add />}
           onClick={() => setOpenAddDialog(true)}
         >
-          Add Task
+          {t('dashboard:tasksWidget.addTask')}
         </Button>
       </Box>
 
@@ -203,9 +205,9 @@ function TasksWidget({ addTaskButtonRef }: TasksWidgetProps): React.JSX.Element 
               <TaskICon sx={{ fontSize: 32, color: 'action.disabled' }} />
             </Box>
             <Typography variant="body1" sx={{ color: 'text.primary' }}>
-              No tasks for today
+              {t('dashboard:tasksWidget.emptyTitle')}
             </Typography>
-            <Typography variant="caption">Nice work!</Typography>
+            <Typography variant="caption">{t('dashboard:tasksWidget.emptySubtitle')}</Typography>
           </Box>
         ) : (
           <List sx={{ p: 0, overflowY: 'auto', maxHeight: '300px' }}>
@@ -260,7 +262,7 @@ function TasksWidget({ addTaskButtonRef }: TasksWidgetProps): React.JSX.Element 
                         </Typography>
                         {!task.completed && (
                           <Chip 
-                            label={task.priority} 
+                            label={t(`dashboard:tasksWidget.priority.${task.priority}`)} 
                             size="small" 
                             color={getPriorityColor(task.priority) as any} 
                             sx={{

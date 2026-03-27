@@ -18,6 +18,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useTheme } from '@mui/material/styles';
 import { motion } from 'framer-motion';
 import type { Folder } from '../../types/folder.types';
+import { useTranslation } from 'react-i18next';
 
 const DEFAULT_COLORS = [
   '#3E8EDE', // Primary Main (Biru)
@@ -30,7 +31,6 @@ const DEFAULT_COLORS = [
 
 const DEFAULT_UNLOCKED_COLOR_COUNT = 3;
 const MASTERY_UNLOCK_TARGET = 5;
-const LOCKED_TOOLTIP_MESSAGE = 'Mastery required: Have 5 folders with at least 2 materials each to unlock more colors.';
 
 interface FolderDialogProps {
   open: boolean;
@@ -48,6 +48,7 @@ function FolderDialog({
   masteryFolderCount,
 }: FolderDialogProps): React.JSX.Element {
   const theme = useTheme(); // (Opsional) Anda bisa hapus ini jika DEFAULT_COLORS sudah cukup
+  const { t } = useTranslation();
 
   const isEditMode = Boolean(initialData);
 
@@ -116,20 +117,22 @@ function FolderDialog({
     >
       <DialogTitle sx={{ m: 0, p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Typography variant="h6" component="div" fontWeight="bold">
-          {isEditMode ? 'Edit Folder' : 'Create New Folder'}
+          {isEditMode ? t('library:folderDialog.titles.editFolder') : t('library:folderDialog.titles.createNewFolder')}
         </Typography>
-        <IconButton aria-label="close" onClick={onClose} sx={{ color: (theme) => theme.palette.grey[500] }}>
+        <IconButton aria-label={t('library:folderDialog.aria.close')} onClick={onClose} sx={{ color: (theme) => theme.palette.grey[500] }}>
           <CloseIcon />
         </IconButton>
       </DialogTitle>
       
       <DialogContent dividers sx={{ p: 2, borderBottom: 'none' }}>
-        <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 'bold' }}>Folder Name</Typography>
+        <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 'bold' }}>
+          {t('library:folderDialog.labels.folderName')}
+        </Typography>
         <TextField
           autoFocus
           margin="dense"
           id="folderName"
-          placeholder="e.g., Biology Midterm Prep"
+          placeholder={t('library:folderDialog.placeholders.folderName')}
           type="text"
           fullWidth
           variant="outlined"
@@ -139,7 +142,9 @@ function FolderDialog({
           InputProps={{ sx: { borderRadius: '8px' } }}
         />
 
-        <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 'bold' }}>Folder Icon</Typography>
+        <Typography variant="subtitle2" sx={{ mb: 1, fontWeight: 'bold' }}>
+          {t('library:folderDialog.labels.folderIcon')}
+        </Typography>
         <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
           {iconColors.map((color, index) => {
             const isLockedColor = index >= DEFAULT_UNLOCKED_COLOR_COUNT && !isExtendedPaletteUnlocked;
@@ -151,7 +156,18 @@ function FolderDialog({
                 animate={shakeColor === color ? { x: [0, -5, 5, -4, 4, 0] } : { x: 0 }}
                 transition={{ duration: 0.28 }}
               >
-                <Tooltip title={isLockedColor ? LOCKED_TOOLTIP_MESSAGE : ''} arrow placement="top">
+                <Tooltip
+                  title={
+                    isLockedColor
+                      ? t('library:folderDialog.messages.lockedColorTooltip', {
+                        target: MASTERY_UNLOCK_TARGET,
+                        minMaterials: 2,
+                      })
+                      : ''
+                  }
+                  arrow
+                  placement="top"
+                >
                   <Box sx={{ position: 'relative' }}>
                     <IconButton
                       onClick={() => handleColorSelect(color, isLockedColor)}
@@ -216,7 +232,7 @@ function FolderDialog({
         <Box sx={{ mt: 1.25 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 0.5 }}>
             <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-              Mastery Progress
+              {t('library:folderDialog.labels.masteryProgress')}
             </Typography>
             <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 600 }}>
               {Math.min(masteryFolderCount, MASTERY_UNLOCK_TARGET)}/{MASTERY_UNLOCK_TARGET}
@@ -239,7 +255,7 @@ function FolderDialog({
 
       <DialogActions sx={{ p: 2, display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
         <Button variant="text" onClick={onClose} sx={{ color: 'text.secondary', textTransform: 'none' }}>
-          Cancel
+          {t('library:folderDialog.actions.cancel')}
         </Button>
         <Button
           variant="contained"
@@ -248,7 +264,7 @@ function FolderDialog({
           disabled={!folderName.trim()} 
           sx={{ textTransform: 'none', color:'white' }}
         >
-          {isEditMode ? 'Save Changes' : 'Create'}
+          {isEditMode ? t('library:folderDialog.actions.saveChanges') : t('library:folderDialog.actions.create')}
         </Button>
       </DialogActions>
     </Dialog>

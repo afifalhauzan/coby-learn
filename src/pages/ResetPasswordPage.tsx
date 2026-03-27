@@ -11,9 +11,11 @@ import {
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { Lock as LockIcon } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 import { resetPassword } from '../services/apiAuthService';
 
 function ResetPasswordPage(): React.JSX.Element {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
 
@@ -35,13 +37,13 @@ function ResetPasswordPage(): React.JSX.Element {
         onSuccess: (data) => {
             setMessage({
                 type: 'success',
-                text: data?.meta?.message || 'Password successfully reset. Redirecting to login...'
+                text: data?.meta?.message || t('auth:resetPassword.messages.successRedirect', { defaultValue: 'Password successfully reset. Redirecting to login...' })
             });
             setTimeout(() => navigate('/sign-in'), 3000);
         },
         onError: (error: any) => {
             console.log(error)
-            const errorMessage = error?.response?.data?.meta?.message || 'Failed to reset password.';
+            const errorMessage = error?.response?.data?.meta?.message || t('auth:resetPassword.messages.failed', { defaultValue: 'Failed to reset password.' });
             setMessage({
                 type: 'error',
                 text: errorMessage
@@ -54,15 +56,15 @@ function ResetPasswordPage(): React.JSX.Element {
         setMessage(null);
 
         if (!token) {
-            setMessage({ type: 'error', text: 'Invalid or missing token.' });
+            setMessage({ type: 'error', text: t('auth:resetPassword.messages.invalidToken', { defaultValue: 'Invalid or missing token.' }) });
             return;
         }
         if (password !== confirmPassword) {
-            setMessage({ type: 'error', text: 'Passwords do not match.' });
+            setMessage({ type: 'error', text: t('auth:resetPassword.messages.passwordMismatch', { defaultValue: 'Passwords do not match.' }) });
             return;
         }
         if (password.length < 6) {
-            setMessage({ type: 'error', text: 'Password must be at least 6 characters.' });
+            setMessage({ type: 'error', text: t('auth:resetPassword.messages.passwordMinLength', { defaultValue: 'Password must be at least 6 characters.' }) });
             return;
         }
 
@@ -100,10 +102,10 @@ function ResetPasswordPage(): React.JSX.Element {
                     <Box sx={{ textAlign: 'center' }}>
                         <LockIcon sx={{ color: 'primary.main', fontSize: 48, mb: 1 }} />
                         <Typography variant="h4" fontWeight="600" sx={{ color: 'text.primary' }}>
-                            Set New Password
+                            {t('auth:resetPassword.title', { defaultValue: 'Set New Password' })}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                            Please enter your new password below.
+                            {t('auth:resetPassword.subtitle', { defaultValue: 'Please enter your new password below.' })}
                         </Typography>
                     </Box>
 
@@ -122,16 +124,16 @@ function ResetPasswordPage(): React.JSX.Element {
 
                             {!searchParams.get('token') && (
                                 <TextField
-                                    label="Reset Token"
+                                    label={t('auth:resetPassword.fields.token.label', { defaultValue: 'Reset Token' })}
                                     value={token}
                                     onChange={(e) => setToken(e.target.value)}
                                     fullWidth
-                                    helperText="Paste the token from your email if not auto-filled"
+                                    helperText={t('auth:resetPassword.fields.token.helperText', { defaultValue: 'Paste the token from your email if not auto-filled' })}
                                 />
                             )}
 
                             <TextField
-                                label="New Password"
+                                label={t('auth:resetPassword.fields.newPassword.label', { defaultValue: 'New Password' })}
                                 type="password"
                                 fullWidth
                                 value={password}
@@ -140,7 +142,7 @@ function ResetPasswordPage(): React.JSX.Element {
                             />
 
                             <TextField
-                                label="Confirm Password"
+                                label={t('auth:resetPassword.fields.confirmPassword.label', { defaultValue: 'Confirm Password' })}
                                 type="password"
                                 fullWidth
                                 value={confirmPassword}
@@ -164,7 +166,9 @@ function ResetPasswordPage(): React.JSX.Element {
                                     boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
                                 }}
                             >
-                                {mutation.isPending ? 'Resetting...' : 'Reset Password'}
+                                {mutation.isPending
+                                    ? t('auth:resetPassword.actions.resetting', { defaultValue: 'Resetting...' })
+                                    : t('auth:resetPassword.actions.reset', { defaultValue: 'Reset Password' })}
                             </Button>
                         </Stack>
                     </Box>

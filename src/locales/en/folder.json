@@ -1,0 +1,33 @@
+{
+  "actions": {
+    "backToLibrary": "Back to Library",
+    "uploadMaterial": "Upload Material"
+  },
+  "breadcrumbs": {
+    "myLibrary": "My Library"
+  },
+  "emptyState": {
+    "description": "Package \"{{title}}\" has no materials yet.",
+    "title": "Empty Folder"
+  },
+  "errors": {
+    "failedToLoadFolderDetails": "Failed to load folder details: {{message}}",
+    "failedToUploadMaterial": "Failed to upload material. Please try again."
+  },
+  "materialItem": {
+    "actions": {
+      "openSource": "Open Source",
+      "rename": "Rename"
+    },
+    "confirmDelete": "Are you sure you want to delete \"{{title}}\"?",
+    "errors": {
+      "failedToDeleteMaterial": "Failed to delete material",
+      "failedToRenameMaterial": "Failed to rename material"
+    },
+    "quizChipLabel": "Quiz",
+    "renameDialog": {
+      "materialTitle": "Material Title",
+      "title": "Rename Material"
+    }
+  }
+}

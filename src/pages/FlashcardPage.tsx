@@ -7,12 +7,14 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ReplayIcon from '@mui/icons-material/Replay';
 import CloseIcon from '@mui/icons-material/Close';
+import { useTranslation } from 'react-i18next';
 
 import type { FlashcardItem } from '../services/apiLibraryService';
 
 function FlashcardPage(): React.JSX.Element {
   const location = useLocation();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   
   const { flashcards } = location.state as { flashcards: FlashcardItem[], title: string } || {};
 
@@ -23,8 +25,8 @@ function FlashcardPage(): React.JSX.Element {
   if (!flashcards || flashcards.length === 0) {
     return (
       <Box sx={{ p: 4, textAlign: 'center' }}>
-        <Typography variant="h6" color="error">No flashcards data found.</Typography>
-        <Button onClick={() => navigate(-1)} sx={{ mt: 2 }}>Go Back</Button>
+        <Typography variant="h6" color="error">{t('flashcard:errors.noFlashcardsDataFound')}</Typography>
+        <Button onClick={() => navigate(-1)} sx={{ mt: 2 }}>{t('common:actions.goBack')}</Button>
       </Box>
     );
   }
@@ -111,11 +113,11 @@ function FlashcardPage(): React.JSX.Element {
               border: '1px solid #334155'
             }}
           >
-            <Typography variant="h5" sx={{ color: 'white', mb: 4 }}>QUESTION</Typography>
+            <Typography variant="h5" sx={{ color: 'white', mb: 4 }}>{t('flashcard:labels.question')}</Typography>
             <Typography variant="h4" fontWeight="bold" sx={{ color: 'white' }}>
               {currentCard.front}
             </Typography>
-            <Typography variant="h6" sx={{ mt: 4, color: 'white' }}>Tap to flip</Typography>
+            <Typography variant="h6" sx={{ mt: 4, color: 'white' }}>{t('flashcard:actions.tapToFlip')}</Typography>
           </Paper>
 
           {/* BACK SIDE */}
@@ -136,7 +138,7 @@ function FlashcardPage(): React.JSX.Element {
               color: '#1E293B'
             }}
           >
-            <Typography variant="h5" sx={{ color: 'text.secondary', mb: 2, fontWeight: 'bold' }}>ANSWER</Typography>
+            <Typography variant="h5" sx={{ color: 'text.secondary', mb: 2, fontWeight: 'bold' }}>{t('flashcard:labels.answer')}</Typography>
             <Typography variant="h5" fontWeight="medium">
               {currentCard.back}
             </Typography>
@@ -158,7 +160,7 @@ function FlashcardPage(): React.JSX.Element {
           onClick={() => setIsFlipped(!isFlipped)}
           sx={{ textTransform: 'none', color: 'text.secondary' }}
         >
-          Flip Card
+          {t('flashcard:actions.flipCard')}
         </Button>
 
         <IconButton 

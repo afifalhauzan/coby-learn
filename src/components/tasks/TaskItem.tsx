@@ -4,6 +4,7 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import type { Task } from '../../types/task.types';
+import { useTranslation } from 'react-i18next';
 
 interface TaskItemProps {
   task: Task;
@@ -40,6 +41,7 @@ const formatDateTime = (isoString: string) => {
 
 function TaskItem({ task, onUpdateStatus, onDelete, onEdit }: TaskItemProps): React.JSX.Element {
   const theme = useTheme();
+  const { t } = useTranslation();
   const taskItemTransition = theme.transitions.create(
     ['transform', 'box-shadow', 'border-color', 'background-color', 'opacity'],
     {
@@ -112,7 +114,7 @@ function TaskItem({ task, onUpdateStatus, onDelete, onEdit }: TaskItemProps): Re
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, color: 'text.secondary' }}>
           <AccessTimeIcon sx={{ fontSize: 16 }} />
           <Typography variant="caption" sx={{ fontWeight: 500 }}>
-            Due: {displayDate}
+            {t('tasks:taskItem.dueLabel', { date: displayDate })}
           </Typography>
         </Box>
       </Box>

@@ -20,6 +20,7 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 
 import { useQuery } from '@tanstack/react-query';
 import { animate } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 import { getStudentStats } from '../services/apiStatsService';
 import { getDailyQuizStatus } from '../services/apiLibraryService';
@@ -42,6 +43,7 @@ const getCurrentLevel = (streak: number): number => {
 
 function ProgressPage(): React.JSX.Element {
   const theme = useTheme();
+  const { t } = useTranslation();
 
   const [filter, setFilter] = useState<'day' | 'week' | 'month' | 'year'>('week');
   const [isXPModalOpen, setIsXPModalOpen] = useState(false);
@@ -171,6 +173,7 @@ function ProgressPage(): React.JSX.Element {
   };
 
   const isStreakDone = streakData?.is_done ?? false;
+  const filterLabel = t(`progress:labels.${filter}`);
 
   return (
     <Box>
@@ -203,15 +206,18 @@ function ProgressPage(): React.JSX.Element {
           sx={{ width: '100%', textTransform: 'none',  textColor : 'white', fontWeight: 600, borderRadius: 3, boxShadow: '0 4px 12px rgba(25, 118, 210, 0.3)' }}
         >
           {levelUpEvent
-            ? `Level Up! You reached Level ${levelUpEvent.toLevel} - ${levelUpEvent.toName}`
-            : 'Level Up!'}
+            ? t('progress:messages.levelUpReached', {
+              level: levelUpEvent.toLevel,
+              name: levelUpEvent.toName,
+            })
+            : t('progress:messages.levelUp')}
         </Alert>
       </Snackbar>
 
       {/* Header */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3, flexWrap: 'wrap', gap: 2 }}>
         <Typography variant="h4">
-          My Progress
+          {t('progress:labels.myProgress')}
         </Typography>
 
         <ToggleButtonGroup
@@ -222,10 +228,10 @@ function ProgressPage(): React.JSX.Element {
           size="small"
           sx={{ bgcolor: 'background.paper' }}
         >
-          <ToggleButton value="day" sx={{ textTransform: 'none', px: 2 }}>Day</ToggleButton>
-          <ToggleButton value="week" sx={{ textTransform: 'none', px: 2 }}>Week</ToggleButton>
-          <ToggleButton value="month" sx={{ textTransform: 'none', px: 2 }}>Month</ToggleButton>
-          <ToggleButton value="year" sx={{ textTransform: 'none', px: 2 }}>Year</ToggleButton>
+          <ToggleButton value="day" sx={{ textTransform: 'none', px: 2 }}>{t('progress:labels.day')}</ToggleButton>
+          <ToggleButton value="week" sx={{ textTransform: 'none', px: 2 }}>{t('progress:labels.week')}</ToggleButton>
+          <ToggleButton value="month" sx={{ textTransform: 'none', px: 2 }}>{t('progress:labels.month')}</ToggleButton>
+          <ToggleButton value="year" sx={{ textTransform: 'none', px: 2 }}>{t('progress:labels.year')}</ToggleButton>
         </ToggleButtonGroup>
       </Box>
 
@@ -249,14 +255,19 @@ function ProgressPage(): React.JSX.Element {
       >
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
           <Typography variant="subtitle1" fontWeight={700}>
-            Level {currentXPLevel.level} - {currentXPLevel.name}
+            {t('progress:labels.level')} {currentXPLevel.level} - {currentXPLevel.name}
           </Typography>
           <Typography variant="caption" sx={{ color: 'text.secondary', fontWeight: 600, textAlign: 'right' }}>
-            {nextXPLevel ? `Next Level in ${xpToNextLevel} XP` : 'Max Level Reached'}
+            {nextXPLevel
+              ? t('progress:messages.nextLevel', { xp: xpToNextLevel })
+              : t('progress:messages.maxLevel')}
           </Typography>
         </Box>
         <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 1 }}>
-          {daysRemainingInSeason} days left in {seasonMonthLabel} Season
+          {t('progress:messages.daysLeftInSeason', {
+            days: daysRemainingInSeason,
+            month: seasonMonthLabel,
+          })}
         </Typography>
         <LinearProgress
           variant="determinate"
@@ -297,10 +308,12 @@ function ProgressPage(): React.JSX.Element {
           >
             <Box>
               <Typography variant="h6">
-                Current Streak!
+                {t('progress:labels.currentStreak')}
               </Typography>
               <Typography variant="body2" sx={{ color: isStreakDone ? 'text.primary' : 'text.secondary', opacity: 0.8 }}>
-                {isStreakDone ? 'Keep the flame alive.' : 'Complete daily quiz to ignite!'}
+                {isStreakDone
+                  ? t('progress:messages.keepFlameAlive')
+                  : t('progress:messages.completeDailyQuizToIgnite')}
               </Typography>
             </Box>
 
@@ -343,7 +356,7 @@ function ProgressPage(): React.JSX.Element {
                   <Box
                     component="img"
                     src={`/fire${currentLevel}.png`}
-                    alt={`Current fire level ${currentLevel}`}
+                    alt={t('progress:labels.currentFireLevel', { level: currentLevel })}
                     sx={{
                       width: '100%',
                       height: '100%',
@@ -366,7 +379,7 @@ function ProgressPage(): React.JSX.Element {
 
         <Box>
           <Typography variant="h6" fontWeight="500" sx={{ mb: 2 }}>
-            Key Stats ({filter})
+            {t('progress:labels.keyStats', { filter: filterLabel })}
           </Typography>
 
           {isLoading ? (
@@ -374,32 +387,34 @@ function ProgressPage(): React.JSX.Element {
               {[1, 2, 3, 4].map(i => <Skeleton key={i} variant="rounded" height={80} sx={{ borderRadius: 3 }} />)}
             </Stack>
           ) : isError ? (
-            <Alert severity="error">Failed to load statistics: {(error as any).message}</Alert>
+            <Alert severity="error">
+              {t('progress:messages.failedToLoadStatistics', { message: (error as any).message })}
+            </Alert>
           ) : (
             <Stack spacing={2}>
               <StatCard
-                title="Total Study Hours"
+                title={t('progress:labels.totalStudyHours')}
                 value={displayStats?.total_study_hours || "0h"}
                 IconComponent={AccessTimeIcon}
                 iconBgColor={theme.palette.primary.main + '15'} // Consistent Opacity
                 iconColor={theme.palette.primary.main} // Consistent Color
               />
               <StatCard
-                title="Tasks Completed"
+                title={t('progress:labels.tasksCompleted')}
                 value={displayStats?.tasks_completed?.toString() || "0"}
                 IconComponent={CheckCircleOutlineIcon}
                 iconBgColor={theme.palette.primary.main + '15'}
                 iconColor={theme.palette.primary.main}
               />
               <StatCard
-                title="AI Quizzes Taken"
+                title={t('progress:labels.aiQuizzesTaken')}
                 value={displayStats?.quizzes_taken?.toString() || "0"}
                 IconComponent={LibraryBooksIcon}
                 iconBgColor={theme.palette.primary.main + '15'}
                 iconColor={theme.palette.primary.main}
               />
               <StatCard
-                title="Most Productive Day"
+                title={t('progress:labels.mostProductiveDay')}
                 value={displayStats?.most_productive_day || "-"}
                 IconComponent={TrendingUpIcon}
                 iconBgColor={theme.palette.primary.main + '15'}

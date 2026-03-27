@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
+import { useTranslation } from 'react-i18next';
 import logoImage from '../../assets/logo_1.svg';
 // import FireStreakLottie from '../../assets/FireStreak.lottie';
 import QuizIcon from '@mui/icons-material/Quiz';
@@ -23,23 +24,23 @@ interface DashboardOnboardingModalProps {
 
 const steps = [
   {
-    title: 'Welcome to Coby Learn',
-    content: 'Your dashboard keeps everything in one place so you can review progress and study efficiently.',
+    titleKey: 'dashboard:onboarding.title',
+    contentKey: 'dashboard:onboarding.step1Description',
     visual: 'image' as const,
   },
   {
-    title: 'Build Consistent Momentum',
-    content: 'Track today\'s tasks, keep your streak alive, and use focus sessions for a steady routine.',
+    titleKey: 'dashboard:onboarding.step2Title',
+    contentKey: 'dashboard:onboarding.step2Description',
     visual: 'lottie' as const,
   },
   {
-    title: 'Study With Active Recall',
-    content: 'Use daily quizzes and quick actions to practice more often and keep learning moving forward.',
+    titleKey: 'dashboard:onboarding.step3Title',
+    contentKey: 'dashboard:onboarding.step3Description',
     visual: 'logo' as const,
   },
   {
-    title: 'Powerful Chatbot Companion',
-    content: 'Get instant study help with our AI-powered chatbot in each Material.',
+    titleKey: 'dashboard:onboarding.step4Title',
+    contentKey: 'dashboard:onboarding.step4Description',
     visual: 'bot' as const,
   },
 ] as const;
@@ -48,6 +49,7 @@ function DashboardOnboardingModal({ open, username, onFinish }: DashboardOnboard
   const [currentStep, setCurrentStep] = useState(0);
   const [direction, setDirection] = useState(1);
   const theme = useTheme();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (open) {
@@ -167,7 +169,7 @@ function DashboardOnboardingModal({ open, username, onFinish }: DashboardOnboard
 
           <Stack direction="row" spacing={1} alignItems="center">
             <Button onClick={onFinish} sx={{ textTransform: 'none', fontWeight: 600 }}>
-              Skip
+              {t('dashboard:onboarding.skip')}
             </Button>
           </Stack>
         </Stack>
@@ -205,13 +207,13 @@ function DashboardOnboardingModal({ open, username, onFinish }: DashboardOnboard
 
           <Stack spacing={1.5} alignItems="center">
             <Typography variant="h6" sx={{ color: 'primary.main', fontWeight: 600, fontSize: '1rem', letterSpacing: '0.12em' }}>
-              {currentStep === 0 ? `Hello ${username || 'Student'}!` : ''}
+              {currentStep === 0 ? t('dashboard:header.greeting', { name: username || 'Student' }) : ''}
             </Typography>
             <Typography variant="h4" sx={{ fontWeight: 600, color: 'text.primary', fontSize: { xs: '1.7rem', sm: '2rem' } }}>
-              {currentStepData.title}
+              {t(currentStepData.titleKey)}
             </Typography>
             <Typography sx={{ color: 'text.secondary', maxWidth: 420 }}>
-              {currentStepData.content}
+              {t(currentStepData.contentKey)}
             </Typography>
           </Stack>
         </Stack>
@@ -222,7 +224,7 @@ function DashboardOnboardingModal({ open, username, onFinish }: DashboardOnboard
             disabled={currentStep === 0}
             sx={{ textColor: currentStep === 0 ? 'white' : 'primary.main', textTransform: 'none', fontWeight: 600 }}
           >
-            Back
+            {t('dashboard:onboarding.back')}
           </Button>
 
           <Button
@@ -234,7 +236,7 @@ function DashboardOnboardingModal({ open, username, onFinish }: DashboardOnboard
               px: 5,
             }}
           >
-            {isLastStep ? 'Start Learning' : 'Next'}
+            {isLastStep ? t('dashboard:onboarding.startLearning') : t('dashboard:onboarding.next')}
           </Button>
         </Stack>
       </Paper>

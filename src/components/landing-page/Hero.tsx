@@ -6,14 +6,13 @@ import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion'
 import heroImage from '../../assets/hero_image.png';
 import { COLORS } from './landingPage.constants';
 import { useTheme, useMediaQuery } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 interface HeroProps {
     isLoggedIn: boolean;
     onPrimaryClick: () => void;
     onSecondaryClick: () => void;
 }
-
-const HERO_WORDS = ['Smarter,', 'Better,'];
 
 function StatCard({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }): React.JSX.Element {
     return (
@@ -46,6 +45,11 @@ function StatCard({ icon, label, value }: { icon: React.ReactNode; label: string
 }
 
 function Hero({ isLoggedIn, onPrimaryClick, onSecondaryClick }: HeroProps): React.JSX.Element {
+    const { t } = useTranslation();
+    const heroWords = [
+        t('landing:hero.words.smarter'),
+        t('landing:hero.words.better'),
+    ];
     const { scrollY } = useScroll();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -53,11 +57,11 @@ function Hero({ isLoggedIn, onPrimaryClick, onSecondaryClick }: HeroProps): Reac
 
     useEffect(() => {
         const timer = window.setInterval(() => {
-            setWordIndex((prev) => (prev + 1) % HERO_WORDS.length);
+            setWordIndex((prev) => (prev + 1) % heroWords.length);
         }, 4500); // Change word every 4.8 seconds
 
         return () => window.clearInterval(timer);
-    }, []);
+    }, [heroWords.length]);
 
     // Adjust range based on device
     // On mobile, we reduce the travel distance (e.g., 40px instead of 150px)
@@ -96,7 +100,7 @@ function Hero({ isLoggedIn, onPrimaryClick, onSecondaryClick }: HeroProps): Reac
                                 color: 'secondary.dark',
                             }}
                         >
-                            Learn{' '}
+                            {t('landing:hero.titlePrefix')}{' '}
                             <Box
                                 component="span"
                                 sx={{
@@ -110,7 +114,7 @@ function Hero({ isLoggedIn, onPrimaryClick, onSecondaryClick }: HeroProps): Reac
                             >
                                 <AnimatePresence mode="wait">
                                     <motion.span
-                                        key={HERO_WORDS[wordIndex]}
+                                        key={heroWords[wordIndex]}
                                         initial={{ opacity: 0, y: 18 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: -18 }}
@@ -125,7 +129,7 @@ function Hero({ isLoggedIn, onPrimaryClick, onSecondaryClick }: HeroProps): Reac
                                             lineHeight: 'inherit',
                                         }}
                                     >
-                                        {HERO_WORDS[wordIndex]}
+                                        {heroWords[wordIndex]}
                                     </motion.span>
                                 </AnimatePresence>
                             </Box>
@@ -140,14 +144,14 @@ function Hero({ isLoggedIn, onPrimaryClick, onSecondaryClick }: HeroProps): Reac
                                 mb: 2.5,
                             }}
                         >
-                            Not Harder
+                            {t('landing:hero.titleSuffix')}
                         </Typography>
 
                         <Typography
                             variant="body1"
                             sx={{ color: '#4A5568', maxWidth: 480, mb: 4, lineHeight: 1.75, fontSize: '1rem' }}
                         >
-                            Upload your study materials and let AI instantly transform them into summaries, quizzes, and flashcards. <br /> Turn hours of reading into minutes of mastering.
+                            {t('landing:hero.subtitleLine1')} <br /> {t('landing:hero.subtitleLine2')}
                         </Typography>
 
                         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
@@ -167,7 +171,7 @@ function Hero({ isLoggedIn, onPrimaryClick, onSecondaryClick }: HeroProps): Reac
                                     '&:hover': { bgcolor: '#2563EB', transform: 'translateY(-2px)', transition: 'all 0.2s' },
                                 }}
                             >
-                                {isLoggedIn ? 'Go to Dashboard' : 'Start Learning'}
+                                {isLoggedIn ? t('common:actions.goToDashboard') : t('common:actions.startLearning')}
                             </Button>
                             <Button
                                 variant="outlined"
@@ -185,7 +189,7 @@ function Hero({ isLoggedIn, onPrimaryClick, onSecondaryClick }: HeroProps): Reac
                                     '&:hover': { bgcolor: 'rgba(59,130,246,0.06)', borderColor: '#2563EB' },
                                 }}
                             >
-                                View Features
+                                {t('common:actions.viewFeatures')}
                             </Button>
                         </Stack>
                     </Grid>
@@ -229,7 +233,7 @@ function Hero({ isLoggedIn, onPrimaryClick, onSecondaryClick }: HeroProps): Reac
                                 <Box
                                     component="img"
                                     src={heroImage}
-                                    alt="Student learning with AI"
+                                    alt={t('landing:hero.imageAlt')}
                                     sx={{
                                         width: '100%',
                                         display: 'block',       // Remove image bottom gap
@@ -249,8 +253,8 @@ function Hero({ isLoggedIn, onPrimaryClick, onSecondaryClick }: HeroProps): Reac
                                     >
                                         <StatCard
                                             icon={<BarChartIcon />}
-                                            label="Study Progress"
-                                            value="87% Completed"
+                                            label={t('landing:hero.stats.studyProgress.label')}
+                                            value={t('landing:hero.stats.studyProgress.value')}
                                         />
                                     </motion.div>
                                 </motion.div>
@@ -265,8 +269,8 @@ function Hero({ isLoggedIn, onPrimaryClick, onSecondaryClick }: HeroProps): Reac
                                     >
                                         <StatCard
                                             icon={<SchoolIcon />}
-                                            label="AI Generated"
-                                            value="50+ Flashcards"
+                                            label={t('landing:hero.stats.aiGenerated.label')}
+                                            value={t('landing:hero.stats.aiGenerated.value')}
                                         />
                                     </motion.div>
                                 </motion.div>

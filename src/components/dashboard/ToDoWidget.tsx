@@ -1,6 +1,7 @@
 import React from 'react';
 import { Paper, Typography, Box, LinearProgress, useTheme } from '@mui/material';
 import { Assignment } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 type ToDoWidgetProps = {
   completed: number;
@@ -9,6 +10,7 @@ type ToDoWidgetProps = {
 
 function ToDoWidget({ completed, total }: ToDoWidgetProps): React.JSX.Element {
   const theme = useTheme();
+  const { t } = useTranslation();
   const percent = total > 0 ? (completed / total) * 100 : 0;
 
   return (
@@ -26,10 +28,10 @@ function ToDoWidget({ completed, total }: ToDoWidgetProps): React.JSX.Element {
         <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2, mb: 1 }}>
           <Box>
             <Typography variant="h6" sx={{ color: 'text.primary', fontWeight: 600 }}>
-              To-Do List
+              {t('tasks:todoWidget.title')}
             </Typography>
             <Typography variant="body2" sx={{ color: 'text.secondary', fontWeight: 400 }}>
-              You have completed <strong>{completed}</strong> out of <strong>{total}</strong> tasks today.
+              {t('tasks:todoWidget.completedSummary', { completed, total })}
             </Typography>
           </Box>
           <Box
@@ -51,7 +53,7 @@ function ToDoWidget({ completed, total }: ToDoWidgetProps): React.JSX.Element {
       <Box>
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 1, justifyContent: 'space-between' }}>
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            Daily Progress
+            {t('tasks:todoWidget.dailyProgress')}
           </Typography>
           <Typography variant="body2" sx={{ color: 'primary.main', fontWeight: 400 }}>
             {Math.round(percent)}%

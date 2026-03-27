@@ -14,6 +14,7 @@ import {
   
 } from '@mui/material';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
+import { useTranslation } from 'react-i18next';
 
 interface GenerateQuizDialogProps {
   open: boolean;
@@ -23,6 +24,7 @@ interface GenerateQuizDialogProps {
 }
 
 function GenerateQuizDialog({ open, onClose, onSubmit, isLoading }: GenerateQuizDialogProps): React.JSX.Element {
+  const { t } = useTranslation();
   const [count, setCount] = useState(5);
 
   const handleSubmit = () => {
@@ -33,30 +35,30 @@ function GenerateQuizDialog({ open, onClose, onSubmit, isLoading }: GenerateQuiz
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="xs">
       <DialogTitle sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
         <AutoAwesomeIcon sx={{ color: 'primary.main' }} />
-        <Typography variant="h6" fontWeight="bold">Generate AI Quiz</Typography>
+        <Typography variant="h6" fontWeight="bold">{t('material:generateQuizDialog.title')}</Typography>
       </DialogTitle>
       
       <DialogContent>
         <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-          Select how many questions you want our AI to generate from this material.
+          {t('material:generateQuizDialog.description')}
         </Typography>
 
         <FormControl fullWidth size="small">
-          <InputLabel>Number of Questions</InputLabel>
+          <InputLabel>{t('material:generateQuizDialog.numberOfQuestions')}</InputLabel>
           <Select
             value={count}
-            label="Number of Questions"
+            label={t('material:generateQuizDialog.numberOfQuestions')}
             onChange={(e) => setCount(Number(e.target.value))}
           >
-            <MenuItem value={3}>3 Questions (Quick)</MenuItem>
-            <MenuItem value={5}>5 Questions (Standard)</MenuItem>
-            <MenuItem value={10}>10 Questions (Deep Dive)</MenuItem>
+            <MenuItem value={3}>{t('material:generateQuizDialog.options.quick3')}</MenuItem>
+            <MenuItem value={5}>{t('material:generateQuizDialog.options.standard5')}</MenuItem>
+            <MenuItem value={10}>{t('material:generateQuizDialog.options.deepDive10')}</MenuItem>
           </Select>
         </FormControl>
       </DialogContent>
 
       <DialogActions sx={{ p: 2 }}>
-        <Button onClick={onClose} disabled={isLoading} color="inherit">Cancel</Button>
+        <Button onClick={onClose} disabled={isLoading} color="inherit">{t('common:actions.cancel')}</Button>
         <Button 
           onClick={handleSubmit} 
           variant="contained" 
@@ -67,7 +69,7 @@ function GenerateQuizDialog({ open, onClose, onSubmit, isLoading }: GenerateQuiz
             '&:hover': { bgcolor: 'primary.dark' }
           }}
         >
-          {isLoading ? 'Generating...' : 'Start Generation'}
+          {isLoading ? t('common:states.generating') : t('material:generateQuizDialog.startGeneration')}
         </Button>
       </DialogActions>
     </Dialog>

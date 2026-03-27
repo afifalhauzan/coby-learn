@@ -2,12 +2,15 @@ import React from 'react';
 import { Box, Button, Container, Paper, Typography } from '@mui/material';
 import { motion } from 'framer-motion';
 import { COLORS } from './landingPage.constants';
+import { useTranslation } from 'react-i18next';
 
 interface FinalCtaSectionProps {
   onClick: () => void;
 }
 
 function FinalCtaSection({ onClick }: FinalCtaSectionProps): React.JSX.Element {
+  const { t } = useTranslation();
+
   return (
     <Box sx={{ py: 12, pt:4,  px: 2, bgcolor: 'white' }}>
       <Container maxWidth="lg">
@@ -24,10 +27,10 @@ function FinalCtaSection({ onClick }: FinalCtaSectionProps): React.JSX.Element {
           />
         
           <Typography variant="h3" fontWeight="500" sx={{  color: 'white', mb: 2, position: 'relative', zIndex: 1 }}>
-            Ready to Transform Your Grades?
+            {t('landing:finalCta.title')}
           </Typography>
           <Typography sx={{ color: 'rgba(255,255,255,0.9)', mb: 5, fontSize: '1.2rem', position: 'relative', zIndex: 1 }}>
-            Join our community of students and start learning smarter today.
+            {t('landing:finalCta.subtitle')}
           </Typography>
 
           <Button
@@ -36,7 +39,7 @@ function FinalCtaSection({ onClick }: FinalCtaSectionProps): React.JSX.Element {
             onClick={onClick}
             sx={{ bgcolor: 'white', color: COLORS.primary, px: 6, py: 2, boxShadow:'0 1px 20px rgba(255, 245, 245, 0.3)', fontSize: '1.2rem', fontWeight: 'bold', borderRadius: '20px', '&:hover': { bgcolor: '#f0f4f8' } }}
           >
-            Get Started Now
+            {t('landing:finalCta.cta')}
           </Button>
         </Paper>
       </Container>

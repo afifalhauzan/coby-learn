@@ -1,0 +1,50 @@
+{
+  "actions": {
+    "back": "Kembali",
+    "cancel": "Batal",
+    "close": "Tutup",
+    "dashboard": "Dasbor",
+    "download": "Unduh",
+    "delete": "Hapus",
+    "goToDashboard": "Ke Dasbor",
+    "goBack": "Kembali",
+    "logIn": "Masuk",
+    "login": "Masuk",
+    "review": "Tinjau",
+    "save": "Simpan",
+    "saveChanges": "Simpan Perubahan",
+    "sending": "Mengirim...",
+    "signUp": "Daftar",
+    "signUpFree": "Daftar Gratis",
+    "start": "Mulai",
+    "startLearning": "Mulai Belajar",
+    "viewFeatures": "Lihat Fitur"
+  },
+  "states": {
+    "done": "Selesai",
+    "error": "Terjadi kesalahan. Silakan coba lagi.",
+    "generating": "Membuat konten, harap tunggu...",
+    "preparing": "Menyiapkan...",
+    "saving": "Menyimpan progres Anda..."
+  },
+  "deleteDialog": {
+    "defaultDescription": "Apakah Anda yakin ingin menghapus item ini? Tindakan ini tidak dapat dibatalkan.",
+    "defaultTitle": "Konfirmasi Penghapusan"
+  },
+  "navigation": {
+    "brand": "CobyLearnAi",
+    "breadcrumb": "breadcrumb",
+    "defaultAvatarLetter": "U",
+    "home": "Beranda",
+    "logoAlt": "CobyLearnAi Logo",
+    "logOut": "Log Out",
+    "myProfile": "Profil Saya",
+    "dashboard": "Dasbor",
+    "myLibrary": "Pustaka",
+    "myTasks": "Tugas Saya",
+    "progress": "Kemajuan"
+  },
+  "time": {
+    "today": "Hari ini"
+  }
+}

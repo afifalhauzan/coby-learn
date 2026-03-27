@@ -1,0 +1,130 @@
+{
+  "hero": {
+    "imageAlt": "Student learning with AI",
+    "stats": {
+      "aiGenerated": {
+        "label": "AI Generated",
+        "value": "50+ Flashcards"
+      },
+      "studyProgress": {
+        "label": "Study Progress",
+        "value": "87% Completed"
+      }
+    },
+    "subtitleLine1": "Upload your study materials and let AI instantly transform them into summaries, quizzes, and flashcards.",
+    "subtitleLine2": "Turn hours of reading into minutes of mastering.",
+    "titlePrefix": "Learn",
+    "titleSuffix": "Not Harder",
+    "words": {
+      "better": "Better,",
+      "smarter": "Smarter,"
+    }
+  },
+  "navbar": {
+    "navItems": {
+      "faq": "FAQ",
+      "features": "Features",
+      "how-it-works": "How it Works"
+    }
+  },
+  "features": {
+    "items": {
+      "aiSummarization": {
+        "description": "Turn long PDFs or texts into concise, easy-to-understand summaries in seconds.",
+        "title": "AI Summarization"
+      },
+      "fileSupport": {
+        "description": "Support for PDF, Text, and even Youtube Video links (coming soon).",
+        "title": "File Support"
+      },
+      "flashcards": {
+        "description": "Memorize key concepts faster with automatically generated flashcards.",
+        "title": "Flashcards"
+      },
+      "gamifiedLearning": {
+        "description": "Earn XP and keep your streak alive to stay motivated every single day.",
+        "title": "Gamified Learning"
+      },
+      "smartQuizzes": {
+        "description": "Test your knowledge with AI-generated quizzes tailored to your material.",
+        "title": "Smart Quizzes"
+      },
+      "trackProgress": {
+        "description": "Visualize your learning journey with streaks, heatmaps, and performance stats.",
+        "title": "Track Progress"
+      }
+    },
+    "subtitle": "Everything you need to ace your exams in one platform.",
+    "title": "Why CobyLearnAi?"
+  },
+  "howItWorks": {
+    "quizVisual": {
+      "correctLabel": "Correct",
+      "flashcardLabel": "Flashcard",
+      "flashcardQuestion": "\"What is the term for the movement of water across a semi-permeable membrane?\"",
+      "options": {
+        "option1": "To control cell division",
+        "option2": "To produce ATP (energy)",
+        "option3": "To synthesize proteins"
+      },
+      "questionProgress": "QUESTION 1/10",
+      "questionTitle": "What is the primary function of the mitochondria in a cell?",
+      "showAnswer": "Show Answer"
+    },
+    "sections": {
+      "quiz": {
+        "desktopDescription": "Static reading is passive. Our system generates dynamic quizzes and flashcards based specifically on your materials to ensure active recall and long-term retention.",
+        "desktopTitle": "Practice Smarter With AI Quizzes",
+        "eyebrow": "Active Recall",
+        "fallbackDescription": "Practice with generated quizzes.",
+        "mobileDescription": "Static reading is passive. The system generates dynamic quizzes and flashcards based on your own material to build long-term retention.",
+        "mobileTitle": "Practice Smarter With AI Generated Quizzes"
+      },
+      "summary": {
+        "desktopDescription": "Don't get buried in hundreds of pages. Our AI extracts core concepts, definitions, and key takeaways so you can grasp the big picture in minutes.",
+        "desktopTitle": "Instantly Turn Study Notes Into Summaries",
+        "eyebrow": "Save Hours Weekly",
+        "fallbackDescription": "AI extracts core concepts instantly.",
+        "mobileDescription": "Don't get buried in hundreds of pages. AI extracts core concepts and key takeaways so you can grasp the big picture in minutes.",
+        "mobileTitle": "Instantly Turn Study Notes Into Clear Summaries"
+      }
+    },
+    "summaryVisual": {
+      "aiSummary": "AI Summary (5 Key Points)",
+      "originalDocument": "Original Document (45 pages)"
+    },
+    "title": "How It Works"
+  },
+  "faq": {
+    "items": {
+      "answer1": "Yes! You can get started for free. We also plan to offer premium features for power users in the future.",
+      "answer2": "Currently we support text-based PDFs and raw text. Handwriting recognition is in our roadmap!",
+      "answer3": "We use advanced LLMs to ensure high accuracy, but we always recommend reviewing the summaries against your original notes.",
+      "question1": "Is CobyLearnAi free to use?",
+      "question2": "Can I upload handwritten notes?",
+      "question3": "How accurate is the AI?"
+    },
+    "title": "Frequently Asked Questions"
+  },
+  "finalCta": {
+    "cta": "Get Started Now",
+    "subtitle": "Join our community of students and start learning smarter today.",
+    "title": "Ready to Transform Your Grades?"
+  },
+  "footer": {
+    "copyright": "© {{year}} CobyLearnAi. All rights reserved.",
+    "links": {
+      "about": "About",
+      "contact": "Contact",
+      "privacy": "Privacy",
+      "terms": "Terms"
+    },
+    "logoAlt": "CobyLearnAi",
+    "tagline": "Empower your learning journey with AI"
+  },
+  "mascot": {
+    "description": "Coby helps you stay focused with friendly guidance while you summarize, quiz, and review. Learn faster without feeling overwhelmed.",
+    "imageAlt": "Coby mascot waving",
+    "title": "Meet your study buddy"
+  }
+}

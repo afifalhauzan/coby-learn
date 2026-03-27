@@ -1,0 +1,37 @@
+{
+  "breadcrumbs": {
+    "category": "Ilmu Komputer",
+    "projectName": "Belajar SQL"
+  },
+  "header": {
+    "title": "Belajar SQL",
+    "subtitle": "Pelajari lebih dalam dasar-dasar SQL dan manajemen basis data."
+  },
+  "actions": {
+    "editProject": "Edit Proyek"
+  },
+  "summary": {
+    "title": "Ringkasan AI",
+    "default": "SQL, atau Structured Query Language, adalah bahasa standar untuk mengelola dan memanipulasi basis data relasional. SQL memungkinkan pengguna membuat, mengambil, memperbarui, dan menghapus data. Konsep pentingnya meliputi tabel yang menyimpan data dalam baris dan kolom, serta query sebagai perintah untuk berinteraksi dengan data.\n\nPerintah SQL umum meliputi SELECT untuk mengambil data, INSERT untuk menambah data, UPDATE untuk memperbarui data, dan DELETE untuk menghapus data. Memahami join (INNER, LEFT, RIGHT, FULL) juga penting untuk menggabungkan data dari beberapa tabel berdasarkan kolom yang saling terkait.\n\nTipe data menentukan jenis nilai yang bisa disimpan dalam kolom, seperti INTEGER, VARCHAR, dan DATE. Constraint seperti PRIMARY KEY, FOREIGN KEY, dan NOT NULL membantu menjaga integritas data dalam basis data.",
+    "actions": {
+      "copyTitle": "Salin ringkasan",
+      "copyAria": "Salin ringkasan"
+    }
+  },
+  "quizGenerator": {
+    "title": "Uji Pemahamanmu",
+    "numberOfQuestionsLabel": "Jumlah Pertanyaan",
+    "questionCountOption": "{{count}} Pertanyaan",
+    "actions": {
+      "generateFromMaterial": "Buat Kuis dari Materi"
+    },
+    "questionCountOption_other": "{{count}} pertanyaan"
+  },
+  "notes": {
+    "title": "Catatan Saya",
+    "placeholder": "Mulai ketik catatanmu di sini...",
+    "actions": {
+      "save": "Simpan Catatan"
+    }
+  }
+}

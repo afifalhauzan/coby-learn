@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import ShareIcon from '@mui/icons-material/Share';
 import DownloadIcon from '@mui/icons-material/Download';
+import { useTranslation } from 'react-i18next';
 import StreakShareCard from './StreakShareCard';
 
 interface StreakShareDialogProps {
@@ -30,6 +31,7 @@ function StreakShareDialog({
   dateLabel,
   onShared,
 }: StreakShareDialogProps): React.JSX.Element {
+  const { t } = useTranslation();
   const exportRef = useRef<HTMLDivElement>(null);
   const [isSharing, setIsSharing] = useState(false);
   const [shareError, setShareError] = useState<string | null>(null);
@@ -39,13 +41,13 @@ function StreakShareDialog({
   const previewHeight = 1920 * previewScale;
 
   const filename = useMemo(() => {
-    const safeName = (username || 'learner').replace(/\s+/g, '-').toLowerCase();
+    const safeName = (username || t('streak:share.defaultUsernameSlug', { defaultValue: 'learner' })).replace(/\s+/g, '-').toLowerCase();
     return `streak-${safeName}-${streak}.png`;
-  }, [username, streak]);
+  }, [username, streak, t]);
 
   const generateShareBlob = async () => {
     if (!exportRef.current) {
-      throw new Error('Share card is not ready yet.');
+      throw new Error(t('streak:share.errors.cardNotReady', { defaultValue: 'Share card is not ready yet.' }));
     }
 
     const moduleUrl = 'https://cdn.skypack.dev/html-to-image';
@@ -58,7 +60,7 @@ function StreakShareDialog({
     });
 
     if (!blob) {
-      throw new Error('Unable to generate share image.');
+      throw new Error(t('streak:share.errors.imageGenerateFailed', { defaultValue: 'Unable to generate share image.' }));
     }
 
     return blob;
@@ -94,8 +96,8 @@ function StreakShareDialog({
 
       if (nav.share && nav.canShare?.({ files: [file] })) {
         await nav.share({
-          title: 'My CobyLearnAI Streak',
-          text: `I just reached a ${streak}-day streak on CobyLearnAI!`,
+          title: t('streak:share.nativeShare.title', { defaultValue: 'My CobyLearnAI Streak' }),
+          text: t('streak:share.nativeShare.text', { streak, defaultValue: 'I just reached a {{streak}}-day streak on CobyLearnAI!' }),
           files: [file],
         });
       } else {
@@ -104,7 +106,7 @@ function StreakShareDialog({
 
       onShared?.();
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Failed to share streak card.';
+      const message = error instanceof Error ? error.message : t('streak:share.errors.shareFailed', { defaultValue: 'Failed to share streak card.' });
       setShareError(message);
     } finally {
       setIsSharing(false);
@@ -123,7 +125,7 @@ function StreakShareDialog({
       const blob = await generateShareBlob();
       downloadBlob(blob);
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Failed to download streak card.';
+      const message = error instanceof Error ? error.message : t('streak:share.errors.downloadFailed', { defaultValue: 'Failed to download streak card.' });
       setShareError(message);
     } finally {
       setIsSharing(false);
@@ -133,10 +135,10 @@ function StreakShareDialog({
   return (
     <>
       <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm" sx={{ '& .MuiDialog-paper': { borderRadius: 1 }, p: 0 }}>
-        <DialogTitle sx={{ fontWeight: 700 }}>Share Your Streak</DialogTitle>
+        <DialogTitle sx={{ fontWeight: 700 }}>{t('streak:share.dialog.title', { defaultValue: 'Share Your Streak' })}</DialogTitle>
         <DialogContent dividers>
           <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-            Post your latest milestone and keep the streak alive.
+            {t('streak:share.dialog.subtitle', { defaultValue: 'Post your latest milestone and keep the streak alive.' })}
           </Typography>
 
           <Box
@@ -172,7 +174,7 @@ function StreakShareDialog({
 
         <DialogActions sx={{ p: 2 }}>
           <Button onClick={onClose} color="inherit" sx={{ textTransform: 'none' }}>
-            Close
+            {t('common:actions.close', { defaultValue: 'Close' })}
           </Button>
           <Button
             variant="outlined"
@@ -181,7 +183,7 @@ function StreakShareDialog({
             startIcon={<DownloadIcon />}
             sx={{ textTransform: 'none' }}
           >
-            Download
+            {t('common:actions.download', { defaultValue: 'Download' })}
           </Button>
           <Button
             variant="contained"
@@ -190,7 +192,9 @@ function StreakShareDialog({
             startIcon={<ShareIcon />}
             sx={{ textTransform: 'none', color: 'white' }}
           >
-            {isSharing ? 'Preparing...' : 'Share to Socials'}
+            {isSharing
+              ? t('common:states.preparing', { defaultValue: 'Preparing...' })
+              : t('streak:share.dialog.actions.shareToSocials', { defaultValue: 'Share to Socials' })}
           </Button>
         </DialogActions>
       </Dialog>

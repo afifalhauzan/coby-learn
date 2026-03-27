@@ -1,8 +1,11 @@
 import React from 'react';
 import { Box, Container, Typography } from '@mui/material';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 function Mascot(): React.JSX.Element {
+	const { t } = useTranslation();
+
 	return (
 		<Box
 			id="mascot"
@@ -31,7 +34,7 @@ function Mascot(): React.JSX.Element {
 								mb: 2,
 							}}
 						>
-							Meet your study buddy
+							{t('landing:mascot.title')}
 						</Typography>
 						<Typography
 							variant="h6"
@@ -42,7 +45,7 @@ function Mascot(): React.JSX.Element {
 								fontSize: { xs: '1rem', md: '1.1rem' },
 							}}
 						>
-							Coby helps you stay focused with friendly guidance while you summarize, quiz, and review. Learn faster without feeling overwhelmed.
+							{t('landing:mascot.description')}
 						</Typography>
 					</Box>
 
@@ -98,7 +101,7 @@ function Mascot(): React.JSX.Element {
 							<Box
 								component="img"
 								src="/hello.svg"
-								alt="Coby mascot waving"
+								alt={t('landing:mascot.imageAlt')}
 								sx={{
 									width: '100%',
 									maxWidth: { xs: 220, md: 310 },

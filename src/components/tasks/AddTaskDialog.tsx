@@ -16,6 +16,7 @@ import {
   FormHelperText,
 } from '@mui/material';
 import type { Task } from '../../types/task.types';
+import { useTranslation } from 'react-i18next';
 
 // Helper: Ubah "2025-11-25T14:30:00Z" menjadi "2025-11-25T14:30" (untuk input html)
 const formatForInput = (isoString?: string) => {
@@ -38,6 +39,7 @@ interface AddTaskDialogProps {
 }
 
 function AddTaskDialog({ open, onClose, initialData, onSubmit }: AddTaskDialogProps): React.JSX.Element {
+  const { t } = useTranslation();
   const [title, setTitle] = useState('');
   const [context, setContext] = useState('');
   const [startDate, setStartDate] = useState('');
@@ -87,21 +89,21 @@ function AddTaskDialog({ open, onClose, initialData, onSubmit }: AddTaskDialogPr
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
       <DialogTitle sx={{ fontWeight: 'bold' }}>
-        {initialData ? 'Edit Task' : 'Add New Task'}
+        {initialData ? t('tasks:addTaskDialog.editTitle') : t('tasks:addTaskDialog.addTitle')}
       </DialogTitle>
       
       <DialogContent>
         <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 1 }}>
           <TextField
             autoFocus
-            label="Task Title"
+            label={t('tasks:addTaskDialog.taskTitle')}
             fullWidth
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
           />
           <TextField
-            label="Description / Context"
+            label={t('tasks:addTaskDialog.descriptionContext')}
             fullWidth
             multiline
             rows={3}
@@ -111,7 +113,7 @@ function AddTaskDialog({ open, onClose, initialData, onSubmit }: AddTaskDialogPr
           
         <Box sx={{ display: 'flex', gap: 2 }}>
           <TextField
-            label="Start Time"
+            label={t('tasks:addTaskDialog.startTime')}
             type="datetime-local"
             fullWidth
             value={startDate}
@@ -127,7 +129,7 @@ function AddTaskDialog({ open, onClose, initialData, onSubmit }: AddTaskDialogPr
             }}
           />
           <TextField
-            label="Due Time"
+            label={t('tasks:addTaskDialog.dueTime')}
             type="datetime-local"
             fullWidth
             value={taskDate}
@@ -145,15 +147,15 @@ function AddTaskDialog({ open, onClose, initialData, onSubmit }: AddTaskDialogPr
           />
         </Box>
           <FormControl fullWidth>
-            <InputLabel>Priority</InputLabel>
+            <InputLabel>{t('tasks:addTaskDialog.priority')}</InputLabel>
             <Select
               value={priority}
-              label="Priority"
+              label={t('tasks:addTaskDialog.priority')}
               onChange={(e) => setPriority(e.target.value as any)}
             >
-              <MenuItem value="low">Low</MenuItem>
-              <MenuItem value="medium">Medium</MenuItem>
-              <MenuItem value="high">High</MenuItem>
+              <MenuItem value="low">{t('tasks:priority.low')}</MenuItem>
+              <MenuItem value="medium">{t('tasks:priority.medium')}</MenuItem>
+              <MenuItem value="high">{t('tasks:priority.high')}</MenuItem>
             </Select>
           </FormControl>
 
@@ -167,10 +169,10 @@ function AddTaskDialog({ open, onClose, initialData, onSubmit }: AddTaskDialogPr
                     color="primary" 
                   />
                 }
-                label="Add to Google Calendar"
+                label={t('tasks:addTaskDialog.addToGoogleCalendar')}
               />
               <FormHelperText sx={{ ml: 3.5, mt: 0 }}>
-                Will open a Google Calendar tab with the appropriate time.
+                {t('tasks:addTaskDialog.googleCalendarHelpText')}
               </FormHelperText>
             </Box>
           )}
@@ -179,9 +181,9 @@ function AddTaskDialog({ open, onClose, initialData, onSubmit }: AddTaskDialogPr
       </DialogContent>
       
       <DialogActions sx={{ p: 2 }}>
-        <Button onClick={onClose} color="inherit">Cancel</Button>
+        <Button onClick={onClose} color="inherit">{t('common:actions.cancel')}</Button>
         <Button onClick={handleSubmit} variant="contained" color="primary" sx={{ color: 'white' }}>
-          {initialData ? 'Save Changes' : 'Create Task'}
+          {initialData ? t('common:actions.saveChanges') : t('tasks:actions.createTask')}
         </Button>
       </DialogActions>
     </Dialog>

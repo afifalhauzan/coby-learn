@@ -15,54 +15,27 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { useQuery } from '@tanstack/react-query';
 import { getQuizResultDetail } from '../services/apiLibraryService';
+import { useTranslation } from 'react-i18next';
 
 /**
  * Refined Copywriting for Coby Learn AI
  * Themes: Crystalline Knowledge, Playful Mastery, Mascot (Coby) Encouragement
  */
 
-const scoreRangeMessages = {
-  low: [
-    "Raw shards gathered! Every mistake is just a step toward a solid crystal.",
-    "Coby's tip: Mistakes are the best data points for deep learning. Let's retry!",
-    "Your knowledge garden starts here. Every expert was once a beginner.",
-    "The structure is still settling. Review the summary and let's try again!",
-    "No crystal is formed without pressure. Keep showing up—you've got this!",
-  ],
-  mid: [
-    "The crystal is forming! You are starting to see the core patterns.",
-    "Great momentum! Coby sees those connections becoming clearer.",
-    "Solid recall! A little more polish and this will be a Stage 5 crystal.",
-    "You're in the Flow Zone. Consistency is turning this info into mastery.",
-    "Steady glow! Tighten those weak spots and let's reach for the top range.",
-  ],
-  high: [
-    "Mega Crystal achieved! You have reached peak mastery of this material.",
-    "Stage 5 Performance! Coby is doing a backflip for that score.",
-    "Absolute clarity. Your knowledge structure is rock solid.",
-    "Fantastic result! Your active recall strategy is working perfectly.",
-    "Brilliant! Your streak is glowing as bright as your knowledge crystals.",
-  ],
-};
-
-const pickTwoRandomMessages = (messages: string[]): string[] => {
-  const shuffled = [...messages].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, 1);
-};
-
-const getMotivationalMessagesByScore = (score: number): string[] => {
+const getMotivationLevelByScore = (score: number): 'low' | 'medium' | 'high' => {
   if (score <= 30) {
-    return pickTwoRandomMessages(scoreRangeMessages.low);
+    return 'low';
   }
 
   if (score < 70) {
-    return pickTwoRandomMessages(scoreRangeMessages.mid);
+    return 'medium';
   }
 
-  return pickTwoRandomMessages(scoreRangeMessages.high);
+  return 'high';
 };
 
 function QuizResultPage(): React.JSX.Element {
+  const { t } = useTranslation();
   const { resultId } = useParams<{ resultId: string }>();
   const navigate = useNavigate();
 
@@ -86,10 +59,10 @@ function QuizResultPage(): React.JSX.Element {
     return (
       <Box sx={{ p: 4 }}>
         <Alert severity="error">
-          Gagal memuat hasil kuis: {(error as any)?.message || "Data tidak ditemukan"}
+          {t('quiz:errors.failedToLoadQuizResult', { message: (error as any)?.message || t('quiz:states.empty') })}
         </Alert>
         <Button startIcon={<ArrowBackIcon />} onClick={() => navigate(-1)} sx={{ mt: 2 }}>
-          Kembali
+          {t('common:actions.back')}
         </Button>
       </Box>
     );
@@ -97,7 +70,7 @@ function QuizResultPage(): React.JSX.Element {
 
   const correctCount = result.questions.filter(q => q.is_correct).length;
   const totalCount = result.questions.length;
-  const motivationalMessages = getMotivationalMessagesByScore(result.score);
+  const motivationLevel = getMotivationLevelByScore(result.score);
   const isHighScore = result.score > 70;
   const resultMascot = isHighScore ? '/quizhigh.svg' : '/quizlow.svg';
 
@@ -109,7 +82,7 @@ function QuizResultPage(): React.JSX.Element {
         onClick={() => navigate(-1)}
         sx={{ mb: 2, textTransform: 'none', color: 'text.secondary' }}
       >
-        Back to Material
+        {t('quiz:actions.backToMaterial')}
       </Button>
 
       <Paper
@@ -123,7 +96,7 @@ function QuizResultPage(): React.JSX.Element {
           color: 'white',
         }}
       >
-        <Typography variant="h6" sx={{ color: 'text.secondary', mb: 2, textAlign: 'center' }}>Quiz Result</Typography>
+        <Typography variant="h6" sx={{ color: 'text.secondary', mb: 2, textAlign: 'center' }}>{t('quiz:messages.quizResult')}</Typography>
 
         <Box
           sx={{
@@ -140,25 +113,23 @@ function QuizResultPage(): React.JSX.Element {
               {result.score}
             </Typography>
             <Typography variant="body1" sx={{ color: 'text.secondary', mt: 1 }}>
-              You answered {correctCount} out of {totalCount} questions correctly.
+              {t('quiz:messages.scoreSummary', { correct: correctCount, total: totalCount })}
             </Typography>
 
             <Stack spacing={0.5} sx={{ mt: 1.5, alignItems: 'left' }}>
-              {motivationalMessages.map((message, index) => (
-                <Typography key={`${index}-${message}`} variant="body2" sx={{ color: 'text.secondary' }}>
-                  {message}
-                </Typography>
-              ))}
+              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                {t(`quiz:motivations.${motivationLevel}`)}
+              </Typography>
             </Stack>
             <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mt: 2 }}>
-              Completed on {new Date(result.created_at).toLocaleString('id-ID')}
+              {t('quiz:messages.completedOn', { date: new Date(result.created_at).toLocaleString('id-ID') })}
             </Typography>
           </Box>
 
           <Box
             component="img"
             src={resultMascot}
-            alt={isHighScore ? 'High score mascot' : 'Low score mascot'}
+            alt={isHighScore ? t('quiz:labels.highScoreMascotAlt') : t('quiz:labels.lowScoreMascotAlt')}
             sx={{
               width: { xs: 120, sm: 140 },
               objectFit: 'contain',
@@ -185,12 +156,12 @@ function QuizResultPage(): React.JSX.Element {
           >
             <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
               <Typography variant="subtitle2" color="text.secondary">
-                Question {index + 1}
+                {t('quiz:labels.questionNumber', { count: index + 1 })}
               </Typography>
               {question.is_correct ? (
-                <Chip icon={<CheckCircleIcon />} label="Correct" color="success" size="small" variant="outlined" />
+                <Chip icon={<CheckCircleIcon />} label={t('quiz:messages.correctAnswer')} color="success" size="small" variant="outlined" />
               ) : (
-                <Chip icon={<CancelIcon />} label="Incorrect" color="error" size="small" variant="outlined" />
+                <Chip icon={<CancelIcon />} label={t('quiz:messages.wrongAnswer')} color="error" size="small" variant="outlined" />
               )}
             </Box>
 
@@ -259,7 +230,7 @@ function QuizResultPage(): React.JSX.Element {
             {!question.is_correct && (
               <Box sx={{ mt: 2, p: 2, bgcolor: 'action.hover', borderRadius: 2 }}>
                 <Typography variant="body2" color="text.secondary">
-                  <strong>Correct Answer:</strong> Option {question.correct_answer}
+                  <strong>{t('quiz:labels.correctAnswerLabel')}</strong> {t('quiz:labels.optionWithKey', { key: question.correct_answer })}
                 </Typography>
               </Box>
             )}

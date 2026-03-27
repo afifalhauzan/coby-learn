@@ -1,0 +1,116 @@
+{
+  "dailyQuizWidget": {
+    "doneDescription": "Kamu telah menyelesaikan tantangan hari ini. Kembali lagi besok untuk menjaga streak-mu!",
+    "doneTitle": "Tantangan Selesai",
+    "challengeLabel": "Tantangan Harian",
+    "pendingDescription": "Tantangan harian baru menantimu.",
+    "startButton": "Mulai Kuis",
+    "title": "Kuis Harian"
+  },
+  "spotlight": {
+    "title": "Mulai di sini: Tambahkan tugas pertamamu",
+    "description": "Ketuk tombol Tambah Tugas untuk membuat langkah belajar berikutnya. Klik area gelap untuk menutup pesan ini.",
+    "dismissAriaLabel": "Tutup sorotan"
+  },
+  "dayStreak": {
+    "checkStreaks": "Cek Streak",
+    "closeStreakLevels": "Tutup",
+    "currentBadge": "Badge Saat Ini",
+    "currentFireLevelAlt": "Ikon tingkat api saat ini",
+    "label": "Streak",
+    "levelAlt": "Ikon level streak",
+    "streakLevelsDescription": "Pantau konsistensi belajar harianmu untuk membuka tingkat api yang lebih tinggi.",
+    "streakLevelsTitle": "Tingkatan Streak",
+    "motivations": {
+      "level1": "Bagus! Kamu telah memulai perjalanan belajarmu.",
+      "level2": "Hebat! Lanjutkan untuk menjaga momentum dan lihat seberapa jauh kamu bisa pergi!",
+      "level3": "Luar biasa! Kamu sudah 7 hari belajar tanpa henti. Teruskan dan raih tingkat api yang lebih tinggi!",
+      "level4": "Luar biasa! Konsistensimu tak tertandingi. Kamu berada di jalur menuju penguasaan penuh!",
+      "level5": "Legendaris! Kamu telah mencapai puncak. Semangatmu adalah inspirasi bagi pelajar lain!"
+    },
+    "levels": {
+      "embers": {
+        "label": "Ember (Bara)",
+        "range": "0 hari",
+        "description": "Kamu baru saja memulai. Tetap konsisten untuk membangun kebiasaan belajar yang kuat!"
+      },
+      "spark": {
+        "label": "Spark (Percikan)",
+        "range": "1 hari",
+        "description": "Langkah pertama sudah diambil! Percikan kecil ini adalah awal dari penguasaan materi yang besar."
+      },
+      "flame": {
+        "label": "Flame (Api)",
+        "range": "2-3 hari",
+        "description": "Momentum mulai terbangun. Api belajarmu mulai menyala terang dan stabil!"
+      },
+      "blaze": {
+        "label": "Blaze (Kobaran)",
+        "range": "7 hari",
+        "description": "Satu minggu penuh! Kamu telah membuktikan bahwa belajar adalah bagian dari gaya hidupmu."
+      },
+      "inferno": {
+        "label": "Inferno (Lautan Api)",
+        "range": "14 hari",
+        "description": "Dua minggu tanpa henti! Fokusmu membara sangat kuat, menghancurkan segala rintangan belajar."
+      },
+      "supernova": {
+        "label": "Supernova",
+        "range": "20+ hari",
+        "description": "Luar biasa! Semangat belajarmu meledak melampaui batas. Kamu adalah master dalam konsistensi!"
+      }
+    }
+  },
+  "focusSession": {
+    "dayStreak_one": "{{count}} hari streak",
+    "dayStreak_other": "{{count}} hari streak",
+    "nextWeek": "Minggu Depan",
+    "previousWeek": "Minggu Sebelumnya",
+    "weekdays": {
+      "fri": "Jum",
+      "mon": "Sen",
+      "thu": "Kam",
+      "tue": "Sel",
+      "wed": "Rab"
+    },
+    "youAreOnA": "Kamu sedang dalam"
+  },
+  "header": {
+    "greeting": "Hai, {{name}}!",
+    "studentFallback": "Pelajar"
+  },
+  "missions": {
+    "dailyProgress": "Progres Harian",
+    "title": "Misi Harian",
+    "toggleMission": "Ubah status misi",
+    "taskMasterTitle": "Tugas Harian",
+    "taskMasterTarget": "Selesaikan 1 tugas hari ini",
+    "researcherTitle": "Peneliti Harian",
+    "researcherTarget": "Masukkan 1 materi hari ini",
+    "focusMasterTitle": "Cendekia Harian",
+    "focusMasterTarget": "Selesaikan 1 sesi fokus 25 menit hari ini"
+  },
+  "onboarding": {
+    "back": "Kembali",
+    "next": "Lanjut",
+    "skip": "Lewati",
+    "startLearning": "Mulai Belajar"
+  },
+  "quickActions": {
+    "addMaterial": "Tambah Materi",
+    "title": "Aksi Cepat",
+    "toTaskMenu": "Ke Menu Tugas"
+  },
+  "tasksWidget": {
+    "addTask": "Tambah Tugas",
+    "emptySubtitle": "Kerja bagus!",
+    "emptyTitle": "Tidak ada tugas untuk hari ini",
+    "errorLoadingTodayTasks": "Gagal memuat tugas hari ini.",
+    "priority": {
+      "high": "tinggi",
+      "low": "rendah",
+      "medium": "sedang"
+    },
+    "title": "Tugas Hari Ini"
+  }
+}

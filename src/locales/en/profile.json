@@ -1,0 +1,15 @@
+{
+  "title": "Account Settings",
+  "fields": {
+    "username": {
+      "label": "Username"
+    },
+    "email": {
+      "label": "Email Address"
+    }
+  },
+  "messages": {
+    "updateSuccess": "Profile updated successfully!",
+    "updateFailed": "Failed to update profile"
+  }
+}

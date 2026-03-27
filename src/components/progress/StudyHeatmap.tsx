@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Box, Typography, Tooltip } from '@mui/material';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 interface HeatmapDay {
   level: number;
@@ -86,8 +87,6 @@ const generateHeatmapData = (year: number, month: number): HeatmapDay[] => {
   return data;
 };
 
-const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
 const getCrystalForLevel = (level: number): string | null => {
   if (level <= 0) {
     return null;
@@ -101,6 +100,7 @@ interface CrystalTileProps {
 }
 
 function CrystalTile({ activityCount }: CrystalTileProps): React.JSX.Element | null {
+  const { t } = useTranslation();
   const level = Math.min(Math.max(activityCount, 0), 4);
 
   if (level === 0) {
@@ -113,7 +113,7 @@ function CrystalTile({ activityCount }: CrystalTileProps): React.JSX.Element | n
         <Box
           component="img"
           src="/crystal4_bg.svg"
-          alt="Crystal level 4 background"
+          alt={t('progress:labels.crystalLevelBackground', { level: 4 })}
           sx={{
             position: 'absolute',
             inset: 0,
@@ -127,7 +127,7 @@ function CrystalTile({ activityCount }: CrystalTileProps): React.JSX.Element | n
         <Box
           component={motion.img}
           src="/crystal4_isolate.svg"
-          alt="Crystal level 4"
+          alt={t('progress:labels.crystalLevel', { level: 4 })}
           animate={{
             y: [0, -3, 0],
             filter: [
@@ -161,7 +161,7 @@ function CrystalTile({ activityCount }: CrystalTileProps): React.JSX.Element | n
     <Box
       component={motion.img}
       src={getCrystalForLevel(level) || undefined}
-      alt={`Crystal level ${level}`}
+      alt={t('progress:labels.crystalLevel', { level })}
       initial={{ opacity: 0, scale: 0.92 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
@@ -179,8 +179,18 @@ function CrystalTile({ activityCount }: CrystalTileProps): React.JSX.Element | n
 }
 
 function StudyHeatmap(): React.JSX.Element {
+  const { t } = useTranslation();
   // State for current month view
   const [currentDate, setCurrentDate] = useState(new Date());
+  const daysOfWeek = [
+    t('progress:labels.sun'),
+    t('progress:labels.mon'),
+    t('progress:labels.tue'),
+    t('progress:labels.wed'),
+    t('progress:labels.thu'),
+    t('progress:labels.fri'),
+    t('progress:labels.sat'),
+  ];
 
   const handleMonthChange = (direction: 'prev' | 'next') => {
     setCurrentDate((prev: Date) => {
@@ -203,7 +213,7 @@ function StudyHeatmap(): React.JSX.Element {
       {/* Header Heatmap */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
         <Typography variant="h6" sx={{ fontWeight: '600' }}>
-          Study Heatmap
+          {t('progress:labels.studyHeatmap')}
         </Typography>
       </Box>
 
@@ -214,7 +224,7 @@ function StudyHeatmap(): React.JSX.Element {
           onClick={() => handleMonthChange('prev')}
           sx={{ border: 'none', bgcolor: 'transparent', cursor: 'pointer', fontWeight: 'bold', color: 'primary.main' }}
         >
-          &lt; Prev
+          &lt; {t('progress:actions.previous')}
         </Box>
         <Typography variant="body2" fontWeight="600">{currentMonthName}</Typography>
         <Box
@@ -222,7 +232,7 @@ function StudyHeatmap(): React.JSX.Element {
           onClick={() => handleMonthChange('next')}
           sx={{ border: 'none', bgcolor: 'transparent', cursor: 'pointer', fontWeight: 'bold', color: 'primary.main' }}
         >
-          Next &gt;
+          {t('progress:actions.next')} &gt;
         </Box>
       </Box>
 
@@ -236,7 +246,11 @@ function StudyHeatmap(): React.JSX.Element {
         {displayData.slice(0, 35).map((dayData, index) => (
           <Tooltip
             key={index}
-            title={`${dayData.tasks} tasks on ${dayData.date}`}
+            title={
+              dayData.tasks === 0
+                ? t('progress:heatmap.noActivity', { date: dayData.date })
+                : t('progress:heatmap.studyActivity', { count: dayData.tasks, date: dayData.date })
+            }
             arrow
             placement="top"
           >
@@ -265,18 +279,18 @@ function StudyHeatmap(): React.JSX.Element {
       </Box>
 
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 1 }}>
-        <Typography variant="body2" color="text.secondary">Less</Typography>
+        <Typography variant="body2" color="text.secondary">{t('progress:labels.less')}</Typography>
         <Box sx={{ width: 15, height: 15, borderRadius: '3px', bgcolor: 'rgba(0,0,0,0.04)', border: '1px solid', borderColor: 'divider' }} />
         {[1, 2, 3, 4].map((level) => (
           <Box
             key={level}
             component="img"
             src={`/crystal${level}.svg`}
-            alt={`Legend crystal level ${level}`}
+            alt={t('progress:labels.legendCrystalLevel', { level })}
             sx={{ width: 15, height: 15, objectFit: 'contain' }}
           />
         ))}
-        <Typography variant="body2" color="text.secondary">More</Typography>
+        <Typography variant="body2" color="text.secondary">{t('progress:labels.more')}</Typography>
       </Box>
     </Box>
   );

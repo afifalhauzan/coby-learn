@@ -1,0 +1,88 @@
+{
+    "actions": {
+        "backToDashboard": "Back to Dashboard",
+        "backToMaterial": "Back to Material",
+        "cancel": "Cancel",
+        "claiming": "Claiming...",
+        "finishAndClaimShort": "Finish & Claim",
+        "finishAndClaim": "Finish & Claim XP",
+        "finishReview": "Finish Review",
+        "nextQuestionLabel": "Next Question",
+        "nextQuestion": "Next Question",
+        "quitQuiz": "Quit Quiz",
+        "reviewAnswers": "Review Answers",
+        "startQuiz": "Start Quiz",
+        "submitQuiz": "Submit Quiz",
+        "uploadNow": "Upload Now"
+    },
+    "errors": {
+        "failedToLoadDailyQuiz": "Failed to load the daily challenge.",
+        "failedToLoadQuizResult": "Failed to load quiz results.",
+        "failedToSaveProgress": "Could not save your study progress.",
+        "submitFailed": "Submission failed. Please check your connection."
+    },
+    "labels": {
+        "correct": "Correct",
+        "correctAnswerLabel": "Correct Answer:",
+        "dailyChallenge": "Daily Challenge",
+        "enterTopic": "Enter Topic",
+        "highScoreMascotAlt": "Happy mascot celebrating your score",
+        "incorrect": "Incorrect",
+        "learnerFallback": "Learner",
+        "lowScoreMascotAlt": "Supportive mascot encouraging you to try again",
+        "optionWithKey": "Option {{key}}",
+        "questionIndex": "Question {{current}} of {{total}}",
+        "questionNumber": "Question {{count}}",
+        "questionNumberUpper": "QUESTION {{count}}",
+        "questionProgress": "QUESTION {{current}}/{{total}}",
+        "reviewingQuestion": "Reviewing Question {{count}}",
+        "questionNumber_other": "Question {{count}}",
+        "reviewingQuestion_other": "Reviewing Question {{count}}",
+        "score": "Score",
+        "specificTopic": "Specific Topic",
+        "streakMode": "Streak Mode"
+    },
+    "messages": {
+        "calculatingScore": "Calculating your score...",
+        "claimError": "An error occurred while saving progress.",
+        "chooseChallengeMode": "Choose how you want to be challenged today.",
+        "claiming": "Claiming rewards...",
+        "completedOn": "Completed on {{date}}",
+        "correctAnswer": "Spot on! You got it right.",
+        "dailyChallengeCompleted": "You've completed today's challenge. Come back tomorrow to keep the fire burning!",
+        "enterTopicPrompt": "What do you want to be quizzed on today?",
+        "generatingQuiz": "AI is crafting your personalized quiz...",
+        "loadFailed": "Failed to load Daily Quiz.",
+        "noMaterialsDescription": "You haven't uploaded any study materials yet. Upload one to start taking quizzes!",
+        "noMaterialsFound": "No materials found",
+        "quizCompleted": "Quiz Completed!",
+        "quizResult": "Quiz Result",
+        "scoreSummary": "You answered {{correct}} out of {{total}} questions correctly.",
+        "specificTopicDescription": "Generate a quiz based on a specific subject you choose.",
+        "streakSaved": "Streak Saved!",
+        "submittingAnswers": "Submitting your answers...",
+        "surpriseMeDescription": "Let AI pick a random topic from your library.",
+        "wrongAnswer": "Not quite right.",
+        "wrongTryAgain": "Wrong. Try again!",
+        "wrongAnswerTryAgain": "That's not it. Give it another thought!"
+    },
+    "completion": {
+        "title": "Streak Saved!",
+        "description": "You've completed today's challenge. Come back tomorrow to keep the fire burning!",
+        "actions": {
+            "awesome": "Awesome!"
+        }
+    },
+    "motivations": {
+        "high": "Incredible! You've mastered this material. Keep up the legendary work!",
+        "medium": "Good job! You have a solid grasp, but there's still a little room to grow.",
+        "low": "Don't give up! Every mistake is a step toward learning. Let's review and try again."
+    },
+    "placeholders": {
+        "topicExample": "e.g. Human Anatomy or Quantum Physics"
+    },
+    "states": {
+        "empty": "No quiz data available.",
+        "error": "Something went wrong while loading the quiz."
+    }
+}

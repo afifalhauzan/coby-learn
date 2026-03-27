@@ -28,6 +28,7 @@ import {
   parseISO
 } from 'date-fns';
 import { ChevronLeft, ChevronRight, Add, EventNote } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 import type { Task } from '../../types/task.types';
 
 const getStatusColor = (completed: boolean, priority: string) => {
@@ -44,6 +45,7 @@ interface CalendarViewProps {
 }
 
 function CalendarView({ tasks, onAddTask, onEditTask }: CalendarViewProps): React.JSX.Element {
+  const { t } = useTranslation();
   const theme = useTheme();
   const dayCellTransition = theme.transitions.create('background-color', {
     duration: theme.transitions.duration.shorter,
@@ -110,14 +112,22 @@ function CalendarView({ tasks, onAddTask, onEditTask }: CalendarViewProps): Reac
           width: { xs: '100%', sm: 'auto' } // Full width di HP
         }}
       >
-        Today
+        {t('common:time.today', { defaultValue: 'Today' })}
       </Button>
     </Box>
   );
 
   // --- DAYS HEADER ---
   const renderDays = () => {
-    const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+    const days = [
+      t('tasks:calendar.weekdays.sun', { defaultValue: 'SUN' }),
+      t('tasks:calendar.weekdays.mon', { defaultValue: 'MON' }),
+      t('tasks:calendar.weekdays.tue', { defaultValue: 'TUE' }),
+      t('tasks:calendar.weekdays.wed', { defaultValue: 'WED' }),
+      t('tasks:calendar.weekdays.thu', { defaultValue: 'THU' }),
+      t('tasks:calendar.weekdays.fri', { defaultValue: 'FRI' }),
+      t('tasks:calendar.weekdays.sat', { defaultValue: 'SAT' }),
+    ];
     return (
       <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', mb: 1, borderBottom: '1px solid', borderColor: 'divider', pb: 1 }}>
         {days.map((day) => (
@@ -220,7 +230,7 @@ function CalendarView({ tasks, onAddTask, onEditTask }: CalendarViewProps): Reac
               {/* Desktop/Tablet "More" indicator */}
               {!isMobile && dayTasks.length > maxTasksToShow && (
                 <Typography variant="caption" sx={{ pl: 1, fontSize: '0.65rem', color: 'text.secondary', fontStyle: 'italic' }}>
-                  + {dayTasks.length - maxTasksToShow} more
+                  {t('tasks:calendar.moreTasks', { count: dayTasks.length - maxTasksToShow, defaultValue: '+ {{count}} more' })}
                 </Typography>
               )}
             </Box>
@@ -274,7 +284,12 @@ function CalendarView({ tasks, onAddTask, onEditTask }: CalendarViewProps): Reac
           }}
         >
           <Box sx={{ mb: 3 }}>
-            <Typography variant="h6" fontWeight="bold">Tasks for {format(selectedDate, 'MMM d')}</Typography>
+            <Typography variant="h6" fontWeight="bold">
+              {t('tasks:calendar.tasksForDate', {
+                date: format(selectedDate, 'MMM d'),
+                defaultValue: 'Tasks for {{date}}',
+              })}
+            </Typography>
             <Typography variant="body2" color="text.secondary">{format(selectedDate, 'EEEE, yyyy')}</Typography>
           </Box>
           <Divider sx={{ mb: 3 }} />
@@ -283,7 +298,7 @@ function CalendarView({ tasks, onAddTask, onEditTask }: CalendarViewProps): Reac
             {selectedDayTasks.length === 0 ? (
               <Box sx={{ textAlign: 'center', py: 6, opacity: 0.6 }}>
                 <EventNote sx={{ fontSize: 48, color: 'text.disabled', mb: 1 }} />
-                <Typography variant="body2" color="text.secondary">No tasks scheduled.</Typography>
+                <Typography variant="body2" color="text.secondary">{t('tasks:calendar.noTasksScheduled', { defaultValue: 'No tasks scheduled.' })}</Typography>
               </Box>
             ) : (
               selectedDayTasks.map((task, index) => (
@@ -306,7 +321,11 @@ function CalendarView({ tasks, onAddTask, onEditTask }: CalendarViewProps): Reac
                     </Typography>
                     <Stack direction="row" spacing={1} alignItems="center">
                       <Chip label={task.priority} size="small" sx={{ height: 20, fontSize: '0.65rem', bgcolor: getStatusColor(task.completed, task.priority) + '22', color: getStatusColor(task.completed, task.priority), fontWeight: 'bold' }} />
-                      <Typography variant="caption" color="text.secondary">{task.completed ? 'Done' : format(parseISO(task.dueDate), 'HH:mm')}</Typography>
+                      <Typography variant="caption" color="text.secondary">
+                        {task.completed
+                          ? t('common:states.done', { defaultValue: 'Done' })
+                          : format(parseISO(task.dueDate), 'HH:mm')}
+                      </Typography>
                     </Stack>
                   </Paper>
                 </Grow>
@@ -314,7 +333,10 @@ function CalendarView({ tasks, onAddTask, onEditTask }: CalendarViewProps): Reac
             )}
           </Box>
           <Button variant="contained" fullWidth startIcon={<Add />} onClick={onAddTask} sx={{ mt: 3, borderRadius: 3, textTransform: 'none', py: 1.5 }}>
-            Add New Task for {format(selectedDate, 'MMM d')}
+            {t('tasks:calendar.actions.addNewTaskForDate', {
+              date: format(selectedDate, 'MMM d'),
+              defaultValue: 'Add New Task for {{date}}',
+            })}
           </Button>
         </Paper>
       </Box>

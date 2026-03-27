@@ -1,0 +1,118 @@
+{
+  "actions": {
+    "createFlashcards": "Buat Flashcard",
+    "generateNewQuiz": "Buat Kuis Baru"
+  },
+  "addedOn": "Ditambahkan pada {{date}}",
+  "chat": {
+    "aiTyping": "AI sedang mengetik...",
+    "cobyChatMascotAlt": "Maskot chat Coby",
+    "cobyThinkingMascotAlt": "Maskot Coby sedang berpikir",
+    "emptyState": "Tanyakan apa saja tentang materi ini!",
+    "errorSendingToAi": "Gagal mengirim pesan ke AI.",
+    "headerTitle": "Tutor AI",
+    "inputPlaceholder": "Tanyakan sesuatu...",
+    "online": "Online",
+    "openTutorAriaLabel": "Buka tutor AI",
+    "senderAi": "AI",
+    "senderYou": "Kamu",
+    "suggestions": {
+      "explainHardestConcept": "Jelaskan konsep paling sulit di materi ini",
+      "summarizeSimplePoints": "Ringkas materi ini menjadi poin-poin sederhana"
+    },
+    "suggestionsDescription": "Coba salah satu prompt ini dengan tutor AI.",
+    "suggestionsTitle": "Butuh bantuan dengan materi ini?"
+  },
+  "errors": {
+    "failedToGenerateFlashcards": "Gagal membuat flashcard.",
+    "failedToGenerateQuiz": "Gagal membuat kuis: {{message}}",
+    "failedToLoadMaterial": "Gagal memuat materi."
+  },
+  "generateQuizDialog": {
+    "description": "Pilih berapa banyak pertanyaan yang ingin dibuat AI dari materi ini.",
+    "numberOfQuestions": "Jumlah Pertanyaan",
+    "options": {
+      "deepDive10": "10 Pertanyaan (Mendalam)",
+      "quick3": "3 Pertanyaan (Cepat)",
+      "standard5": "5 Pertanyaan (Standar)"
+    },
+    "startGeneration": "Mulai Pembuatan",
+    "title": "Buat Kuis AI"
+  },
+  "quizHistory": {
+    "emptyState": "Belum ada riwayat kuis. Buat kuis baru untuk memulai!",
+    "pendingLabel": "MENUNGGU",
+    "questionsAndDate_one": "{{count}} Pertanyaan • {{date}}",
+    "questionsAndDate_other": "{{count}} Pertanyaan • {{date}}",
+    "quizNumber": "Kuis #{{number}}",
+    "scoreLabel": "NILAI",
+    "title": "Riwayat Kuis"
+  },
+  "summary": {
+    "lastUpdatedJustNow": "Terakhir diperbarui baru saja",
+    "noSummaryAvailable": "_Belum ada ringkasan._",
+    "title": "Ringkasan Materi"
+  },
+  "focusSessionWidget": {
+    "actions": {
+      "cancel": "Batal",
+      "changeStation": "Ganti Stasiun",
+      "pause": "Jeda",
+      "play": "Putar",
+      "startFocus": "Mulai Fokus",
+      "stopAlarm": "Hentikan Alarm"
+    },
+    "labels": {
+      "cobyMascotAlt": "Maskot Coby",
+      "focusTimer": "Timer Fokus",
+      "minutesShort": "mnt",
+      "quickPresets": "Preset Cepat"
+    },
+    "music": {
+      "customVideoDescription": "Pilihan YouTube",
+      "customVideoName": "Video Kustom"
+    },
+    "musicDialog": {
+      "title": "Ganti Musik Latar",
+      "youtubeLabel": "URL / ID YouTube",
+      "youtubePlaceholder": "contoh: jfKfPfyJRdk"
+    },
+    "notifications": {
+      "timeUpBody": "Sesi fokus selesai. Saatnya istirahat sejenak!",
+      "timeUpTitle": "Waktu Habis!"
+    },
+    "settingsDialog": {
+      "title": "Atur Durasi"
+    },
+    "stations": {
+      "ambientSpace": {
+        "description": "Suasana fokus mendalam",
+        "name": "Ruang Ambien"
+      },
+      "classicalPiano": {
+        "description": "Mozart untuk belajar",
+        "name": "Piano Klasik"
+      },
+      "lofiGirl": {
+        "description": "Beat untuk santai/belajar",
+        "name": "Radio Lofi Girl"
+      },
+      "lofiHipHop": {
+        "description": "Campuran beat santai",
+        "name": "Lofi Hip Hop"
+      },
+      "quietRain": {
+        "description": "Suara alam untuk fokus",
+        "name": "Hujan Tenang"
+      },
+      "synthwave": {
+        "description": "Beat untuk santai/bermain",
+        "name": "Radio Synthwave"
+      }
+    },
+    "timeUpDialog": {
+      "description": "Kerja bagus! Kamu sudah fokus. Sekarang istirahat sebentar.",
+      "title": "Waktu Habis!"
+    }
+  }
+}

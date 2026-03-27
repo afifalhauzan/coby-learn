@@ -2,10 +2,12 @@ import React from 'react';
 import { Paper, Typography, Stack, Button } from '@mui/material';
 import { Add, MenuBookOutlined } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 
 function QuickActionsWidget(): React.JSX.Element {
     const navigate = useNavigate();
+  const { t } = useTranslation();
   
   return (
     <Paper sx={{ 
@@ -14,7 +16,7 @@ function QuickActionsWidget(): React.JSX.Element {
       bgcolor: 'background.paper'
     }}>
       <Typography variant="h6" component="h2" sx={{ mb: 2, fontWeight: 500, color: 'text.primary' }}>
-        Quick Actions
+        {t('dashboard:quickActions.title')}
       </Typography>
       <Stack spacing={2}>
         <Button
@@ -29,7 +31,7 @@ function QuickActionsWidget(): React.JSX.Element {
             textTransform: 'none',
           }}
         >
-          To Task Menu
+          {t('dashboard:quickActions.toTaskMenu')}
         </Button>
         <Button
           variant="outlined"
@@ -49,7 +51,7 @@ function QuickActionsWidget(): React.JSX.Element {
             }
           }}
         >
-          Add Material
+          {t('dashboard:quickActions.addMaterial')}
         </Button>
 
       </Stack>

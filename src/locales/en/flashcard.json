@@ -1,0 +1,13 @@
+{
+  "actions": {
+    "flipCard": "Flip Card",
+    "tapToFlip": "Tap to flip"
+  },
+  "errors": {
+    "noFlashcardsDataFound": "No flashcards data found."
+  },
+  "labels": {
+    "answer": "ANSWER",
+    "question": "QUESTION"
+  }
+}

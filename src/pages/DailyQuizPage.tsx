@@ -25,8 +25,10 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { getDailyQuiz, claimDailyQuiz, getDailyQuizStatus } from '../services/apiLibraryService';
 import type { DailyQuizOptionObj, DailyQuizResponse } from '../services/apiLibraryService';
+import { useTranslation } from 'react-i18next';
 
 function DailyQuizPage(): React.JSX.Element {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
@@ -66,7 +68,7 @@ function DailyQuizPage(): React.JSX.Element {
         return;
       }
 
-      const msg = error?.response?.data?.message || "Failed to load Daily Quiz.";
+      const msg = error?.response?.data?.message || t('quiz:errors.failedToLoadDailyQuiz');
       setErrorMessage(msg);
       // Kembali ke selection jika error
       if (setupMode !== 'selection') {
@@ -84,7 +86,7 @@ function DailyQuizPage(): React.JSX.Element {
     },
     onError: (err) => {
       console.error("Gagal klaim:", err);
-      alert("Terjadi kesalahan saat menyimpan progress.");
+      alert(t('quiz:errors.failedToSaveProgress'));
     }
   });
 
@@ -96,7 +98,7 @@ function DailyQuizPage(): React.JSX.Element {
 
   const handleStartTopic = () => {
     if (!customTopic.trim()) {
-      alert("Please enter a topic");
+      alert(t('quiz:messages.enterTopicPrompt'));
       return;
     }
     setErrorMessage(null);
@@ -199,17 +201,17 @@ function DailyQuizPage(): React.JSX.Element {
         <Paper sx={{ p: 6, textAlign: 'center' }}>
           <LocalFireDepartmentIcon sx={{ fontSize: 80, color: 'primary.main', mb: 2 }} />
           <Typography variant="h4" fontWeight="bold" gutterBottom>
-            Streak Saved!
+            {t('quiz:messages.streakSaved')}
           </Typography>
           <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-            You've completed today's challenge. Come back tomorrow to keep the fire burning!
+            {t('quiz:messages.dailyChallengeCompleted')}
           </Typography>
           <Button
             variant="contained"
             onClick={() => navigate('/dashboard')}
             sx={{ borderRadius: 50, px: 4, py: 1.5, fontWeight: 'bold', textTransform: 'none', color: 'white' }}
           >
-            Back to Dashboard
+            {t('quiz:actions.backToDashboard')}
           </Button>
         </Paper>
         {/* Dialog No Material */}
@@ -227,11 +229,11 @@ function DailyQuizPage(): React.JSX.Element {
             </Box>
 
             <Typography variant="h5" fontWeight="bold" gutterBottom>
-              No Materials Found
+              {t('quiz:messages.noMaterialsFound')}
             </Typography>
 
             <Typography color="text.secondary" sx={{ mb: 4, lineHeight: 1.6 }}>
-              You haven't uploaded any materials yet. Please upload materials first to use this quiz feature.
+              {t('quiz:messages.noMaterialsDescription')}
             </Typography>
 
             <Box sx={{ display: 'flex', gap: 2, width: '100%' }}>
@@ -241,7 +243,7 @@ function DailyQuizPage(): React.JSX.Element {
                 onClick={() => setNoMaterialError(false)}
                 sx={{ borderRadius: 2, py: 1.5, fontWeight: 'bold' }}
               >
-                Cancel
+                {t('quiz:actions.cancel')}
               </Button>
               <Button
                 fullWidth
@@ -249,7 +251,7 @@ function DailyQuizPage(): React.JSX.Element {
                 onClick={() => navigate('/library')}
                 sx={{ borderRadius: 2, py: 1.5, fontWeight: 'bold' }}
               >
-                Upload Now
+                {t('quiz:actions.uploadNow')}
               </Button>
             </Box>
           </Box>
@@ -264,7 +266,7 @@ function DailyQuizPage(): React.JSX.Element {
     return (
       <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '80vh', gap: 2 }}>
         <CircularProgress />
-        <Typography>Generating your challenge...</Typography>
+        <Typography>{t('quiz:messages.generatingQuiz')}</Typography>
       </Box>
     );
   }
@@ -274,14 +276,14 @@ function DailyQuizPage(): React.JSX.Element {
     return (
       <Container maxWidth="sm" sx={{ py: 0 }}>
         <Button startIcon={<ArrowBackIcon />} onClick={() => navigate('/dashboard')} sx={{ mb: 2 }}>
-          Back to Dashboard
+          {t('quiz:actions.backToDashboard')}
         </Button>
 
         <Typography variant="h4" fontWeight="bold" gutterBottom>
-          Daily Challenge
+          {t('quiz:labels.dailyChallenge')}
         </Typography>
         <Typography color="text.secondary" sx={{ mb: 4 }}>
-          Choose how you want to test your knowledge today.
+          {t('quiz:messages.chooseChallengeMode')}
         </Typography>
 
         {errorMessage && (
@@ -308,7 +310,7 @@ function DailyQuizPage(): React.JSX.Element {
               <Box>
                 <Typography variant="h6" fontWeight="bold">Surprise Me</Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Questions based on your random uploaded materials.
+                  {t('quiz:messages.surpriseMeDescription')}
                 </Typography>
               </Box>
             </Paper>
@@ -327,9 +329,9 @@ function DailyQuizPage(): React.JSX.Element {
                 <CheckCircleIcon fontSize="large" />
               </Box>
               <Box>
-                <Typography variant="h6" fontWeight="bold">Specific Topic</Typography>
+                <Typography variant="h6" fontWeight="bold">{t('quiz:labels.specificTopic')}</Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Focus on a specific subject you want to master.
+                  {t('quiz:messages.specificTopicDescription')}
                 </Typography>
               </Box>
             </Paper>
@@ -337,21 +339,21 @@ function DailyQuizPage(): React.JSX.Element {
         ) : (
           <Box>
             <Typography variant="h6" fontWeight="bold" gutterBottom>
-              Enter Topic
+              {t('quiz:labels.enterTopic')}
             </Typography>
             <TextField
               fullWidth
-              placeholder="e.g. Sejarah Kemerdekaan Indonesia"
+              placeholder={t('quiz:placeholders.topicExample')}
               value={customTopic}
               onChange={(e) => setCustomTopic(e.target.value)}
               sx={{ mb: 3 }}
             />
             <Box sx={{ display: 'flex', gap: 2 }}>
               <Button variant="outlined" onClick={() => setSetupMode('selection')} fullWidth>
-                Cancel
+                {t('quiz:actions.cancel')}
               </Button>
               <Button variant="contained" onClick={handleStartTopic} fullWidth disabled={!customTopic.trim()}>
-                Start Quiz
+                {t('quiz:actions.startQuiz')}
               </Button>
             </Box>
           </Box>
@@ -376,11 +378,11 @@ function DailyQuizPage(): React.JSX.Element {
             </Box>
 
             <Typography variant="h5" fontWeight="bold" gutterBottom>
-              No Materials Found
+              {t('quiz:messages.noMaterialsFound')}
             </Typography>
 
             <Typography color="text.secondary" sx={{ mb: 4 }}>
-              You haven't uploaded any materials yet. Please upload materials first to use this quiz feature.
+              {t('quiz:messages.noMaterialsDescription')}
             </Typography>
 
             <Box sx={{ display: 'flex', gap: 2, width: '100%' }}>
@@ -390,7 +392,7 @@ function DailyQuizPage(): React.JSX.Element {
                 onClick={() => setNoMaterialError(false)}
                 sx={{ borderRadius: 2, fontWeight: 'bold' }}
               >
-                Cancel
+                {t('quiz:actions.cancel')}
               </Button>
               <Button
                 fullWidth
@@ -398,7 +400,7 @@ function DailyQuizPage(): React.JSX.Element {
                 onClick={() => navigate('/library')}
                 sx={{ borderRadius: 2, fontWeight: 'bold' }}
               >
-                Upload Now
+                {t('quiz:actions.uploadNow')}
               </Button>
             </Box>
           </Box>
@@ -421,15 +423,15 @@ function DailyQuizPage(): React.JSX.Element {
         onClick={() => navigate('/')}
         sx={{ mb: 2, color: 'text.secondary' }}
       >
-        Quit
+        {t('quiz:actions.quitQuiz')}
       </Button>
 
       <Paper sx={{ p: { xs: 2, md: 6 }, boxShadow: 4 }}>
         {/* Progress */}
         <Box sx={{ mb: 4 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-            <Typography variant="caption" fontWeight="bold" color="primary">QUESTION {currentIdx + 1} OF {totalQ}</Typography>
-            <Typography variant="caption" color="text.secondary">Daily Challenge</Typography>
+            <Typography variant="caption" fontWeight="bold" color="primary">{t('quiz:labels.questionNumber', { count: currentIdx + 1 })}</Typography>
+            <Typography variant="caption" color="text.secondary">{t('quiz:labels.dailyChallenge')}</Typography>
           </Box>
           <LinearProgress variant="determinate" value={progress} sx={{ height: 8, borderRadius: 4, bgcolor: 'action.hover', '& .MuiLinearProgress-bar': { bgcolor: 'primary.main' } }} />
         </Box>
@@ -447,7 +449,7 @@ function DailyQuizPage(): React.JSX.Element {
           {answerStatus === 'wrong' && (
             <Fade in>
               <Alert severity="error" icon={<ErrorIcon />} sx={{ py: 0.5, px: 2, mr: 2 }}>
-                Incorrect. Try again!
+                {t('quiz:messages.wrongAnswerTryAgain')}
               </Alert>
             </Fade>
           )}
@@ -463,7 +465,7 @@ function DailyQuizPage(): React.JSX.Element {
                   '&:hover': { bgcolor: 'primary.main' }
                 }}
               >
-                {currentIdx === totalQ - 1 ? (claimMutation.isPending ? 'Claiming...' : 'Finish & Claim') : 'Next Question'}
+                {currentIdx === totalQ - 1 ? (claimMutation.isPending ? t('quiz:messages.claiming') : t('quiz:actions.finishAndClaim')) : t('quiz:actions.nextQuestion')}
               </Button>
             </Fade>
           )}

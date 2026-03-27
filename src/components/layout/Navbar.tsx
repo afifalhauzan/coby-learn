@@ -30,17 +30,19 @@ import { useQuery } from '@tanstack/react-query';
 import logo from '../../assets/logo_1.svg';
 import { logoutUser } from '../../services/apiAuthService';
 import { getDailyQuizStatus } from '../../services/apiLibraryService';
+import { useTranslation } from 'react-i18next';
 
 // Daftar menu agar mudah diedit di satu tempat
 const MENU_ITEMS = [
-  { text: 'Dashboard', path: '/dashboard', icon: Home },
-  { text: 'My Library', path: '/library', icon: MenuBook },
-  { text: 'My Tasks', path: '/tasks', icon: Assignment },
-  { text: 'Progress', path: '/progress', icon: TrendingUp },
+  { textKey: 'common:navigation.dashboard', path: '/dashboard', icon: Home },
+  { textKey: 'common:navigation.myLibrary', path: '/library', icon: MenuBook },
+  { textKey: 'common:navigation.myTasks', path: '/tasks', icon: Assignment },
+  { textKey: 'common:navigation.progress', path: '/progress', icon: TrendingUp },
 ];
 
 function Navbar(): React.JSX.Element {
   const theme = useTheme();
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -104,7 +106,7 @@ function Navbar(): React.JSX.Element {
               {/* Logo Image Responsive */}
               <img
                 src={logo}
-                alt="Logo"
+                alt={t('common:navigation.logoAlt')}
                 style={{
                   width: isMobile ? '35px' : '50px', // Kecil di HP, Besar di PC
                   transition: '0.3s'
@@ -122,7 +124,7 @@ function Navbar(): React.JSX.Element {
                   display: { xs: 'none', sm: 'block' } // Hidden on Extra Small screens
                 }}
               >
-                CobyLearnAi
+                {t('common:navigation.brand')}
               </Typography>
             </Box>
 
@@ -130,7 +132,7 @@ function Navbar(): React.JSX.Element {
             <Stack direction="row" spacing={1} sx={{ mr: 10 }}> {/* Margin kanan untuk memberi ruang ke avatar */}
               {MENU_ITEMS.map((item) => (
                 <Button
-                  key={item.text}
+                  key={item.path}
                   onClick={() => navigate(item.path)}
                   sx={{
                     // 1. Give every button the exact same fixed width
@@ -162,7 +164,7 @@ function Navbar(): React.JSX.Element {
                     }
                   }}
                 >
-                  {item.text}
+                  {t(item.textKey)}
                 </Button>
               ))}
             </Stack>
@@ -185,7 +187,7 @@ function Navbar(): React.JSX.Element {
                     color: 'white'
                   }}
                 >
-                  {dailyStatus?.username?.charAt(0).toUpperCase() || 'S'}
+                    {dailyStatus?.username?.charAt(0).toUpperCase() || t('common:navigation.defaultAvatarLetter')}
                 </Avatar>
               </IconButton>
 
@@ -218,7 +220,7 @@ function Navbar(): React.JSX.Element {
                 color: 'white'
               }}
             >
-              {dailyStatus?.username?.charAt(0).toUpperCase() || 'S'}
+              {dailyStatus?.username?.charAt(0).toUpperCase() || t('common:navigation.defaultAvatarLetter')}
             </Avatar>
           </IconButton>
         </Box>
@@ -244,11 +246,11 @@ function Navbar(): React.JSX.Element {
       >
         <MenuItem onClick={() => { setAnchorEl(null); navigate('/profile'); }} sx={{ fontWeight: 600 }}>
           <Person3Outlined fontSize="small" sx={{ mr: 1 }} />
-          My Profile
+          {t('common:navigation.myProfile')}
         </MenuItem>
         <MenuItem onClick={handleLogout} sx={{ color: 'error.main', fontWeight: 600 }}>
           <Logout fontSize="small" sx={{ mr: 1 }} />
-          Log Out
+          {t('common:navigation.logOut')}
         </MenuItem>
       </Menu>
 
@@ -314,7 +316,7 @@ function Navbar(): React.JSX.Element {
               return (
                 <BottomNavigationAction
                   key={item.path}
-                  label={item.text}
+                  label={t(item.textKey)}
                   value={item.path}
                   icon={<IconComponent />}
                 />

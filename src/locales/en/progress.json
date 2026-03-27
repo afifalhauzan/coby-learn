@@ -1,0 +1,75 @@
+{
+	"actions": {
+		"close": "Close",
+		"next": "Next",
+		"previous": "Previous"
+	},
+	"heatmap": {
+		"noActivity": "No activity on {{date}}",
+		"studyActivity": "{{count}} tasks on {{date}}",
+        "studyActivity_other": "{{count}} study activities"
+	},
+	"labels": {
+		"aiQuizzesTaken": "AI Quizzes Taken",
+		"crystalLevel": "Crystal level {{level}}",
+		"crystalLevelBackground": "Crystal level {{level}} background",
+		"currentFireLevel": "Current fire level {{level}}",
+		"currentStreak": "Current Streak!",
+		"dailyProgress": "Daily Progress",
+		"day": "Day",
+		"fri": "Fri",
+		"keyStats": "Key Stats ({{filter}})",
+		"legendCrystalLevel": "Legend crystal level {{level}}",
+		"less": "Less",
+		"level": "Level",
+		"mon": "Mon",
+		"month": "Month",
+		"more": "More",
+		"mostProductiveDay": "Most Productive Day",
+		"myProgress": "My Progress",
+		"sat": "Sat",
+		"studyHeatmap": "Study Heatmap",
+		"sun": "Sun",
+		"tasksCompleted": "Tasks Completed",
+		"thu": "Thu",
+		"totalStudyHours": "Total Study Hours",
+		"tue": "Tue",
+		"wed": "Wed",
+		"week": "Week",
+		"xp": "XP",
+		"year": "Year"
+	},
+	"messages": {
+		"completeDailyQuizToIgnite": "Complete daily quiz to ignite!",
+		"daysLeftInSeason": "{{days}} days left in {{month}} Season",
+		"failedToLoadStatistics": "Failed to load statistics: {{message}}",
+		"keepFlameAlive": "Keep the flame alive.",
+		"levelUp": "Level Up!",
+		"levelUpReached": "Level Up! You reached Level {{level}} - {{name}}",
+		"maxLevel": "Max level reached",
+		"nextLevel": "Next level in {{xp}} XP"
+	},
+	"states": {
+		"empty": "No data available",
+		"loading": "Loading..."
+	},
+	"xpModal": {
+		"aria": {
+			"closeXpLevels": "Close XP levels"
+		},
+		"labels": {
+			"levelName": "Level {{level}}: {{name}}",
+			"requiresXp": "Requires {{xp}} XP",
+			"title": "XP Levels",
+			"totalXp": "Total XP: {{xp}}"
+		},
+		"messages": {
+			"monthlyResetInfo": "XP and Levels reset at the start of every month. Keep the momentum to reach Gemstone Master this season!"
+		},
+		"states": {
+			"current": "Current",
+			"locked": "Locked",
+			"unlocked": "Unlocked"
+		}
+	}
+}

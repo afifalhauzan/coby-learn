@@ -1,0 +1,31 @@
+{
+  "share": {
+    "defaultUsernameSlug": "pelajar",
+    "nativeShare": {
+      "title": "Streak CobyLearnAI Saya",
+      "text": "Saya baru mencapai streak {{streak}} hari di CobyLearnAI!"
+    },
+    "errors": {
+      "cardNotReady": "Kartu share belum siap.",
+      "imageGenerateFailed": "Gagal membuat gambar share.",
+      "shareFailed": "Gagal membagikan kartu streak.",
+      "downloadFailed": "Gagal mengunduh kartu streak."
+    },
+    "dialog": {
+      "title": "Bagikan Streak-mu",
+      "subtitle": "Bagikan pencapaian terbarumu dan jaga streak tetap hidup.",
+      "actions": {
+        "shareToSocials": "Bagikan ke Sosial Media"
+      }
+    },
+    "card": {
+      "logoAlt": "Logo CobyLearnAI",
+      "congrats": "Selamat!",
+      "streakDay": "Hari Streak",
+      "defaultUsername": "Pelajar",
+      "fireLevelAlt": "Level api streak {{level}}",
+      "keepItUp": "Pertahankan!",
+      "mascotAlt": "Maskot Coby"
+    }
+  }
+}

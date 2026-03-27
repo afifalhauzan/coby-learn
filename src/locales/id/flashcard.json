@@ -1,0 +1,13 @@
+{
+  "actions": {
+    "flipCard": "Balik Kartu",
+    "tapToFlip": "Ketuk untuk membalik"
+  },
+  "errors": {
+    "noFlashcardsDataFound": "Data flashcard tidak ditemukan."
+  },
+  "labels": {
+    "answer": "JAWABAN",
+    "question": "PERTANYAAN"
+  }
+}
